@@ -1,0 +1,117 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+<link href="style.css" media="all" rel="stylesheet">
+<title>そつけん</title>
+<meta http-equiv="content-type" charset="utf-8">
+</head>
+<body>
+
+<h2>アトラクションを選択（※2つ以上）</h2>
+<form action="cgi-bin/sotsuken.py" method="post">
+  <div class="box11">
+    <label><input type="checkbox" class="chk" name="sp" id="sp" value="0"> スパイダーマン</label><br>
+    <label><input type="checkbox" class="chk" name="mn" id="mn" value="1"> ミニオンパーク</label> <br>
+    <label><input type="checkbox" class="chk" name="fl" id="fl" value="2"> フライングダイナソー</label><br>
+    <label><input type="checkbox" class="chk" name="jw" id="jw" value="3"> ジョーズ</label><br>
+    <label><input type="checkbox" class="chk" name="hr" id="hr" value="4"> ハリーポッター</label><br>
+    <label><input type="checkbox" class="chk" name="hl" id="hl" value="5"> ハリウッドドリームザライド</label><br>
+    <label><input type="checkbox" class="chk" name="bk" id="bk" value="6"> バックドロップ</label><br>
+    <label><input type="checkbox" class="chk" name="hp" id="hp" value="7"> ヒッポグリフ</label> <br>
+    <label><input type="checkbox" class="chk" name="jr" id="jr" value="8"> ジュラシックパークザライド</label><br>
+    <label><input type="checkbox" class="chk" name="gr" id="gr" value="9"> スヌーピーのグレートレース</label><br>
+    <label><input type="checkbox" class="chk" name="fs" id="fs" value="10"> フライングスヌーピー</label><br>
+    <label><input type="checkbox" class="chk" name="el" id="el" value="11"> エルモのバブルバブル</label>
+  </div>
+  <hr>
+
+  <h2>スタート地点</h2>
+  <div class="cp_ipselect cp_sl03">
+    <select name="START" class="select_box">
+      <option value="100">エントランス(入口)</option>
+      <option value="0">スパイダーマン</option>
+      <option value="1">ミニオンパーク</option>
+      <option value="2">フライングダイナソー</option>
+      <option value="3">ジョーズ</option>
+      <option value="4">ハリーポッター</option>
+      <option value="5">ハリウッドドリームザライド</option>
+      <option value="6">バックドロップ</option>
+      <option value="7">ヒッポグリフ</option>
+      <option value="8">ジュラシックパークザライド</option>
+　　 <option value="9">スヌーピーのグレートレース</option>
+      <option value="10">フライングスヌーピー</option>
+      <option value="11">エルモのバブルバブル</option>
+    </select><br>
+  </div>
+  <hr>
+
+  <h2>ゴール地点</h2>
+  <div class="cp_ipselect cp_sl03">
+    <select name="END" class="select_box">
+      <option value="100">エントランス(入口)</option>
+      <option value="0">スパイダーマン</option>
+      <option value="1">ミニオンパーク</option>
+      <option value="2">フライングダイナソー</option>
+      <option value="3">ジョーズ</option>
+      <option value="4">ハリーポッター</option>
+      <option value="5">ハリウッドドリームザライド</option>
+      <option value="6">バックドロップ</option>
+      <option value="7">ヒッポグリフ</option>
+      <option value="8">ジュラシックパークザライド</option>
+　　 <option value="9">スヌーピーのグレートレース</option>
+      <option value="10">フライングスヌーピー</option>
+      <option value="11">エルモのバブルバブル</option>
+    </select>
+  </div>
+  <hr>
+
+  <h2>スタート時間</h2>
+  <div class="cp_ipselect cp_sl03">
+    <select name="start_time" class="select_box">
+      <option value="100" selected>現在時刻</option>
+      <option value="1">8:15</option>
+      <option value="2">8:45</option>
+      <option value="3">9:15</option>
+      <option value="4">9:45</option>
+      <option value="5">10:15</option>
+      <option value="6">10:45</option>
+      <option value="7">11:15</option>
+      <option value="8">11:45</option>
+　　 <option value="9">12:15</option>
+      <option value="10">12:45</option>
+      <option value="11">13:15</option>
+      <option value="12">13:45</option>
+      <option value="13">14:15</option>
+      <option value="14">14:45</option>
+      <option value="15">15:15</option>
+      <option value="16">15:45</option>
+      <option value="17">16:15</option>
+      <option value="18">16:45</option>
+      <option value="19">17:15</option>
+      <option value="20">17:45</option>
+　　 <option value="21">18:15</option>
+      <option value="22">18:45</option>
+      <option value="23">19:15</option>
+      <option value="24">19:45</option>
+      <option value="25">20:15</option>
+      <option value="26">20:45</option>
+　　 <option value="27">21:15</option>
+      <option value="28">21:45</option>
+    </select><br>
+  </div>
+    <hr>
+
+  <h2>優先</h2>
+  <div class="box11">
+    <label><input type="radio" name="priority" id="dt" value="True" checked> 距離優先</label>
+    <label><input type="radio" name="priority" id="wt" value="False"> 待ち時間優先</label>
+  </div>
+  <div class="button1">
+  <br>
+    <button class="Button-style" id="btn1" style="width: 150px;">実行</button>
+  </div>
+</form>
+</form>
+
+</body>
+</html>
