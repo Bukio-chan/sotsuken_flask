@@ -1,5 +1,14 @@
-import os
+#!/usr/bin/env python3
 
-if __name__ == '__main__':
-  port = int(os.environ.get('PORT', 5000))
-  app.run(host='0.0.0.0', port=port)
+import os
+from http.server import HTTPServer, CGIHTTPRequestHandler
+
+os.chdir('./www')
+
+PORT = int(os.environ['PORT'])
+
+httpd = HTTPServer(('', PORT), CGIHTTPRequestHandler)
+
+print('Web server running at port', PORT)
+
+httpd.serve_forever()
