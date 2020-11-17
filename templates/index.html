@@ -8,20 +8,20 @@
 <body>
 
 <h2>アトラクションを選択（※2つ以上）</h2>
-<form action="cgi-bin/sotsuken.py" method="post">
+<form action="/result" method="POST">
   <div class="box11">
-    <label><input type="checkbox" class="chk" name="sp" id="sp" value="0"> スパイダーマン</label><br>
-    <label><input type="checkbox" class="chk" name="mn" id="mn" value="1"> ミニオンパーク</label> <br>
-    <label><input type="checkbox" class="chk" name="fl" id="fl" value="2"> フライングダイナソー</label><br>
-    <label><input type="checkbox" class="chk" name="jw" id="jw" value="3"> ジョーズ</label><br>
-    <label><input type="checkbox" class="chk" name="hr" id="hr" value="4"> ハリーポッター</label><br>
-    <label><input type="checkbox" class="chk" name="hl" id="hl" value="5"> ハリウッドドリームザライド</label><br>
-    <label><input type="checkbox" class="chk" name="bk" id="bk" value="6"> バックドロップ</label><br>
-    <label><input type="checkbox" class="chk" name="hp" id="hp" value="7"> ヒッポグリフ</label> <br>
-    <label><input type="checkbox" class="chk" name="jr" id="jr" value="8"> ジュラシックパークザライド</label><br>
-    <label><input type="checkbox" class="chk" name="gr" id="gr" value="9"> スヌーピーのグレートレース</label><br>
-    <label><input type="checkbox" class="chk" name="fs" id="fs" value="10"> フライングスヌーピー</label><br>
-    <label><input type="checkbox" class="chk" name="el" id="el" value="11"> エルモのバブルバブル</label>
+    <label><input type="checkbox" class="chk" name="attraction" id="sp" value="0"> スパイダーマン</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="mn" value="1"> ミニオンパーク</label> <br>
+    <label><input type="checkbox" class="chk" name="attraction" id="fl" value="2"> フライングダイナソー</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="jw" value="3"> ジョーズ</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="hr" value="4"> ハリーポッター</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="hl" value="5"> ハリウッドドリームザライド</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="bk" value="6"> バックドロップ</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="hp" value="7"> ヒッポグリフ</label> <br>
+    <label><input type="checkbox" class="chk" name="attraction" id="jr" value="8"> ジュラシックパークザライド</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="gr" value="9"> スヌーピーのグレートレース</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="fs" value="10"> フライングスヌーピー</label><br>
+    <label><input type="checkbox" class="chk" name="attraction" id="el" value="11"> エルモのバブルバブル</label>
   </div>
   <hr>
 
@@ -38,7 +38,7 @@
       <option value="6">バックドロップ</option>
       <option value="7">ヒッポグリフ</option>
       <option value="8">ジュラシックパークザライド</option>
-　　 <option value="9">スヌーピーのグレートレース</option>
+　　   <option value="9">スヌーピーのグレートレース</option>
       <option value="10">フライングスヌーピー</option>
       <option value="11">エルモのバブルバブル</option>
     </select><br>
@@ -58,7 +58,7 @@
       <option value="6">バックドロップ</option>
       <option value="7">ヒッポグリフ</option>
       <option value="8">ジュラシックパークザライド</option>
-　　 <option value="9">スヌーピーのグレートレース</option>
+　　   <option value="9">スヌーピーのグレートレース</option>
       <option value="10">フライングスヌーピー</option>
       <option value="11">エルモのバブルバブル</option>
     </select>
@@ -77,7 +77,7 @@
       <option value="6">10:45</option>
       <option value="7">11:15</option>
       <option value="8">11:45</option>
-　　 <option value="9">12:15</option>
+　　   <option value="9">12:15</option>
       <option value="10">12:45</option>
       <option value="11">13:15</option>
       <option value="12">13:45</option>
@@ -89,13 +89,13 @@
       <option value="18">16:45</option>
       <option value="19">17:15</option>
       <option value="20">17:45</option>
-　　 <option value="21">18:15</option>
+　　   <option value="21">18:15</option>
       <option value="22">18:45</option>
       <option value="23">19:15</option>
       <option value="24">19:45</option>
       <option value="25">20:15</option>
       <option value="26">20:45</option>
-　　 <option value="27">21:15</option>
+　　   <option value="27">21:15</option>
       <option value="28">21:45</option>
     </select><br>
   </div>
@@ -110,7 +110,6 @@
   <br>
     <button class="Button-style" id="btn1" style="width: 150px;">実行</button>
   </div>
-</form>
 </form>
 
 </body>
