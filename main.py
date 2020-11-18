@@ -4,7 +4,6 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import calc
-import os
 
 app = Flask(__name__)
 
@@ -42,7 +41,6 @@ class_City = calc.City
 
 @app.route("/")
 def search():
-    os.remove("static/USJ_route.png")
     render_page = render_template("index.html")
     return render_page
 
@@ -136,9 +134,10 @@ def result():
     time_result = result_output[0]
     distance_result = result_output[1]
     order_result = result_output[2]
+    img_url = "../static/USJ_route.png"
 
     return render_template('result.html', title=title_result, time=time_result,
-                           distance=distance_result, order=order_result)
+                           distance=distance_result, order=order_result, img_url=img_url)
 
 
 if __name__ == "__main__":

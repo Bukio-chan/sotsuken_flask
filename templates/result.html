@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <link href="../static/style.css" media="all" rel="stylesheet">
+        <title>そつけん</title>
+        <meta http-equiv="content-type" charset="utf-8">
     </head>
     <body>
         <h2>{{title}}</h2>
@@ -9,6 +16,6 @@
         {% for i in order %}
         <br>{{i}}
         {% endfor %}
-        <br><img src="{{url_for('static', filename='USJ_route.png')}}" alt ="USJ_route">
+        <br><img src="{{img_url}}" alt ="USJ_route">
     </body>
 </html>
