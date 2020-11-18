@@ -3,10 +3,12 @@
     <head>
     </head>
     <body>
-      <br>{{title}}
-      <br>{{time}}
-      <br>{{distance}}
-      <br>{{order}}
-      <br><img src="../static/USJ_route.png">
+        <h2>{{title}}</h2>
+        <br>予想待ち時間: 約{{time}}分
+        <br>総移動距離: 約{{distance}}m
+        {% for i in order %}
+        <br>{{i}}
+        {% endfor %}
+        <br><img src="../static/USJ_route.png">
     </body>
 </html>

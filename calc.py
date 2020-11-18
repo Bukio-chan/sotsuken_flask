@@ -5,9 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
-import requests
-from bs4 import BeautifulSoup
-import datetime
 
 img = imread("static/USJ_map.png")
 
@@ -69,7 +66,7 @@ def wait_time_total(order, city_list, time_, att_for_loop):
     if flag:
         return wait
     else:
-        return wait * 10
+        return wait * 10000
 
 
 """

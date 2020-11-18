@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
-from flask import Flask, render_template
-from flask import request
+from flask import Flask, render_template, request
 import calc
 
 app = Flask(__name__)
@@ -126,12 +125,7 @@ def result():
     get_start = int(request.form.get('START'))  # スタート位置
     get_end = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))  # スタート時間
-    """
-    attraction_num = [0, 1, 2, 3, 4, 5]
-    get_start = 100
-    get_end = 100
-    start_time = 1
-    """
+
     for i in range(len(city)):
         for j in range(len(attraction_num)):
             if i == int(attraction_num[j]):
