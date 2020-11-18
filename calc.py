@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import random
+import string
 import operator
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,41 +15,9 @@ generation = 50  # 世代数
 population_gene = generation
 elite = int(population_gene / 5)
 
-"""
-title_Flask = 0
-time_Flask = 0
-distance_Flask = 0
-attraction_order_Flask = []
-now = datetime.datetime.now()  # 現在のタイムスタンプを取得
 
-url = 'https://usjportal.net/'
-html = requests.get(url)
-soup = BeautifulSoup(html.content, "html.parser")
-table = soup.find_all(class_="waittime")
-
-
-def remove_td(td):  # tdを取り除く
-    for i in range(len(td)):
-        td[i] = td[i].string
-        if td[i] == '-':
-            td[i] = '0'
-    return td
-
-
-table_1 = remove_td(table[0].find_all("td"))
-table_2 = remove_td(table[1].find_all("td"))
-table_3 = remove_td(table[2].find_all("td"))
-table_4 = remove_td(table[3].find_all("td"))
-table_5 = remove_td(table[4].find_all("td"))
-
-
-def wait_time(table_num, line):  # stringをintに変換
-    attraction = []
-    for i in range(len(table_num)):
-        if i % (len(table_num) / 29) == line:
-            attraction.append(int(table_num[i]))
-    return attraction
-"""
+def random_name(n):
+    return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
 
 def wait_time_total(order, city_list, time_, att_for_loop):
@@ -261,6 +230,8 @@ def next_generation(current_gen, elite_size, mutation_rate, distance_flag, start
 
 def plot_route(route, attraction_name, city_list, title=None):  # 表示
     attraction_order = []
+    random_url = random_name(6)
+    url = f"static/result/USJ_route_{random_url}.png"
     for i in range(len(route)):
         city = route[i]
         next_city = route[(i + 1) % len(route)]
@@ -285,8 +256,9 @@ def plot_route(route, attraction_name, city_list, title=None):  # 表示
     plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
     plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
     plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-    plt.savefig("static/USJ_route.png")  # 画像で保存
-    return attraction_order_result
+    plt.savefig(url)  # 画像で保存
+    print(url)
+    return attraction_order_result, url
 
 
 def supple_dist(route, start, end):  # おまけの距離の計算
@@ -352,12 +324,14 @@ def solve(cities, population_size, elite_size, mutation_rate, generations,
 def main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop):
     best_route = solve(city_list, population_gene, elite, 0.01, generation, distance_flag,
                        start, end, start_time, att_for_loop)
-    order_result = plot_route(best_route[0], attraction_name, city_list, '')
+    result = plot_route(best_route[0], attraction_name, city_list, '')
 
     time_result = best_route[1]
     distance_result = best_route[2]
+    order_result = result[0]
+    url_result = result[1]
 
-    return time_result, distance_result, order_result
+    return url_result, time_result, distance_result, order_result
 
 
 """

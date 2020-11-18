@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
-        <link href="../static/style.css" media="all" rel="stylesheet">
+        <link href="../static/css/style.css" media="all" rel="stylesheet">
         <title>そつけん</title>
         <meta http-equiv="content-type" charset="utf-8">
     </head>
@@ -10,9 +10,11 @@
         <h2>{{title}}</h2>
         <br>予想待ち時間: 約{{time}}分
         <br>総移動距離: 約{{distance}}m
-        {% for i in order %}
-        <br>{{i}}
-        {% endfor %}
+        <div class="box11">
+            {% for i in order %}
+            <br>{{i}}
+            {% endfor %}
+        </div>
         <br><img src="{{img_url}}" alt ="USJ_route">
     </body>
 </html>

@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import calc
+import os
+import glob
 
 app = Flask(__name__)
 
@@ -131,23 +133,20 @@ def result():
     result_output = calc.main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop)
 
     title_result = '結果'
-    time_result = result_output[0]
-    distance_result = result_output[1]
-    order_result = result_output[2]
-    img_url = "../static/USJ_route.png"
+    img_url = result_output[0]
+    time_result = result_output[1]
+    distance_result = result_output[2]
+    order_result = result_output[3]
 
     return render_template('result.html', title=title_result, time=time_result,
                            distance=distance_result, order=order_result, img_url=img_url)
 
 
 @app.after_request
-def add_header(r):
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
-
-    return r
+def after_request(x):
+    for x in glob.glob('static/result*.png'):
+        os.remove(x)
+    return x
 
 
 if __name__ == "__main__":
