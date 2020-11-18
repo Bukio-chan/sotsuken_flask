@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
+import os
 
 img = imread("static/USJ_map.png")
 
@@ -283,7 +284,7 @@ def plot_route(route, attraction_name, city_list, title=None):  # 表示
     plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
     plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
     plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-    plt.savefig("static/USJ_route.png", facecolor="azure")  # 画像で保存
+    plt.savefig("static/USJ_route.png")  # 画像で保存
     return attraction_order_result
 
 
@@ -350,7 +351,7 @@ def solve(cities, population_size, elite_size, mutation_rate, generations,
 def main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop):
     best_route = solve(city_list, population_gene, elite, 0.01, generation, distance_flag,
                        start, end, start_time, att_for_loop)
-    order_result = plot_route(best_route[0], attraction_name, city_list, '地図')
+    order_result = plot_route(best_route[0], attraction_name, city_list, '')
 
     time_result = best_route[1]
     distance_result = best_route[2]
