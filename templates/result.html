@@ -9,6 +9,6 @@
         {% for i in order %}
         <br>{{i}}
         {% endfor %}
-        <br><img src="../static/USJ_route.png">
+        <br><img src="{{url_for('static', filename='USJ_route.png')}}" alt ="USJ_route">
     </body>
 </html>

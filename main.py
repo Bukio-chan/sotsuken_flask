@@ -38,19 +38,6 @@ def wait_time(table_num, line):  # stringをintに変換
 
 class_City = calc.City
 
-"""
-# スタート・ゴール地点取得
-if get_start == 100:
-    start = entrance_point
-else:
-    start = city[get_start]
-
-if get_end == 100:
-    end = entrance_point
-else:
-    end = city[get_end]
-"""
-
 
 @app.route("/")
 def search():
@@ -113,13 +100,6 @@ def result():
     city.append(class_City(x=int(150), y=int(220)))
     attraction.append('エルモのバブルバブル')
     att_for_loop.append(wait_time(table_4, 5))
-    """
-    attraction_num = [0, 1, 2, 3, 4, 5]
-    get_start = 0
-    get_end = 0
-    time = 1
-    distance_flag = True
-    """
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
