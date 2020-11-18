@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import numpy as np
 import random
 import operator
@@ -5,7 +7,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
-import os
 
 img = imread("static/USJ_map.png")
 

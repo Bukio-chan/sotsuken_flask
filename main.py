@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import calc
+import os
 
 app = Flask(__name__)
 
@@ -41,6 +42,7 @@ class_City = calc.City
 
 @app.route("/")
 def search():
+    os.remove("static/USJ_route.png")
     render_page = render_template("index.html")
     return render_page
 
