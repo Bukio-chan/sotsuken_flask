@@ -41,60 +41,6 @@ def wait_time(table_num, line):  # stringをintに変換
 
 class_City = calc.City
 
-city, city_list = [], []
-attraction, attraction_name = [], []
-att_for_loop = []
-
-entrance_point = class_City(x=int(80), y=int(190))
-
-city.append(class_City(x=int(120), y=int(60)))
-attraction.append('スパイダーマン')
-att_for_loop.append(wait_time(table_2, 3))
-
-city.append(class_City(x=int(170), y=int(50)))
-attraction.append('ミニオンパーク')
-att_for_loop.append(wait_time(table_5, 5))
-
-city.append(class_City(x=int(230), y=int(80)))
-attraction.append('フライングダイナソー')
-att_for_loop.append(wait_time(table_2, 2))
-
-city.append(class_City(x=int(200), y=int(150)))
-attraction.append('ジョーズ')
-att_for_loop.append(wait_time(table_2, 5))
-
-city.append(class_City(x=int(200), y=int(270)))
-attraction.append('ハリーポッター')
-att_for_loop.append(wait_time(table_1, 1))
-
-city.append(class_City(x=int(130), y=int(170)))
-attraction.append('ハリウッドドリームザライド')
-att_for_loop.append(wait_time(table_1, 4))
-
-city.append(class_City(x=int(120), y=int(175)))
-attraction.append('バックドロップ')
-att_for_loop.append(wait_time(table_1, 3))
-
-city.append(class_City(x=int(190), y=int(240)))
-attraction.append('ヒッポグリフ')
-att_for_loop.append(wait_time(table_1, 2))
-
-city.append(class_City(x=int(230), y=int(90)))
-attraction.append('ジュラシックパークザライド')
-att_for_loop.append(wait_time(table_2, 1))
-
-city.append(class_City(x=int(180), y=int(190)))
-attraction.append('スヌーピーのグレートレース')
-att_for_loop.append(wait_time(table_3, 2))
-
-city.append(class_City(x=int(160), y=int(180)))
-attraction.append('フライングスヌーピー')
-att_for_loop.append(wait_time(table_3, 3))
-
-city.append(class_City(x=int(150), y=int(220)))
-attraction.append('エルモのバブルバブル')
-att_for_loop.append(wait_time(table_4, 5))
-
 
 # スタート時間取得メソッド
 def get_start_time(hour, minute):
@@ -119,6 +65,60 @@ def search():
 
 @app.route("/result", methods=['POST'])
 def result():
+    city, city_list = [], []
+    attraction, attraction_name = [], []
+    att_for_loop = []
+
+    entrance_point = class_City(x=int(80), y=int(190))
+
+    city.append(class_City(x=int(120), y=int(60)))
+    attraction.append('スパイダーマン')
+    att_for_loop.append(wait_time(table_2, 3))
+
+    city.append(class_City(x=int(170), y=int(50)))
+    attraction.append('ミニオンパーク')
+    att_for_loop.append(wait_time(table_5, 5))
+
+    city.append(class_City(x=int(230), y=int(80)))
+    attraction.append('フライングダイナソー')
+    att_for_loop.append(wait_time(table_2, 2))
+
+    city.append(class_City(x=int(200), y=int(150)))
+    attraction.append('ジョーズ')
+    att_for_loop.append(wait_time(table_2, 5))
+
+    city.append(class_City(x=int(200), y=int(270)))
+    attraction.append('ハリーポッター')
+    att_for_loop.append(wait_time(table_1, 1))
+
+    city.append(class_City(x=int(130), y=int(170)))
+    attraction.append('ハリウッドドリームザライド')
+    att_for_loop.append(wait_time(table_1, 4))
+
+    city.append(class_City(x=int(120), y=int(175)))
+    attraction.append('バックドロップ')
+    att_for_loop.append(wait_time(table_1, 3))
+
+    city.append(class_City(x=int(190), y=int(240)))
+    attraction.append('ヒッポグリフ')
+    att_for_loop.append(wait_time(table_1, 2))
+
+    city.append(class_City(x=int(230), y=int(90)))
+    attraction.append('ジュラシックパークザライド')
+    att_for_loop.append(wait_time(table_2, 1))
+
+    city.append(class_City(x=int(180), y=int(190)))
+    attraction.append('スヌーピーのグレートレース')
+    att_for_loop.append(wait_time(table_3, 2))
+
+    city.append(class_City(x=int(160), y=int(180)))
+    attraction.append('フライングスヌーピー')
+    att_for_loop.append(wait_time(table_3, 3))
+
+    city.append(class_City(x=int(150), y=int(220)))
+    attraction.append('エルモのバブルバブル')
+    att_for_loop.append(wait_time(table_4, 5))
+
     now = datetime.datetime.now()
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
