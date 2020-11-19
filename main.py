@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import datetime
+import random
+import string
 import calc
 import os
 import glob
@@ -53,6 +55,11 @@ def get_start_time(hour, minute):
             time_ += 1
         num += 2
     return time_
+
+
+# random文字列取得
+def random_name(n):
+    return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
 
 @app.route("/")
@@ -155,7 +162,10 @@ def result():
     else:
         end = city[get_end]
 
-    result_output = calc.main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop)
+    random_url = f"static/result/USJ_route_{random_name(6)}.png"
+
+    result_output = calc.main_run(city_list, attraction_name, distance_flag, start, end, start_time,
+                                  att_for_loop, random_url)
 
     img_url = result_output[0]
     time_result = result_output[1]

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 import random
-import string
 import operator
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -15,10 +14,6 @@ generation = 50  # 世代数
 population_gene = generation
 elite = int(population_gene / 5)
 form_check = False
-
-
-def random_name(n):
-    return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
 
 def wait_time_total(order, city_list, time_, att_for_loop):
@@ -231,10 +226,8 @@ def next_generation(current_gen, elite_size, mutation_rate, distance_flag, start
     return next_gen
 
 
-def plot_route(route, attraction_name, city_list, title=None):  # 表示
+def plot_route(route, attraction_name, city_list, url, title=None):  # 表示
     attraction_order = []
-    random_url = random_name(6)
-    url = f"static/result/USJ_route_{random_url}.png"
     for i in range(len(route)):
         city = route[i]
         next_city = route[(i + 1) % len(route)]
@@ -314,10 +307,10 @@ def solve(cities, population_size, elite_size, mutation_rate, generations,
     return best_route, time_result, distance_result
 
 
-def main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop):
+def main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop, url):
     best_route = solve(city_list, population_gene, elite, 0.01, generation, distance_flag,
                        start, end, start_time, att_for_loop)
-    result = plot_route(best_route[0], attraction_name, city_list, '')
+    result = plot_route(best_route[0], attraction_name, city_list, url, '')
 
     time_result = best_route[1]
     distance_result = best_route[2]
