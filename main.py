@@ -3,8 +3,10 @@
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
+import datetime
 import calc
 import os
+import glob
 
 app = Flask(__name__)
 
@@ -39,73 +41,97 @@ def wait_time(table_num, line):  # stringをintに変換
 
 class_City = calc.City
 
+city, city_list = [], []
+attraction, attraction_name = [], []
+att_for_loop = []
+
+entrance_point = class_City(x=int(80), y=int(190))
+
+city.append(class_City(x=int(120), y=int(60)))
+attraction.append('スパイダーマン')
+att_for_loop.append(wait_time(table_2, 3))
+
+city.append(class_City(x=int(170), y=int(50)))
+attraction.append('ミニオンパーク')
+att_for_loop.append(wait_time(table_5, 5))
+
+city.append(class_City(x=int(230), y=int(80)))
+attraction.append('フライングダイナソー')
+att_for_loop.append(wait_time(table_2, 2))
+
+city.append(class_City(x=int(200), y=int(150)))
+attraction.append('ジョーズ')
+att_for_loop.append(wait_time(table_2, 5))
+
+city.append(class_City(x=int(200), y=int(270)))
+attraction.append('ハリーポッター')
+att_for_loop.append(wait_time(table_1, 1))
+
+city.append(class_City(x=int(130), y=int(170)))
+attraction.append('ハリウッドドリームザライド')
+att_for_loop.append(wait_time(table_1, 4))
+
+city.append(class_City(x=int(120), y=int(175)))
+attraction.append('バックドロップ')
+att_for_loop.append(wait_time(table_1, 3))
+
+city.append(class_City(x=int(190), y=int(240)))
+attraction.append('ヒッポグリフ')
+att_for_loop.append(wait_time(table_1, 2))
+
+city.append(class_City(x=int(230), y=int(90)))
+attraction.append('ジュラシックパークザライド')
+att_for_loop.append(wait_time(table_2, 1))
+
+city.append(class_City(x=int(180), y=int(190)))
+attraction.append('スヌーピーのグレートレース')
+att_for_loop.append(wait_time(table_3, 2))
+
+city.append(class_City(x=int(160), y=int(180)))
+attraction.append('フライングスヌーピー')
+att_for_loop.append(wait_time(table_3, 3))
+
+city.append(class_City(x=int(150), y=int(220)))
+attraction.append('エルモのバブルバブル')
+att_for_loop.append(wait_time(table_4, 5))
+
+
+# スタート時間取得メソッド
+def get_start_time(hour, minute):
+    time_ = 0
+    num = 1
+    for i in range(8, 21):
+        if hour <= i:
+            time_ = num
+        if minute >= 30:
+            time_ += 1
+        num += 2
+    return time_
+
 
 @app.route("/")
 def search():
     render_page = render_template("index.html")
+    for x in glob.glob('static/result/*.png'):
+        os.remove(x)
     return render_page
 
 
 @app.route("/result", methods=['POST'])
 def result():
-    city, city_list = [], []
-    attraction, attraction_name = [], []
-    att_for_loop = []
-
-    entrance_point = class_City(x=int(80), y=int(190))
-
-    city.append(class_City(x=int(120), y=int(60)))
-    attraction.append('スパイダーマン')
-    att_for_loop.append(wait_time(table_2, 3))
-
-    city.append(class_City(x=int(170), y=int(50)))
-    attraction.append('ミニオンパーク')
-    att_for_loop.append(wait_time(table_5, 5))
-
-    city.append(class_City(x=int(230), y=int(80)))
-    attraction.append('フライングダイナソー')
-    att_for_loop.append(wait_time(table_2, 2))
-
-    city.append(class_City(x=int(200), y=int(150)))
-    attraction.append('ジョーズ')
-    att_for_loop.append(wait_time(table_2, 5))
-
-    city.append(class_City(x=int(200), y=int(270)))
-    attraction.append('ハリーポッター')
-    att_for_loop.append(wait_time(table_1, 1))
-
-    city.append(class_City(x=int(130), y=int(170)))
-    attraction.append('ハリウッドドリームザライド')
-    att_for_loop.append(wait_time(table_1, 4))
-
-    city.append(class_City(x=int(120), y=int(175)))
-    attraction.append('バックドロップ')
-    att_for_loop.append(wait_time(table_1, 3))
-
-    city.append(class_City(x=int(190), y=int(240)))
-    attraction.append('ヒッポグリフ')
-    att_for_loop.append(wait_time(table_1, 2))
-
-    city.append(class_City(x=int(230), y=int(90)))
-    attraction.append('ジュラシックパークザライド')
-    att_for_loop.append(wait_time(table_2, 1))
-
-    city.append(class_City(x=int(180), y=int(190)))
-    attraction.append('スヌーピーのグレートレース')
-    att_for_loop.append(wait_time(table_3, 2))
-
-    city.append(class_City(x=int(160), y=int(180)))
-    attraction.append('フライングスヌーピー')
-    att_for_loop.append(wait_time(table_3, 3))
-
-    city.append(class_City(x=int(150), y=int(220)))
-    attraction.append('エルモのバブルバブル')
-    att_for_loop.append(wait_time(table_4, 5))
+    now = datetime.datetime.now()
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
     get_end = int(request.form.get('END'))  # 終わり位置
-    start_time = int(request.form.get('start_time'))  # スタート時間
+    start_time = int(request.form.get('start_time'))
+
+    if int(request.form.get('start_time')) == 100:  # スタート時間
+        if 8 <= now.hour <= 21:
+            start_time = get_start_time(now.hour, now.minute)
+        else:
+            comment = '時間を選択してね！'
+            return render_template('error.html', comment=comment)
 
     for i in range(len(city)):
         for j in range(len(attraction_num)):
@@ -131,21 +157,17 @@ def result():
 
     result_output = calc.main_run(city_list, attraction_name, distance_flag, start, end, start_time, att_for_loop)
 
-    title_result = '結果'
     img_url = result_output[0]
     time_result = result_output[1]
     distance_result = result_output[2]
     order_result = result_output[3]
 
-    return render_template('result.html', title=title_result, time=time_result,
-                           distance=distance_result, order=order_result, img_url=img_url)
-
-
-@app.after_request
-def after_request(x):
-    for x in glob.glob('static/result/*.png'):
-        os.remove(x)
-    return x
+    if time_result == 0:
+        comment = "多分時間が足りないよ！"
+        return render_template('error.html', comment=comment)
+    else:
+        return render_template('result.html', time=time_result,
+                               distance=distance_result, order=order_result, img_url=img_url)
 
 
 if __name__ == "__main__":

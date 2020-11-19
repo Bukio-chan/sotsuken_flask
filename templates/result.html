@@ -7,13 +7,19 @@
         <meta http-equiv="content-type" charset="utf-8">
     </head>
     <body>
-        <h2>{{title}}</h2>
-        <br>予想待ち時間: 約{{time}}分
-        <br>総移動距離: 約{{distance}}m
+        <h2>結果</h2>
         <div class="box11">
+            {% if time > 10000 %}
+            多分時間が足りないよ！
+            {% else %}
+            予想待ち時間: 約{{time}}分
+            {% endif %}
+            <br>総移動距離: 約{{distance}}m
+            <ol>
             {% for i in order %}
-            <br>{{i}}
+            <li>{{i}}
             {% endfor %}
+            </ol>
         </div>
         <br><img src="{{img_url}}" alt ="USJ_route">
     </body>

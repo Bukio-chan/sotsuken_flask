@@ -14,6 +14,7 @@ img = imread("static/USJ_map.png")
 generation = 50  # 世代数
 population_gene = generation
 elite = int(population_gene / 5)
+form_check = False
 
 
 def random_name(n):
@@ -24,6 +25,7 @@ def wait_time_total(order, city_list, time_, att_for_loop):
     wait = 0
     flag = True
     start_time = time_
+    global form_check
     for i in range(len(order)):
         if start_time < 29:
             for j in range(len(city_list)):
@@ -35,6 +37,7 @@ def wait_time_total(order, city_list, time_, att_for_loop):
             break
 
     if flag:
+        form_check = True
         return wait
     else:
         return wait * 10000
@@ -280,18 +283,6 @@ def supple_time(time_route, city_list, start_time, att_for_loop):  # おまけ�
     return path_time
 
 
-def get_start_time(hour, minute):  # スタート時間取得
-    time_ = 0
-    num = 1
-    for i in range(8, 21):
-        if hour <= i:
-            time_ = num
-            if minute >= 30:
-                time_ += 1
-        num += 2
-    return time_
-
-
 def solve(cities, population_size, elite_size, mutation_rate, generations,
           distance_flag, start, end, start_time, att_for_loop):
 
@@ -317,6 +308,9 @@ def solve(cities, population_size, elite_size, mutation_rate, generations,
         time_result = round(1 / rank_routes(pop, distance_flag, start, end,
                                             cities, start_time, att_for_loop)[0][1])
         distance_result = round(supple_dist(best_route, start, end), 2)
+
+    if not form_check and not distance_flag:
+        time_result = 0
 
     return best_route, time_result, distance_result
 
