@@ -260,7 +260,6 @@ def plot_route(route, attraction_name, city_list, title=None):  # 表示
     plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
     plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
     plt.savefig(url)  # 画像で保存
-    print(url)
     return attraction_order_result, url
 
 
