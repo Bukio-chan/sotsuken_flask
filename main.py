@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import calc
 import os
-import glob
 
 app = Flask(__name__)
 
@@ -144,7 +143,7 @@ def result():
 
 @app.after_request
 def after_request(x):
-    for x in glob.glob('static/result*.png'):
+    for x in glob.glob('static/result/*.png'):
         os.remove(x)
     return x
 
