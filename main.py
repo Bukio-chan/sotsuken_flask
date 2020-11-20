@@ -44,7 +44,7 @@ def wait_time(table_num, line):  # stringをintに変換
 class_City = calc.City
 
 
-# スタート時間取得メソッド
+# 現在時刻からスタート時間取得メソッド
 def get_start_time(hour, minute):
     time_ = 0
     num = 1
@@ -57,7 +57,15 @@ def get_start_time(hour, minute):
     return time_
 
 
-# random文字列取得
+# 入力された時間を取得
+def get_input_time(set_time, time_num):
+    for i in range(29):
+        if time_num == i:
+            set_time += datetime.timedelta(minutes=30)
+    return set_time
+
+
+# random文字列生成
 def random_name(n):
     return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
@@ -135,12 +143,16 @@ def result():
     now_hour = now.hour
     now_minute = now.minute
 
+    start_result = now
+
     if int(request.form.get('start_time')) == 100:  # スタート時間
         if 8 <= now_hour <= 21:
             start_time = get_start_time(now_hour, now_minute)
         else:
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
+    else:
+        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 8, 15), start_time)
 
     for i in range(len(city)):
         for j in range(len(attraction_num)):
@@ -178,9 +190,13 @@ def result():
         comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
-        end_time = now + datetime.timedelta(minutes=time_result)
+        end_result = now + datetime.timedelta(minutes=time_result)
+
+        # htmlへ出力
         return render_template('result.html', time=time_result, distance=distance_result,
-                               order=order_result, img_url=img_url, start_time=start_time, end_time=end_time)
+                               order=order_result, img_url=img_url,
+                               start_hour=start_result.hour, start_minute=start_result.minute,
+                               end_hour=end_result.hour, end_minute=end_result.minute)
 
 
 if __name__ == "__main__":
