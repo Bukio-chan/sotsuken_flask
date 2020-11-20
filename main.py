@@ -133,8 +133,10 @@ def result():
     get_end = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))
 
+    hour = now.hour
+
     if int(request.form.get('start_time')) == 100:  # スタート時間
-        if 8 <= now.hour <= 21:
+        if 8 <= hour <= 21:
             start_time = get_start_time(now.hour, now.minute)
         else:
             comment = '時間を選択してね！'
@@ -173,7 +175,7 @@ def result():
     order_result = result_output[3]
 
     if time_result == 0:
-        comment = "多分時間が足りないよ！"
+        comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
         return render_template('result.html', time=time_result,

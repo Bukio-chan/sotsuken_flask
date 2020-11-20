@@ -279,11 +279,9 @@ def solve(cities, population_size, elite_size, mutation_rate, generations,
           distance_flag, start, end, start_time, att_for_loop):
 
     pop = create_initial_population(population_size, cities)
-    best_route_index, best_distance = rank_routes(pop, distance_flag, start, end,
-                                                  cities, start_time, att_for_loop)[0]
-    best_route = pop[best_route_index]
-    # print(f'<br>\nInitial distance: {round(1 / rank_routes(pop)[0][1],2)}')
-    # plot_route(best_route, 'Initial')
+    best_route_index = rank_routes(pop, distance_flag, start, end, cities, start_time, att_for_loop)[0]
+
+    best_route = []
 
     for g in range(generations):
         pop = next_generation(pop, elite_size, mutation_rate, distance_flag, start, end,
