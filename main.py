@@ -59,9 +59,7 @@ def get_start_time(hour, minute):
 
 # 入力された時間を取得
 def get_input_time(set_time, time_num):
-    for i in range(29):
-        if time_num == i:
-            set_time += datetime.timedelta(minutes=30)
+    set_time += datetime.timedelta(minutes=time_num*30)
     return set_time
 
 
@@ -152,7 +150,7 @@ def result():
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
     else:
-        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 8, 15), start_time)
+        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45), start_time)
 
     for i in range(len(city)):
         for j in range(len(attraction_num)):
@@ -190,7 +188,7 @@ def result():
         comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
-        end_result = now + datetime.timedelta(minutes=time_result)
+        end_result = start_result + datetime.timedelta(minutes=time_result)
 
         # htmlへ出力
         return render_template('result.html', time=time_result, distance=distance_result,
