@@ -36,9 +36,6 @@ div.box11,button {
   background-color: #fdf5e6;
   margin: 10px 40px;
 }
-div.box11{
-  font-size: 120%;
-}
 
 .cp_ipselect {
 	overflow: hidden;
@@ -87,7 +84,7 @@ div.box11{
 }
 
 @media screen and (max-width: 480px) {
-font-size: 200%;
+font-size: 150%;
 h2 {
   position: relative;
   padding: 1rem 2rem;
@@ -128,9 +125,6 @@ div.button1 {
 
 div.box11,button {
   background-color: #fdf5e6;
-}
-result.div {
-  font size: 20px;
 }
 
 img {

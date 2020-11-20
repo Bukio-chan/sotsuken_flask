@@ -59,7 +59,7 @@ def get_start_time(hour, minute):
 
 # 入力された時間を取得
 def get_input_time(set_time, time_num):
-    set_time += datetime.timedelta(minutes=time_num*30)
+    set_time += datetime.timedelta(minutes=time_num * 30)
     return set_time
 
 
@@ -190,11 +190,14 @@ def result():
     else:
         end_result = start_result + datetime.timedelta(minutes=time_result)
 
-        # htmlへ出力
-        return render_template('result.html', time=time_result, distance=distance_result,
-                               order=order_result, img_url=img_url,
-                               start_hour=start_result.hour, start_minute=start_result.minute,
-                               end_hour=end_result.hour, end_minute=end_result.minute)
+    time_hour = int(time_result / 60)
+    time_minute = time_result % 60
+
+    # htmlへ出力
+    return render_template('result.html', time=time_result, time_hour=time_hour, time_minute=time_minute,
+                           distance=distance_result, order=order_result, img_url=img_url,
+                           start_hour=start_result.hour, start_minute=start_result.minute,
+                           end_hour=end_result.hour, end_minute=end_result.minute)
 
 
 if __name__ == "__main__":
