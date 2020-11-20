@@ -9,16 +9,21 @@
     <body>
         <h2>結果</h2>
         <div class="box11">
-            {% if time > 10000 %}
-            多分時間が足りないよ！
-            {% else %}
-            予想待ち時間: 約{{time}}分
-            {% endif %}
-            <br>総移動距離: 約{{distance}}m
+            <ul>
+                {% if time > 10000 %}
+                <li>時間が足りないかも！</li>
+                {% else %}
+                <li>予想待ち時間: 約{{time}}分</li>
+                    <ul>
+                        <li>{{start_time}}~{{end_time}}</li>
+                    </ul>
+                {% endif %}
+                <li>総移動距離: 約{{distance}}m</li>
+            </ul>
             <ol>
-            {% for i in order %}
-            <li>{{i}}
-            {% endfor %}
+                {% for i in order %}
+                <li>{{i}}
+                {% endfor %}
             </ol>
         </div>
         <br><img src="{{img_url}}" alt ="USJ_route">

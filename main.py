@@ -126,18 +126,18 @@ def result():
     attraction.append('エルモのバブルバブル')
     att_for_loop.append(wait_time(table_4, 5))
 
-    now = datetime.datetime.now()
-
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
     get_end = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))
 
-    hour = now.hour
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    now_hour = now.hour
+    now_minute = now.minute
 
     if int(request.form.get('start_time')) == 100:  # スタート時間
-        if 8 <= hour <= 21:
-            start_time = get_start_time(now.hour, now.minute)
+        if 8 <= now_hour <= 21:
+            start_time = get_start_time(now_hour, now_minute)
         else:
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
@@ -178,8 +178,9 @@ def result():
         comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
-        return render_template('result.html', time=time_result,
-                               distance=distance_result, order=order_result, img_url=img_url)
+        end_time = now + datetime.timedelta(minutes=time_result)
+        return render_template('result.html', time=time_result, distance=distance_result,
+                               order=order_result, img_url=img_url, start_time=start_time, end_time=end_time)
 
 
 if __name__ == "__main__":
