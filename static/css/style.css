@@ -14,25 +14,7 @@ h2:before {
   background: #00cc5b;
 }
 
-button.Button-style {
-  color: #fff;
-  border-top: 6px solid #48ecc4;
-  border-right: 6px solid #0a5f4a;
-  border-bottom: 6px solid #0f745b;
-  border-left: 6px solid #8cf9de;
-  border-radius: 0;
-  background: #11a37f;
-}
-
-button.Button-style:hover {
-  color: #fff;
-  border-top: 6px solid #0f745b;
-  border-right: 6px solid #8cf9de;
-  border-bottom: 6px solid #48ecc4;
-  border-left: 6px solid #0a5f4a;
-}
-
-div.box11,button {
+div.box11 {
   background-color: #fdf5e6;
   margin: 10px 40px;
 }
@@ -101,30 +83,19 @@ h2:before {
   background: #00cc5b;
 }
 
-button.Button-style {
-  color: #fff;
-  border-top: 6px solid #48ecc4;
-  border-right: 6px solid #0a5f4a;
-  border-bottom: 6px solid #0f745b;
-  border-left: 6px solid #8cf9de;
-  border-radius: 0;
-  background: #11a37f;
+button.button2 {
+  font-size: 1.4em;
+  font-weight: bold;
+  padding: 10px 30px;
 }
 
-button.Button-style:hover {
-  color: #fff;
-  border-top: 6px solid #0f745b;
-  border-right: 6px solid #8cf9de;
-  border-bottom: 6px solid #48ecc4;
-  border-left: 6px solid #0a5f4a;
-}
-
-div.button1 {
-  text-align: center;
-}
-
-div.box11,button {
+div.box11 {
+  padding-left: 1em;
   background-color: #fdf5e6;
+}
+
+.button1 {
+  text-align:center;
 }
 
 img {

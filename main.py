@@ -137,6 +137,10 @@ def result():
     get_end = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))
 
+    if len(attraction_num) < 2:
+        comment = "アトラクションは2つ以上選んでください！"
+        return render_template('error.html', comment=comment)
+
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     now_hour = now.hour
     now_minute = now.minute
