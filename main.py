@@ -196,6 +196,7 @@ def result():
 
     time_hour = int(time_result / 60)
     time_minute = time_result % 60
+    time_minute = format(time_minute, '02')  # 0埋め
 
     # htmlへ出力
     return render_template('result.html', time=time_result, time_hour=time_hour, time_minute=time_minute,
