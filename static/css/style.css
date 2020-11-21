@@ -16,6 +16,7 @@ h2:before {
 
 div.box11 {
   background-color: #fdf5e6;
+  margin: 10px 10px;
 }
 
 .cp_ipselect {
@@ -89,7 +90,7 @@ button.button2 {
 }
 
 div.button1 {
-  text-align:center;
+  text-align:center
 }
 
 img {
