@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
 
-img = imread("static/USJ_map.png")
-
 generation = 50  # 世代数
 population_gene = generation
 elite = int(population_gene / 5)
@@ -228,6 +226,7 @@ def next_generation(current_gen, elite_size, mutation_rate, distance_flag, start
 
 def plot_route(route, attraction_name, city_list, url, title=None):  # 表示
     attraction_order = []
+    img = imread("static/USJ_map.png")
     for i in range(len(route)):
         city = route[i]
         next_city = route[(i + 1) % len(route)]
