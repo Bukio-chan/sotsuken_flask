@@ -18,7 +18,8 @@ soup = BeautifulSoup(html.content, "html.parser")
 table = soup.find_all(class_="waittime")
 
 
-def remove_td(td):  # tdを取り除く
+# tdを取り除く
+def remove_td(td):
     for i in range(len(td)):
         td[i] = td[i].string
         if td[i] == '-':
@@ -33,7 +34,8 @@ table_4 = remove_td(table[3].find_all("td"))
 table_5 = remove_td(table[4].find_all("td"))
 
 
-def wait_time(table_num, line):  # stringをintに変換
+# stringをintに変換
+def wait_time(table_num, line):
     att = []
     for i in range(len(table_num)):
         if i % (len(table_num) / 29) == line:
@@ -71,6 +73,7 @@ def random_name(n):
 @app.route("/")
 def search():
     render_page = render_template("index.html")
+    # 画像の削除
     for x in glob.glob('static/result/*.png'):
         os.remove(x)
     return render_page
@@ -141,7 +144,7 @@ def result():
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
-    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9) # 日本時間
     now_hour = now.hour
     now_minute = now.minute
 
@@ -196,13 +199,15 @@ def result():
 
     time_hour = int(time_result / 60)
     time_minute = time_result % 60
-    time_minute = format(time_minute, '02')  # 0埋め
+    # 0埋め
+    start_minute = format(start_result.minute, '02')
+    end_minute = format(end_result.minute, '02')
 
     # htmlへ出力
     return render_template('result.html', time=time_result, time_hour=time_hour, time_minute=time_minute,
                            distance=distance_result, order=order_result, img_url=img_url,
-                           start_hour=start_result.hour, start_minute=start_result.minute,
-                           end_hour=end_result.hour, end_minute=end_result.minute)
+                           start_hour=start_result.hour, start_minute=start_minute,
+                           end_hour=end_result.hour, end_minute=end_minute)
 
 
 if __name__ == "__main__":

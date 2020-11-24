@@ -252,7 +252,7 @@ def plot_route(route, attraction_name, city_list, url, title=None):  # 表示
     plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
     plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
     # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-    plt.savefig(url)  # 画像で保存
+    plt.savefig(url, bbox_inches='tight', pad_inches=0)  # 画像で保存
     return attraction_order_result, url
 
 
