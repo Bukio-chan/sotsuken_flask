@@ -98,7 +98,7 @@ def result():
     entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
 
     # data.csvのデータをdataに格納
-    with open("csv/data.csv", 'r')as f:
+    with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
         reader = csv.reader(f)
         data = [row for row in reader]
         data.pop(0)
@@ -107,7 +107,7 @@ def result():
     for i in range(len(data)):
         city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
         attraction.append(data[i][0])
-        att_for_loop.append(wait_time(f'csv/table_{data[i][3]}.csv', int(data[i][4])))
+        att_for_loop.append(wait_time(f'static/csv/table_{data[i][3]}.csv', int(data[i][4])))
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
