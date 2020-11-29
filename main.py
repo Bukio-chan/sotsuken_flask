@@ -9,9 +9,10 @@ import string
 import calc
 import os
 import glob
+import csv
 
 app = Flask(__name__)
-
+"""
 url = 'https://usjportal.net/'
 html = requests.get(url)
 soup = BeautifulSoup(html.content, "html.parser")
@@ -41,12 +42,23 @@ def wait_time(table_num, line):
         if i % (len(table_num) / 29) == line:
             att.append(int(table_num[i]))
     return att
+"""
+
+
+# csvから読み取り、stringをintに変換
+def wait_time(table_num, line):
+    csv_file = open(table_num, 'r')
+    df = []
+    for row in csv.reader(csv_file):
+        df.append(int(row[line]))
+    csv_file.close()
+    return df
 
 
 class_City = calc.City
 
 
-# 現在時刻からスタート時間取得メソッド
+# 現在時刻からスタート時間取得
 def get_start_time(hour, minute):
     time_ = 0
     num = 1
@@ -87,53 +99,15 @@ def result():
 
     entrance_point = class_City(x=int(80), y=int(190))
 
-    city.append(class_City(x=int(120), y=int(60)))
-    attraction.append('スパイダーマン')
-    att_for_loop.append(wait_time(table_2, 3))
+    # data.csvを開く
+    with open("static/csv/data.csv", 'r')as f:
+        reader = csv.reader(f)
+        data = [row for row in reader]
 
-    city.append(class_City(x=int(170), y=int(50)))
-    attraction.append('ミニオンパーク')
-    att_for_loop.append(wait_time(table_5, 5))
-
-    city.append(class_City(x=int(230), y=int(80)))
-    attraction.append('フライングダイナソー')
-    att_for_loop.append(wait_time(table_2, 2))
-
-    city.append(class_City(x=int(200), y=int(150)))
-    attraction.append('ジョーズ')
-    att_for_loop.append(wait_time(table_2, 5))
-
-    city.append(class_City(x=int(200), y=int(270)))
-    attraction.append('ハリーポッター')
-    att_for_loop.append(wait_time(table_1, 1))
-
-    city.append(class_City(x=int(130), y=int(170)))
-    attraction.append('ハリウッドドリームザライド')
-    att_for_loop.append(wait_time(table_1, 4))
-
-    city.append(class_City(x=int(120), y=int(175)))
-    attraction.append('バックドロップ')
-    att_for_loop.append(wait_time(table_1, 3))
-
-    city.append(class_City(x=int(190), y=int(240)))
-    attraction.append('ヒッポグリフ')
-    att_for_loop.append(wait_time(table_1, 2))
-
-    city.append(class_City(x=int(230), y=int(90)))
-    attraction.append('ジュラシックパークザライド')
-    att_for_loop.append(wait_time(table_2, 1))
-
-    city.append(class_City(x=int(180), y=int(190)))
-    attraction.append('スヌーピーのグレートレース')
-    att_for_loop.append(wait_time(table_3, 2))
-
-    city.append(class_City(x=int(160), y=int(180)))
-    attraction.append('フライングスヌーピー')
-    att_for_loop.append(wait_time(table_3, 3))
-
-    city.append(class_City(x=int(150), y=int(220)))
-    attraction.append('エルモのバブルバブル')
-    att_for_loop.append(wait_time(table_4, 5))
+    for i in range(len(data)):
+        city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
+        attraction.append(data[i][0])
+        att_for_loop.append(wait_time(f'static/csv/table_{data[i][3]}.csv', int(data[i][4])))
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
@@ -144,7 +118,7 @@ def result():
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
-    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9) # 日本時間
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間
     now_hour = now.hour
     now_minute = now.minute
 
@@ -159,6 +133,7 @@ def result():
     else:
         start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45), start_time)
 
+    # 選択されたアトラクションをappend
     for i in range(len(city)):
         for j in range(len(attraction_num)):
             if i == int(attraction_num[j]):
