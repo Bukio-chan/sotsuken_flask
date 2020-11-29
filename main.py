@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import requests
-from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 import datetime
 import random
@@ -55,7 +53,7 @@ def wait_time(table_num, line):
     return df
 
 
-class_City = calc.City
+class_City = calc.City  # calc.pyのCityクラス
 
 
 # 現在時刻からスタート時間取得
@@ -71,7 +69,7 @@ def get_start_time(hour, minute):
     return time_
 
 
-# 入力された時間を取得
+# 選択された時間を取得
 def get_input_time(set_time, time_num):
     set_time += datetime.timedelta(minutes=time_num * 30)
     return set_time
@@ -97,13 +95,15 @@ def result():
     attraction, attraction_name = [], []
     att_for_loop = []
 
-    entrance_point = class_City(x=int(80), y=int(190))
+    entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
 
-    # data.csvを開く
+    # data.csvのデータをdataに格納
     with open("static/csv/data.csv", 'r')as f:
         reader = csv.reader(f)
         data = [row for row in reader]
+        data.pop(0)
 
+    # アトラクションのデータをappendしていく
     for i in range(len(data)):
         city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
         attraction.append(data[i][0])
@@ -112,7 +112,7 @@ def result():
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
     get_end = int(request.form.get('END'))  # 終わり位置
-    start_time = int(request.form.get('start_time'))
+    start_time = int(request.form.get('start_time'))  # スタート時間
 
     if len(attraction_num) < 2:
         comment = "アトラクションは2つ以上選んでください！"
