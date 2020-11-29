@@ -37,7 +37,7 @@ for i in range(len(table_csv)):
     csv_.append(csv_1)
 
 for j in range(len(table_csv)):
-    file = open(f'static/csv/table_{j+1}.csv', 'w', newline='')
+    file = open(f'csv/table_{j+1}.csv', 'w', newline='')
     w = csv.writer(file)
     for i in range(len(csv_[j])):
         w.writerow(csv_[j][i])
