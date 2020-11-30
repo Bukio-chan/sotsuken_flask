@@ -10,37 +10,6 @@ import glob
 import csv
 
 app = Flask(__name__)
-"""
-url = 'https://usjportal.net/'
-html = requests.get(url)
-soup = BeautifulSoup(html.content, "html.parser")
-table = soup.find_all(class_="waittime")
-
-
-# tdを取り除く
-def remove_td(td):
-    for i in range(len(td)):
-        td[i] = td[i].string
-        if td[i] == '-':
-            td[i] = '0'
-    return td
-
-
-table_1 = remove_td(table[0].find_all("td"))
-table_2 = remove_td(table[1].find_all("td"))
-table_3 = remove_td(table[2].find_all("td"))
-table_4 = remove_td(table[3].find_all("td"))
-table_5 = remove_td(table[4].find_all("td"))
-
-
-# stringをintに変換
-def wait_time(table_num, line):
-    att = []
-    for i in range(len(table_num)):
-        if i % (len(table_num) / 29) == line:
-            att.append(int(table_num[i]))
-    return att
-"""
 
 
 # csvから読み取り、stringをintに変換
@@ -93,11 +62,11 @@ def search():
 def result():
     city, city_list = [], []
     attraction, attraction_name = [], []
-    att_for_loop = []
+    time_list = []
 
     entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
 
-    # data.csvのデータをdataに格納
+    # data.csvのデータを2次元配列dataに格納
     with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
         reader = csv.reader(f)
         data = [row for row in reader]
@@ -107,7 +76,7 @@ def result():
     for i in range(len(data)):
         city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
         attraction.append(data[i][0])
-        att_for_loop.append(wait_time(f'static/csv/table_{data[i][3]}.csv', int(data[i][4])))
+        time_list.append(wait_time(f'static/csv/table_{data[i][3]}.csv', int(data[i][4])))
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
@@ -158,8 +127,8 @@ def result():
 
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
-    result_output = calc.main_run(city_list, attraction_name, distance_flag, start, end, start_time,
-                                  att_for_loop, random_url)
+    result_output = calc.main(city_list, attraction_name, distance_flag, start, end, start_time,
+                              time_list, random_url)
 
     img_url = result_output[0]
     time_result = result_output[1]
