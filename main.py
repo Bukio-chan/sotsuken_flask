@@ -60,9 +60,11 @@ def search():
 
 @app.route("/result", methods=['POST'])
 def result():
-    city, city_list = [], []
-    attraction, attraction_name = [], []
+    city = []
+    city_list = []
+    attraction_name = []
     time_list = []
+    ride_time = []
 
     entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
 
@@ -72,11 +74,9 @@ def result():
         data = [row for row in reader]
         data.pop(0)
 
-    # アトラクションのデータをappendしていく
+    # スタート地点・ゴール地点用配列city[]
     for i in range(len(data)):
         city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
-        attraction.append(data[i][0])
-        time_list.append(wait_time(f'static/csv/table_{data[i][3]}.csv', int(data[i][4])))
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
@@ -86,6 +86,14 @@ def result():
     if len(attraction_num) < 2:
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
+
+    # アトラクションのデータをappendしていく
+    for i in range(len(attraction_num)):
+        num = int(attraction_num[i])
+        city_list.append(class_City(x=int(data[num][1]), y=int(data[num][2])))
+        attraction_name.append(data[num][0])
+        time_list.append(wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])))
+        ride_time.append(data[num][5])
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間
     now_hour = now.hour
@@ -102,12 +110,6 @@ def result():
     else:
         start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45), start_time)
 
-    # 選択されたアトラクションをappend
-    for i in range(len(city)):
-        for j in range(len(attraction_num)):
-            if i == int(attraction_num[j]):
-                city_list.append(city[i])
-                attraction_name.append(attraction[i])
     # 優先取得
     if request.form.get("priority") == "True":
         distance_flag = True

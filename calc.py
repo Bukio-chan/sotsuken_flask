@@ -34,10 +34,10 @@ class City:
 
 
 class Calculation:
-    def __init__(self, route, city_list, start_time, time_list, start, end):
+    def __init__(self, route, city_list, start_time, time_list, start_place, end_place):
         self.route = route
-        self.start = start
-        self.end = end
+        self.start_place = start_place
+        self.end_place = end_place
         self.city_list = city_list
         self.start_time = start_time
         self.time_list = time_list
@@ -69,13 +69,13 @@ class Calculation:
             return wait * 10000
 
     def on_foot(self):  # 徒歩時間の追加
-        on_foot = [round(self.start.distance(self.route[0]) / 80)]  # 最初の地点
+        on_foot = [round(self.start_place.distance(self.route[0]) / 80)]  # 最初の地点
         for i in range(len(self.route) - 1):  # 距離
             from_city = self.route[i]
             to_city = self.route[(i + 1) % len(self.route)]
             # path_distance += setting_distance(from_city,to_city) #どっちか
             on_foot.append(round(from_city.distance(to_city) / 80))  # どっちか
-        on_foot.append(round(self.end.distance(self.route[-1]) / 80))  # 最後の地点
+        on_foot.append(round(self.end_place.distance(self.route[-1]) / 80))  # 最後の地点
         return on_foot
 
     @property
@@ -98,8 +98,8 @@ class Calculation:
                 path_distance += from_city.distance(to_city)  # どっちか
 
             # path_distance += setting_distance(start,self.route[0])#最初の地点
-            path_distance += self.start.distance(self.route[0])  # 最初の地点
-            path_distance += self.end.distance(self.route[-1])  # 最後の地点
+            path_distance += self.start_place.distance(self.route[0])  # 最初の地点
+            path_distance += self.end_place.distance(self.route[-1])  # 最後の地点
             self._distance = path_distance
         return self._distance
 
