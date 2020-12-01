@@ -34,11 +34,12 @@ class City:
 
 
 class Calculation:
-    def __init__(self, route, city_list, start_time, time_list, start_place, end_place):
+    def __init__(self, route, city_list, start_time, time_list, ride_time, start_place, end_place):
         self.route = route
         self.start_place = start_place
         self.end_place = end_place
         self.city_list = city_list
+        self.ride_time = ride_time
         self.start_time = start_time
         self.time_list = time_list
         self._time = 0
@@ -56,6 +57,7 @@ class Calculation:
                 for j in range(len(self.city_list)):
                     if self.route[i] == self.city_list[j]:
                         wait += self.time_list[j][self.start_time]
+                        wait += self.ride_time[j]
                         if wait >= 30:
                             self.start_time = round(wait / 30)
             else:
@@ -190,7 +192,7 @@ def selection(population_ranked, elite_size):
 
 class GeneticAlgorithm:
     def __init__(self, city_list, distance_flag, start_place, end_place, start_time,
-                 time_list, attraction_name, random_url):
+                 ride_time, time_list, attraction_name, random_url):
         self.city_list = city_list
         self.distance_flag = distance_flag
         self.start_place = start_place
@@ -199,6 +201,7 @@ class GeneticAlgorithm:
         self.time_list = time_list
         self.attraction_name = attraction_name
         self.random_url = random_url
+        self.ride_time = ride_time
         self.generation = 50  # 世代数
         self.population_size = self.generation
         self.elite = int(self.population_size / 5)
@@ -218,7 +221,7 @@ class GeneticAlgorithm:
         fitness_results = {}
         for i in range(len(population)):
             calc = Calculation(population[i], self.city_list, self.start_time, self.time_list,
-                               self.start_place, self.end_place)
+                               self.ride_time, self.start_place, self.end_place)
             if self.distance_flag:
                 fitness_results[i] = calc.distance_fitness
             else:
@@ -274,7 +277,7 @@ class GeneticAlgorithm:
         best_route = pop[best_route_index]
 
         calc = Calculation(best_route, self.city_list, self.start_time, self.time_list,
-                           self.start_place, self.end_place)
+                           self.ride_time, self.start_place, self.end_place)
         if self.distance_flag:
             time_result = calc.time
             distance_result = round(1 / self.rank_routes(pop)[0][1], 2)

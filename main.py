@@ -93,7 +93,7 @@ def result():
         city_list.append(class_City(x=int(data[num][1]), y=int(data[num][2])))
         attraction_name.append(data[num][0])
         time_list.append(wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])))
-        ride_time.append(data[num][5])
+        ride_time.append(int(data[num][5]))
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間
     now_hour = now.hour
@@ -130,7 +130,7 @@ def result():
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
     ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time,
-                               time_list, attraction_name, random_url)
+                               ride_time, time_list, attraction_name, random_url)
     result_output = ga.main()
 
     img_url = result_output[0]
