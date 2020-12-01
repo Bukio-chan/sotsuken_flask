@@ -8,34 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
 
-generation = 50  # 世代数
-population_gene = generation
-elite = int(population_gene / 5)
 form_check = False
-
-
-def wait_time_total(order, city_list, time_num, time_list, on_foot):
-    wait = 0
-    flag = True
-    global form_check
-    for i in range(len(order)):
-        if time_num < 29:
-            wait += on_foot[i]
-            for j in range(len(city_list)):
-                if order[i] == city_list[j]:
-                    wait += time_list[j][time_num]
-                    if wait >= 30:
-                        time_num = round(wait / 30)
-        else:
-            flag = False
-            break
-
-    if flag:
-        form_check = True
-        return wait
-    else:
-        return wait * 10000
-
 
 """
 def setting_distance(from_city,to_city): #入力した距離データで計算
@@ -60,7 +33,7 @@ class City:
         return f'({self.x},{self.y})'
 
 
-class Calc:
+class Calculation:
     def __init__(self, route, city_list, start_time, time_list, start, end):
         self.route = route
         self.start = start
@@ -71,6 +44,29 @@ class Calc:
         self._time = 0
         self._distance = 0
         self._fitness = 0
+
+    # 待ち時間の合計
+    def wait_time_total(self):
+        wait = 0
+        flag = True
+        global form_check
+        for i in range(len(self.route)):
+            if self.start_time < 29:
+                wait += self.on_foot()[i]
+                for j in range(len(self.city_list)):
+                    if self.route[i] == self.city_list[j]:
+                        wait += self.time_list[j][self.start_time]
+                        if wait >= 30:
+                            self.start_time = round(wait / 30)
+            else:
+                flag = False
+                break
+
+        if flag:
+            form_check = True
+            return wait
+        else:
+            return wait * 10000
 
     def on_foot(self):  # 徒歩時間の追加
         on_foot = [round(self.start.distance(self.route[0]) / 80)]  # 最初の地点
@@ -86,8 +82,7 @@ class Calc:
     def time(self):  # 時間の計算
         if self._time == 0:
             path_time = 0
-            path_time += wait_time_total(self.route, self.city_list, self.start_time,
-                                         self.time_list, self.on_foot())
+            path_time += self.wait_time_total()
             self._time = path_time
         return self._time
 
@@ -121,27 +116,58 @@ class Calc:
         return self._fitness
 
 
-def create_route(city_list):
-    route = random.sample(city_list, len(city_list))
-    return route
+def mutate(individual, mutation_rate):  # 突然変異
+    # This has mutation_rate chance of swapping ANY city, instead of having mutation_rate chance of doing
+    # a swap on this given route...
+    for swapped in range(len(individual)):
+        if random.random() < mutation_rate:
+            swap_with = int(random.random() * len(individual))
+            individual[swapped], individual[swap_with] = individual[swap_with], individual[swapped]
+    return individual
 
 
-def create_initial_population(population_size, city_list):
-    population = []
-    for i in range(population_size):
-        population.append(create_route(city_list))
-    return population
+def mutate_population(population, mutation_rate):
+    mutated_pop = []
+    for ind in population:
+        mutated = mutate(ind, mutation_rate)
+        mutated_pop.append(mutated)
+    return mutated_pop
 
 
-def rank_routes(population, distance_flag, start, end, city_list, start_time, time_list):
-    fitness_results = {}
-    for i in range(len(population)):
-        calc = Calc(population[i], city_list, start_time, time_list, start, end)
-        if distance_flag:
-            fitness_results[i] = calc.distance_fitness
-        else:
-            fitness_results[i] = calc.time_fitness
-    return sorted(fitness_results.items(), key=operator.itemgetter(1), reverse=True)
+def breed(parent1, parent2):
+    gene_a = int(random.random() * len(parent1))
+    gene_b = int(random.random() * len(parent2))
+
+    start_gene = min(gene_a, gene_b)
+    end_gene = max(gene_a, gene_b)
+
+    child_p1 = []
+    for i in range(start_gene, end_gene):
+        child_p1.append(parent1[i])
+
+    child_p2 = [item for item in parent2 if item not in child_p1]
+    child = child_p1 + child_p2
+    return child
+
+
+def mating_pool(population, selection_results):
+    pool = [population[idx] for idx in selection_results]
+    return pool
+
+
+def breed_population(pool, elite_size):
+    children = []
+    length = len(pool) - elite_size
+    pool = random.sample(pool, len(pool))
+
+    for i in range(elite_size):
+        children.append(pool[i])
+
+    for i in range(length):
+        child = breed(pool[i], pool[-i - 1])
+        children.append(child)
+
+    return children
 
 
 def selection(population_ranked, elite_size):
@@ -162,137 +188,112 @@ def selection(population_ranked, elite_size):
     return selection_results
 
 
-def mating_pool(population, selection_results):
-    pool = [population[idx] for idx in selection_results]
-    return pool
+class GeneticAlgorithm:
+    def __init__(self, city_list, distance_flag, start_place, end_place, start_time,
+                 time_list, attraction_name, random_url):
+        self.city_list = city_list
+        self.distance_flag = distance_flag
+        self.start_place = start_place
+        self.end_place = end_place
+        self.start_time = start_time
+        self.time_list = time_list
+        self.attraction_name = attraction_name
+        self.random_url = random_url
+        self.generation = 50  # 世代数
+        self.population_size = self.generation
+        self.elite = int(self.population_size / 5)
+        self.mutation_rate = 0.01
 
+    def create_route(self):
+        route = random.sample(self.city_list, len(self.city_list))
+        return route
 
-def breed(parent1, parent2):
-    gene_a = int(random.random() * len(parent1))
-    gene_b = int(random.random() * len(parent2))
+    def create_initial_population(self):
+        population = []
+        for i in range(self.population_size):
+            population.append(self.create_route())
+        return population
 
-    start_gene = min(gene_a, gene_b)
-    end_gene = max(gene_a, gene_b)
+    def rank_routes(self, population):
+        fitness_results = {}
+        for i in range(len(population)):
+            calc = Calculation(population[i], self.city_list, self.start_time, self.time_list,
+                               self.start_place, self.end_place)
+            if self.distance_flag:
+                fitness_results[i] = calc.distance_fitness
+            else:
+                fitness_results[i] = calc.time_fitness
+        return sorted(fitness_results.items(), key=operator.itemgetter(1), reverse=True)
 
-    child_p1 = []
-    for i in range(start_gene, end_gene):
-        child_p1.append(parent1[i])
+    def next_generation(self, current_gen, elite_size, mutation_rate):
+        pop_ranked = self.rank_routes(current_gen)
+        selection_results = selection(pop_ranked, elite_size)
+        mate_pool = mating_pool(current_gen, selection_results)
+        children = breed_population(mate_pool, elite_size)
+        next_gen = mutate_population(children, mutation_rate)
+        return next_gen
 
-    child_p2 = [item for item in parent2 if item not in child_p1]
-    child = child_p1 + child_p2
-    return child
+    def plot_route(self, route, attraction_name, url, title=None):  # 表示
+        attraction_order = []
+        img = imread("static/USJ_map.png")
+        plt.figure()
+        for i in range(len(route)):
+            city = route[i]
+            next_city = route[(i + 1) % len(route)]
+            bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
+                             linestyle='-')
+            pyplot.text(city.x, city.y - 10, i + 1, bbox=bbox_dict)  # 番号の表示
+            plt.scatter(city.x, city.y, c='red')
+            if i >= len(route) - 1:
+                break
+            plt.plot((city.x, next_city.x), (city.y, next_city.y), c='black')
+            if title:
+                plt.title(title, fontname="MS Gothic")
 
+        for i in range(len(route)):
+            for j in range(len(self.city_list)):
+                if route[i] == self.city_list[j]:
+                    attraction_order.append(attraction_name[j])
+        attraction_order_result = attraction_order
 
-def breed_population(mating_pool, elite_size):
-    children = []
-    length = len(mating_pool) - elite_size
-    pool = random.sample(mating_pool, len(mating_pool))
+        plt.imshow(img)
+        # plt.show()
+        plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
+        plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
+        # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
+        plt.savefig(url, bbox_inches='tight', pad_inches=0)  # 画像で保存
+        return attraction_order_result, url
 
-    for i in range(elite_size):
-        children.append(mating_pool[i])
+    def solve(self):
+        pop = self.create_initial_population()
 
-    for i in range(length):
-        child = breed(pool[i], pool[-i - 1])
-        children.append(child)
+        for g in range(self.generation):
+            pop = self.next_generation(pop, self.elite, self.mutation_rate)
 
-    return children
+        best_route_index = self.rank_routes(pop)[0][0]
+        best_route = pop[best_route_index]
 
+        calc = Calculation(best_route, self.city_list, self.start_time, self.time_list,
+                           self.start_place, self.end_place)
+        if self.distance_flag:
+            time_result = calc.time
+            distance_result = round(1 / self.rank_routes(pop)[0][1], 2)
+        else:
+            time_result = round(1 / self.rank_routes(pop)[0][1])
+            distance_result = round(calc.distance, 2)
 
-def mutate(individual, mutation_rate):  # 突然変異
-    # This has mutation_rate chance of swapping ANY city, instead of having mutation_rate chance of doing
-    # a swap on this given route...
-    for swapped in range(len(individual)):
-        if random.random() < mutation_rate:
-            swap_with = int(random.random() * len(individual))
-            individual[swapped], individual[swap_with] = individual[swap_with], individual[swapped]
-    return individual
+        if not form_check and not self.distance_flag:
+            time_result = 0
 
+        return best_route, time_result, distance_result
 
-def mutate_population(population, mutation_rate):
-    mutated_pop = []
-    for ind in population:
-        mutated = mutate(ind, mutation_rate)
-        mutated_pop.append(mutated)
-    return mutated_pop
+    def main(self):
+        best_route = self.solve()
+        result = self.plot_route(best_route[0], self.attraction_name, self.random_url)
 
+        time_result = best_route[1]
+        distance_result = best_route[2]
+        order_result = result[0]
+        url_result = result[1]
 
-def next_generation(current_gen, elite_size, mutation_rate, distance_flag, start, end,
-                    city_list, start_time, time_list):
-    pop_ranked = rank_routes(current_gen, distance_flag, start, end, city_list, start_time, time_list)
-    selection_results = selection(pop_ranked, elite_size)
-    mate_pool = mating_pool(current_gen, selection_results)
-    children = breed_population(mate_pool, elite_size)
-    next_gen = mutate_population(children, mutation_rate)
-    return next_gen
-
-
-def plot_route(route, attraction_name, city_list, url, title=None):  # 表示
-    attraction_order = []
-    img = imread("static/USJ_map.png")
-    plt.figure()
-    for i in range(len(route)):
-        city = route[i]
-        next_city = route[(i + 1) % len(route)]
-        bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
-                         linestyle='-')
-        pyplot.text(city.x, city.y - 10, i + 1, bbox=bbox_dict)  # 番号の表示
-        plt.scatter(city.x, city.y, c='red')
-        if i >= len(route) - 1:
-            break
-        plt.plot((city.x, next_city.x), (city.y, next_city.y), c='black')
-        if title:
-            plt.title(title, fontname="MS Gothic")
-
-    for i in range(len(route)):
-        for j in range(len(city_list)):
-            if route[i] == city_list[j]:
-                attraction_order.append(attraction_name[j])
-    attraction_order_result = attraction_order
-
-    plt.imshow(img)
-    # plt.show()
-    plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
-    plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
-    # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-    plt.savefig(url, bbox_inches='tight', pad_inches=0)  # 画像で保存
-    return attraction_order_result, url
-
-
-def solve(cities, population_size, elite_size, mutation_rate, generations,
-          distance_flag, start, end, start_time, time_list):
-    pop = create_initial_population(population_size, cities)
-
-    for g in range(generations):
-        pop = next_generation(pop, elite_size, mutation_rate, distance_flag, start, end,
-                              cities, start_time, time_list)
-
-    best_route_index = rank_routes(pop, distance_flag, start, end, cities, start_time, time_list)[0][0]
-    best_route = pop[best_route_index]
-
-    calc = Calc(best_route, cities, start_time, time_list, start, end)
-    if distance_flag:
-        time_result = calc.time
-        distance_result = round(1 / rank_routes(pop, distance_flag, start, end,
-                                                cities, start_time, time_list)[0][1], 2)
-    else:
-        time_result = round(1 / rank_routes(pop, distance_flag, start, end,
-                                            cities, start_time, time_list)[0][1])
-        distance_result = round(calc.distance, 2)
-
-    if not form_check and not distance_flag:
-        time_result = 0
-
-    return best_route, time_result, distance_result
-
-
-def main(city_list, attraction_name, distance_flag, start, end, start_time, time_list, url):
-    best_route = solve(city_list, population_gene, elite, 0.01, generation, distance_flag,
-                       start, end, start_time, time_list)
-    result = plot_route(best_route[0], attraction_name, city_list, url, '')
-
-    time_result = best_route[1]
-    distance_result = best_route[2]
-    order_result = result[0]
-    url_result = result[1]
-
-    return url_result, time_result, distance_result, order_result
+        return url_result, time_result, distance_result, order_result

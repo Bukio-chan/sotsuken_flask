@@ -27,15 +27,15 @@ class_City = calc.City  # calc.pyのCityクラス
 
 # 現在時刻からスタート時間取得
 def get_start_time(hour, minute):
-    time_ = 0
+    num_result = 0
     num = 1
     for i in range(8, 21):
         if hour <= i:
-            time_ = num
-        if minute >= 30:
-            time_ += 1
+            num_result = num
+            if minute >= 30:
+                num_result += 1
         num += 2
-    return time_
+    return num_result
 
 
 # 選択された時間を取得
@@ -127,8 +127,9 @@ def result():
 
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
-    result_output = calc.main(city_list, attraction_name, distance_flag, start, end, start_time,
-                              time_list, random_url)
+    ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time,
+                               time_list, attraction_name, random_url)
+    result_output = ga.main()
 
     img_url = result_output[0]
     time_result = result_output[1]
