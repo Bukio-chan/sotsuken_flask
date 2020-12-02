@@ -103,9 +103,7 @@ def result():
 
     if int(request.form.get('start_time')) == 100:  # スタート時間
         if 8 <= now_hour <= 21:
-            print(now_hour)
             start_time = get_start_time(now_hour, now_minute)
-            print(start_time)
         else:
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)

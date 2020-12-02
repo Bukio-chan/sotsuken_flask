@@ -8,8 +8,6 @@ import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
 
-form_check = False
-
 """
 def setting_distance(from_city,to_city): #入力した距離データで計算
   for j in range(len(city_list)):
@@ -62,7 +60,6 @@ class Calculation:
         on_foot = self.on_foot()
         wait = 0
         flag = True
-        global form_check
         for i in range(len(self.route)):
             if start_time < 29:
                 wait += on_foot[i]  # 徒歩時間
@@ -77,7 +74,6 @@ class Calculation:
                 break
 
         if flag:
-            form_check = True
             return wait
         else:
             return wait * 10000
@@ -85,8 +81,7 @@ class Calculation:
     @property
     def time(self):  # 時間の計算
         if self._time == 0:
-            path_time = 0
-            path_time += self.wait_time_total()
+            path_time = self.wait_time_total()
             self._time = path_time
         return self._time
 
@@ -287,7 +282,7 @@ class GeneticAlgorithm:
             time_result = round(1 / self.rank_routes(pop)[0][1])
             distance_result = round(calc.distance, 2)
 
-        if not form_check and not self.distance_flag:
+        if not self.distance_flag and time_result > 10000:
             time_result = 0
 
         return best_route, time_result, distance_result
