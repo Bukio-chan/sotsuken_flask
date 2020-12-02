@@ -19,13 +19,13 @@ div.box11 {
   margin: 10px 40px;
 }
 
-.cp_ipselect {
+.cp_select {
 	overflow: hidden;
 	width: 90%;
 	margin: 2em auto;
 	text-align: center;
 }
-.cp_ipselect select {
+.cp_select select {
 	width: 100%;
 	padding-right: 1em;
 	cursor: pointer;
@@ -39,16 +39,16 @@ div.box11 {
 	-webkit-appearance: none;
 	appearance: none;
 }
-.cp_ipselect select::-ms-expand {
+.cp_select select::-ms-expand {
     display: none;
 }
-.cp_ipselect.cp_sl03 {
+.cp_select.cp_sl03 {
 	position: relative;
 	border-radius: 2px;
 	border: 2px solid #000000;
 	background: #fdf5e6;
 }
-.cp_ipselect.cp_sl03::before {
+.cp_select.cp_sl03::before {
 	position: absolute;
 	top: 0.8em;
 	right: 0.8em;
@@ -61,7 +61,7 @@ div.box11 {
 	border-top: 6px solid #000000;
 	pointer-events: none;
 }
-.cp_ipselect.cp_sl03 select {
+.cp_select.cp_sl03 select {
 	padding: 8px 38px 8px 8px;
 }
 

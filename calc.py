@@ -46,30 +46,6 @@ class Calculation:
         self._distance = 0
         self._fitness = 0
 
-    # 待ち時間の合計
-    def wait_time_total(self):
-        wait = 0
-        flag = True
-        global form_check
-        for i in range(len(self.route)):
-            if self.start_time < 29:
-                wait += self.on_foot()[i]
-                for j in range(len(self.city_list)):
-                    if self.route[i] == self.city_list[j]:
-                        wait += self.time_list[j][self.start_time]
-                        wait += self.ride_time[j]
-                        if wait >= 30:
-                            self.start_time = round(wait / 30)
-            else:
-                flag = False
-                break
-
-        if flag:
-            form_check = True
-            return wait
-        else:
-            return wait * 10000
-
     def on_foot(self):  # 徒歩時間の追加
         on_foot = [round(self.start_place.distance(self.route[0]) / 80)]  # 最初の地点
         for i in range(len(self.route) - 1):  # 距離
@@ -79,6 +55,32 @@ class Calculation:
             on_foot.append(round(from_city.distance(to_city) / 80))  # どっちか
         on_foot.append(round(self.end_place.distance(self.route[-1]) / 80))  # 最後の地点
         return on_foot
+
+    # 待ち時間の合計
+    def wait_time_total(self):
+        start_time = self.start_time
+        on_foot = self.on_foot()
+        wait = 0
+        flag = True
+        global form_check
+        for i in range(len(self.route)):
+            if start_time < 29:
+                wait += on_foot[i]  # 徒歩時間
+                for j in range(len(self.city_list)):
+                    if self.route[i] == self.city_list[j]:
+                        wait += self.time_list[j][start_time]
+                        wait += self.ride_time[j]  # 乗車時間
+                        if wait >= 30:
+                            start_time = self.start_time + round(wait / 30)
+            else:
+                flag = False
+                break
+
+        if flag:
+            form_check = True
+            return wait
+        else:
+            return wait * 10000
 
     @property
     def time(self):  # 時間の計算
@@ -202,6 +204,7 @@ class GeneticAlgorithm:
         self.attraction_name = attraction_name
         self.random_url = random_url
         self.ride_time = ride_time
+
         self.generation = 50  # 世代数
         self.population_size = self.generation
         self.elite = int(self.population_size / 5)
@@ -275,7 +278,6 @@ class GeneticAlgorithm:
 
         best_route_index = self.rank_routes(pop)[0][0]
         best_route = pop[best_route_index]
-
         calc = Calculation(best_route, self.city_list, self.start_time, self.time_list,
                            self.ride_time, self.start_place, self.end_place)
         if self.distance_flag:
