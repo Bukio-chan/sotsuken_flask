@@ -106,7 +106,8 @@ def result():
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
     else:
-        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45), start_time)
+        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45),
+                                      start_time)
 
     # 優先取得
     if request.form.get("priority") == "True":
@@ -132,9 +133,9 @@ def result():
     result_output = ga.main()
 
     img_url = result_output[0]
-    time_result = result_output[1]
-    distance_result = result_output[2]
-    order_result = result_output[3]
+    order_result = result_output[1]
+    time_result = result_output[2]
+    distance_result = result_output[3]
 
     if time_result == 0:
         comment = "時間が足りないかも！"

@@ -10,6 +10,45 @@ from matplotlib import pyplot
 import csv
 
 
+# 徒歩時間の追加
+def on_foot(route, start_place, end_place, city_list):
+    # foot = [round(start_place.setting_distance(city_list, route[0]) / 80)]  # 最初の地点
+    foot = [round(start_place.distance(route[0]) / 80)]  # 最初の地点
+    for i in range(len(route) - 1):  # 距離
+        from_city = route[i]
+        to_city = route[(i + 1) % len(route)]
+        # foot.append(round(from_city.setting_distance(city_list, to_city) / 80))  # どっちか
+        foot.append(round(from_city.distance(to_city) / 80))  # どっちか
+    # foot.append(round(end_place.setting_distance(city_list, route[-1]) / 80))  # 最後の地点
+    foot.append(round(end_place.distance(route[-1]) / 80))  # 最後の地点
+    return foot
+
+
+# 待ち時間の合計
+def wait_time_total(route, start_place, end_place, start_time, city_list):
+    fix_time = start_time
+    foot = on_foot(route, start_place, end_place, city_list)
+    wait = 0
+    flag = True
+    for i in range(len(route)):
+        if start_time < 29:
+            wait += foot[i]  # 徒歩時間
+            for j in range(len(city_list)):
+                if route[i] == city_list[j]:
+                    wait += city_list[j].time_list[start_time]
+                    wait += city_list[j].ride_time  # 乗車時間
+                    if wait >= 30:
+                        start_time = fix_time + round(wait / 30)
+        else:
+            flag = False
+            break
+
+    if flag:
+        return wait
+    else:
+        return wait * 10000
+
+
 class City:
     def __init__(self, x, y, name=None, time_list=None, ride_time=None):
         self.x = x
@@ -26,48 +65,14 @@ class City:
         distance = np.sqrt((self.x - city.x) ** 2 + (self.y - city.y) ** 2)
         return distance
 
-    def setting_distance(self, city_list, to_city):  # 設定した距離データで計算
+    # 設定した距離データで計算
+    def setting_distance(self, city_list, to_city):
         distance = 0
         for i in range(len(city_list)):
             for j in range(len(city_list)):
                 if self == city_list[i] and to_city == city_list[j]:
                     distance = int(self.distance_list[i][j])
         return distance
-
-    def on_foot(self, route, start_place, city_list):  # 徒歩時間の追加
-        on_foot = [round(start_place.distance(route[0]) / 80)]  # 最初の地点
-        for i in range(len(route) - 1):  # 距離
-            from_city = route[i]
-            to_city = route[(i + 1) % len(route)]
-            # on_foot.append(round(from_city.setting_distance(city_list, to_city) / 80))  # どっちか
-            on_foot.append(round(from_city.distance(to_city) / 80))  # どっちか
-        on_foot.append(round(self.distance(route[-1]) / 80))  # 最後の地点
-        return on_foot
-
-    # 待ち時間の合計
-    def wait_time_total(self, route, start_time, city_list):
-        start_place = self
-        start_time = start_time
-        on_foot = self.on_foot(route, start_place, city_list)
-        wait = 0
-        flag = True
-        for i in range(len(route)):
-            if start_time < 29:
-                wait += on_foot[i]  # 徒歩時間
-                for j in range(len(city_list)):
-                    if route[i] == city_list[j]:
-                        wait += city_list[j].time_list[start_time]
-                        wait += city_list[j].ride_time  # 乗車時間
-                        if wait >= 30:
-                            start_time = start_time + round(wait / 30)
-            else:
-                flag = False
-                break
-
-        if flag:
-            return wait
-        else:
-            return wait * 10000
 
     def __repr__(self):
         return f'{self.name}  (約{self.ride_time}分)'
@@ -88,7 +93,8 @@ class Calculation:
     @property
     def time(self):  # 時間の計算
         if self._time == 0:
-            path_time = self.start_place.wait_time_total(self.route, self.start_time, self.city_list)
+            path_time = wait_time_total(self.route, self.start_place, self.end_place,
+                                        self.start_time, self.city_list)
             self._time = path_time
         return self._time
 
@@ -96,6 +102,8 @@ class Calculation:
     def distance(self):  # 総距離の計算
         if self._distance == 0:
             path_distance = 0
+            # path_distance += self.start_place.setting_distance(self.city_list, self.route[0])  # 最初の地点
+            path_distance += self.start_place.distance(self.route[0])  # 最初の地点
 
             for i in range(len(self.route) - 1):  # 距離
                 from_city = self.route[i]
@@ -103,8 +111,7 @@ class Calculation:
                 # path_distance += from_city.setting_distance(self.city_list, to_city)  # どっちか
                 path_distance += from_city.distance(to_city)  # どっちか
 
-            # path_distance += setting_distance(start,self.route[0])#最初の地点
-            path_distance += self.start_place.distance(self.route[0])  # 最初の地点
+            # path_distance += self.end_place.setting_distance(self.city_list, self.route[-1])  # 最後の地点
             path_distance += self.end_place.distance(self.route[-1])  # 最後の地点
             self._distance = path_distance
         return self._distance
@@ -194,6 +201,31 @@ def selection(population_ranked, elite_size):
     return selection_results
 
 
+def plot_route(route, url, title=None):  # 表示
+    img = imread("static/USJ_map.png")
+    plt.figure()
+    for i in range(len(route)):
+        city = route[i]
+        next_city = route[(i + 1) % len(route)]
+        bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
+                         linestyle='-')
+        pyplot.text(city.x, city.y - 10, i + 1, bbox=bbox_dict)  # 番号の表示
+        plt.scatter(city.x, city.y, c='red')
+        if i >= len(route) - 1:
+            break
+        plt.plot((city.x, next_city.x), (city.y, next_city.y), c='black')
+        if title:
+            plt.title(title, fontname="MS Gothic")
+
+    plt.imshow(img)
+    # plt.show()
+    plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
+    plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
+    # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
+    plt.savefig(url, bbox_inches='tight', pad_inches=0)  # 画像で保存
+    return url
+
+
 class GeneticAlgorithm:
     def __init__(self, city_list, distance_flag, start_place, end_place, start_time,
                  entrance_distance, random_url):
@@ -238,37 +270,6 @@ class GeneticAlgorithm:
         next_gen = mutate_population(children, mutation_rate)
         return next_gen
 
-    def plot_route(self, route, attraction_name, url, title=None):  # 表示
-        attraction_order = []
-        img = imread("static/USJ_map.png")
-        plt.figure()
-        for i in range(len(route)):
-            city = route[i]
-            next_city = route[(i + 1) % len(route)]
-            bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
-                             linestyle='-')
-            pyplot.text(city.x, city.y - 10, i + 1, bbox=bbox_dict)  # 番号の表示
-            plt.scatter(city.x, city.y, c='red')
-            if i >= len(route) - 1:
-                break
-            plt.plot((city.x, next_city.x), (city.y, next_city.y), c='black')
-            if title:
-                plt.title(title, fontname="MS Gothic")
-
-        for i in range(len(route)):
-            for j in range(len(self.city_list)):
-                if route[i] == self.city_list[j]:
-                    attraction_order.append(attraction_name[j])
-        attraction_order_result = attraction_order
-
-        plt.imshow(img)
-        # plt.show()
-        plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
-        plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
-        # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-        plt.savefig(url, bbox_inches='tight', pad_inches=0)  # 画像で保存
-        return attraction_order_result, url
-
     def solve(self):
         pop = self.create_initial_population()
 
@@ -292,11 +293,10 @@ class GeneticAlgorithm:
 
     def main(self):
         best_route = self.solve()
-        result = self.plot_route(best_route[0], self.city_list, self.random_url)
+        img_name = plot_route(best_route[0], self.random_url)
 
+        order_result = best_route[0]
         time_result = best_route[1]
         distance_result = best_route[2]
-        order_result = result[0]
-        url_result = result[1]
 
-        return url_result, time_result, distance_result, order_result
+        return img_name, order_result, time_result, distance_result
