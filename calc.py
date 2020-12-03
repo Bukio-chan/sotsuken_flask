@@ -7,68 +7,59 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
 from matplotlib import pyplot
-
-"""
-def setting_distance(from_city,to_city): #入力した距離データで計算
-  for j in range(len(city_list)):
-    for k in range(len(city_list)):
-      if from_city == city_list[j] and to_city == city_list[k]:
-        distance = distance_list[j][k]
-  return distance
-"""
+import csv
 
 
 class City:
-    def __init__(self, x, y):
+    def __init__(self, x, y, name=None, time_list=None, ride_time=None):
         self.x = x
         self.y = y
+        self.name = name
+        self.time_list = time_list
+        self.ride_time = ride_time
+        # data.csvのデータを2次元配列distance_listに格納
+        with open("static/csv/distance.csv", 'r', encoding="utf-8")as f:
+            reader = csv.reader(f)
+            self.distance_list = [row for row in reader]
 
     def distance(self, city):  # 二点間の距離の計算
         distance = np.sqrt((self.x - city.x) ** 2 + (self.y - city.y) ** 2)
         return distance
 
-    def __repr__(self):
-        return f'({self.x},{self.y})'
+    def setting_distance(self, city_list, to_city):  # 設定した距離データで計算
+        distance = 0
+        for i in range(len(city_list)):
+            for j in range(len(city_list)):
+                if self == city_list[i] and to_city == city_list[j]:
+                    distance = int(self.distance_list[i][j])
+        return distance
 
-
-class Calculation:
-    def __init__(self, route, city_list, start_time, time_list, ride_time, start_place, end_place):
-        self.route = route
-        self.start_place = start_place
-        self.end_place = end_place
-        self.city_list = city_list
-        self.ride_time = ride_time
-        self.start_time = start_time
-        self.time_list = time_list
-        self._time = 0
-        self._distance = 0
-        self._fitness = 0
-
-    def on_foot(self):  # 徒歩時間の追加
-        on_foot = [round(self.start_place.distance(self.route[0]) / 80)]  # 最初の地点
-        for i in range(len(self.route) - 1):  # 距離
-            from_city = self.route[i]
-            to_city = self.route[(i + 1) % len(self.route)]
-            # path_distance += setting_distance(from_city,to_city) #どっちか
+    def on_foot(self, route, start_place, city_list):  # 徒歩時間の追加
+        on_foot = [round(start_place.distance(route[0]) / 80)]  # 最初の地点
+        for i in range(len(route) - 1):  # 距離
+            from_city = route[i]
+            to_city = route[(i + 1) % len(route)]
+            # on_foot.append(round(from_city.setting_distance(city_list, to_city) / 80))  # どっちか
             on_foot.append(round(from_city.distance(to_city) / 80))  # どっちか
-        on_foot.append(round(self.end_place.distance(self.route[-1]) / 80))  # 最後の地点
+        on_foot.append(round(self.distance(route[-1]) / 80))  # 最後の地点
         return on_foot
 
     # 待ち時間の合計
-    def wait_time_total(self):
-        start_time = self.start_time
-        on_foot = self.on_foot()
+    def wait_time_total(self, route, start_time, city_list):
+        start_place = self
+        start_time = start_time
+        on_foot = self.on_foot(route, start_place, city_list)
         wait = 0
         flag = True
-        for i in range(len(self.route)):
+        for i in range(len(route)):
             if start_time < 29:
                 wait += on_foot[i]  # 徒歩時間
-                for j in range(len(self.city_list)):
-                    if self.route[i] == self.city_list[j]:
-                        wait += self.time_list[j][start_time]
-                        wait += self.ride_time[j]  # 乗車時間
+                for j in range(len(city_list)):
+                    if route[i] == city_list[j]:
+                        wait += city_list[j].time_list[start_time]
+                        wait += city_list[j].ride_time  # 乗車時間
                         if wait >= 30:
-                            start_time = self.start_time + round(wait / 30)
+                            start_time = start_time + round(wait / 30)
             else:
                 flag = False
                 break
@@ -78,22 +69,38 @@ class Calculation:
         else:
             return wait * 10000
 
+    def __repr__(self):
+        return f'{self.name}  (約{self.ride_time}分)'
+
+
+class Calculation:
+    def __init__(self, route, ga):
+        self.route = route
+        self.start_place = ga.start_place
+        self.end_place = ga.end_place
+        self.start_time = ga.start_time
+        self.city_list = ga.city_list
+        self.entrance_distance = ga.entrance_distance
+        self._time = 0
+        self._distance = 0
+        self._fitness = 0
+
     @property
     def time(self):  # 時間の計算
         if self._time == 0:
-            path_time = self.wait_time_total()
+            path_time = self.start_place.wait_time_total(self.route, self.start_time, self.city_list)
             self._time = path_time
         return self._time
 
     @property
-    def distance(self):  # 総距離(時間)の計算
+    def distance(self):  # 総距離の計算
         if self._distance == 0:
             path_distance = 0
 
             for i in range(len(self.route) - 1):  # 距離
                 from_city = self.route[i]
                 to_city = self.route[(i + 1) % len(self.route)]
-                # path_distance += setting_distance(from_city,to_city) #どっちか
+                # path_distance += from_city.setting_distance(self.city_list, to_city)  # どっちか
                 path_distance += from_city.distance(to_city)  # どっちか
 
             # path_distance += setting_distance(start,self.route[0])#最初の地点
@@ -189,16 +196,14 @@ def selection(population_ranked, elite_size):
 
 class GeneticAlgorithm:
     def __init__(self, city_list, distance_flag, start_place, end_place, start_time,
-                 ride_time, time_list, attraction_name, random_url):
+                 entrance_distance, random_url):
         self.city_list = city_list
         self.distance_flag = distance_flag
         self.start_place = start_place
         self.end_place = end_place
         self.start_time = start_time
-        self.time_list = time_list
-        self.attraction_name = attraction_name
+        self.entrance_distance = entrance_distance
         self.random_url = random_url
-        self.ride_time = ride_time
 
         self.generation = 50  # 世代数
         self.population_size = self.generation
@@ -218,8 +223,7 @@ class GeneticAlgorithm:
     def rank_routes(self, population):
         fitness_results = {}
         for i in range(len(population)):
-            calc = Calculation(population[i], self.city_list, self.start_time, self.time_list,
-                               self.ride_time, self.start_place, self.end_place)
+            calc = Calculation(population[i], self)
             if self.distance_flag:
                 fitness_results[i] = calc.distance_fitness
             else:
@@ -273,8 +277,7 @@ class GeneticAlgorithm:
 
         best_route_index = self.rank_routes(pop)[0][0]
         best_route = pop[best_route_index]
-        calc = Calculation(best_route, self.city_list, self.start_time, self.time_list,
-                           self.ride_time, self.start_place, self.end_place)
+        calc = Calculation(best_route, self)
         if self.distance_flag:
             time_result = calc.time
             distance_result = round(1 / self.rank_routes(pop)[0][1], 2)
@@ -289,7 +292,7 @@ class GeneticAlgorithm:
 
     def main(self):
         best_route = self.solve()
-        result = self.plot_route(best_route[0], self.attraction_name, self.random_url)
+        result = self.plot_route(best_route[0], self.city_list, self.random_url)
 
         time_result = best_route[1]
         distance_result = best_route[2]

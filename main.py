@@ -62,21 +62,7 @@ def search():
 def result():
     city = []
     city_list = []
-    attraction_name = []
-    time_list = []
-    ride_time = []
-
-    entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
-
-    # data.csvのデータを2次元配列dataに格納
-    with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
-        reader = csv.reader(f)
-        data = [row for row in reader]
-        data.pop(0)
-
-    # スタート地点・ゴール地点用配列city[]
-    for i in range(len(data)):
-        city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
+    entrance_distance = []
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
@@ -87,13 +73,25 @@ def result():
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
-    # アトラクションのデータをappendしていく
+    # data.csvのデータを2次元配列dataに格納
+    with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
+        reader = csv.reader(f)
+        data = [row for row in reader]
+        data.pop(0)
+
+    entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
+
+    # スタート地点・ゴール地点の座標配列city[]
+    for i in range(len(data)):
+        city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
+
+    # 選択されたアトラクションのデータをappendしていく
     for i in range(len(attraction_num)):
         num = int(attraction_num[i])
-        city_list.append(class_City(x=int(data[num][1]), y=int(data[num][2])))
-        attraction_name.append(data[num][0])
-        time_list.append(wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])))
-        ride_time.append(int(data[num][5]))
+        city_list.append(class_City(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
+                                    time_list=wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])),
+                                    ride_time=int(data[num][5])))
+        entrance_distance.append(int(data[num][6]))
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間
     now_hour = now.hour
@@ -130,7 +128,7 @@ def result():
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
     ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time,
-                               ride_time, time_list, attraction_name, random_url)
+                               entrance_distance, random_url)
     result_output = ga.main()
 
     img_url = result_output[0]
