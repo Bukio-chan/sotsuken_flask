@@ -11,15 +11,15 @@ import csv
 
 
 # 徒歩時間の追加
-def on_foot(route, start_place, end_place, city_list):
-    # foot = [round(start_place.setting_distance(city_list, route[0]) / 80)]  # 最初の地点
+def on_foot(route, start_place, end_place):
+    # foot = [round(start_place.setting_distance(route[0]) / 80)]  # 最初の地点
     foot = [round(start_place.distance(route[0]) / 80)]  # 最初の地点
     for i in range(len(route) - 1):  # 距離
         from_city = route[i]
         to_city = route[(i + 1) % len(route)]
-        # foot.append(round(from_city.setting_distance(city_list, to_city) / 80))  # どっちか
+        # foot.append(round(from_city.setting_distance(to_city) / 80))  # どっちか
         foot.append(round(from_city.distance(to_city) / 80))  # どっちか
-    # foot.append(round(end_place.setting_distance(city_list, route[-1]) / 80))  # 最後の地点
+    # foot.append(round(end_place.setting_distance(route[-1]) / 80))  # 最後の地点
     foot.append(round(end_place.distance(route[-1]) / 80))  # 最後の地点
     return foot
 
@@ -27,7 +27,7 @@ def on_foot(route, start_place, end_place, city_list):
 # 待ち時間の合計
 def wait_time_total(route, start_place, end_place, start_time, city_list):
     fix_time = start_time
-    foot = on_foot(route, start_place, end_place, city_list)
+    foot = on_foot(route, start_place, end_place)
     wait = 0
     flag = True
     for i in range(len(route)):
@@ -50,32 +50,30 @@ def wait_time_total(route, start_place, end_place, start_time, city_list):
 
 
 class City:
-    def __init__(self, x, y, name=None, time_list=None, ride_time=None):
+    # distance.csvのデータを2次元配列distance_listに格納
+    with open("static/csv/distance.csv", 'r', encoding="utf-8")as f:
+        reader = csv.reader(f)
+        distance_list = [row for row in reader]
+
+    def __init__(self, x, y, name=None, time_list=None, ride_time=None, num=None):
         self.x = x
         self.y = y
         self.name = name
         self.time_list = time_list
         self.ride_time = ride_time
-        # data.csvのデータを2次元配列distance_listに格納
-        with open("static/csv/distance.csv", 'r', encoding="utf-8")as f:
-            reader = csv.reader(f)
-            self.distance_list = [row for row in reader]
+        self.num = num
 
     def distance(self, city):  # 二点間の距離の計算
         distance = np.sqrt((self.x - city.x) ** 2 + (self.y - city.y) ** 2)
         return distance
 
     # 設定した距離データで計算
-    def setting_distance(self, city_list, to_city):
-        distance = 0
-        for i in range(len(city_list)):
-            for j in range(len(city_list)):
-                if self == city_list[i] and to_city == city_list[j]:
-                    distance = int(self.distance_list[i][j])
+    def setting_distance(self, city):
+        distance = int(self.distance_list[self.num][city.num])
         return distance
 
     def __repr__(self):
-        return f'{self.name}  (約{self.ride_time}分)'
+        return f'{self.name}'
 
 
 class Calculation:
@@ -85,7 +83,6 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.city_list = ga.city_list
-        self.entrance_distance = ga.entrance_distance
         self._time = 0
         self._distance = 0
         self._fitness = 0
@@ -102,16 +99,16 @@ class Calculation:
     def distance(self):  # 総距離の計算
         if self._distance == 0:
             path_distance = 0
-            # path_distance += self.start_place.setting_distance(self.city_list, self.route[0])  # 最初の地点
+            # path_distance += self.start_place.setting_distance(self.route[0])  # 最初の地点
             path_distance += self.start_place.distance(self.route[0])  # 最初の地点
 
             for i in range(len(self.route) - 1):  # 距離
                 from_city = self.route[i]
                 to_city = self.route[(i + 1) % len(self.route)]
-                # path_distance += from_city.setting_distance(self.city_list, to_city)  # どっちか
+                # path_distance += from_city.setting_distance(to_city)  # どっちか
                 path_distance += from_city.distance(to_city)  # どっちか
 
-            # path_distance += self.end_place.setting_distance(self.city_list, self.route[-1])  # 最後の地点
+            # path_distance += self.end_place.setting_distance(self.route[-1])  # 最後の地点
             path_distance += self.end_place.distance(self.route[-1])  # 最後の地点
             self._distance = path_distance
         return self._distance
@@ -227,14 +224,12 @@ def plot_route(route, url, title=None):  # 表示
 
 
 class GeneticAlgorithm:
-    def __init__(self, city_list, distance_flag, start_place, end_place, start_time,
-                 entrance_distance, random_url):
+    def __init__(self, city_list, distance_flag, start_place, end_place, start_time, random_url):
         self.city_list = city_list
         self.distance_flag = distance_flag
         self.start_place = start_place
         self.end_place = end_place
         self.start_time = start_time
-        self.entrance_distance = entrance_distance
         self.random_url = random_url
 
         self.generation = 50  # 世代数

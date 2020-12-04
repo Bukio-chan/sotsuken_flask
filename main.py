@@ -11,6 +11,19 @@ import csv
 
 app = Flask(__name__)
 
+class_City = calc.City  # calc.pyのCityクラス
+
+# data.csvのデータを2次元配列dataに格納
+with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
+    reader = csv.reader(f)
+    data = [row for row in reader]
+    data.pop(0)
+
+city = []
+# スタート地点・ゴール地点の座標配列city[]
+for j in range(len(data)):
+    city.append(class_City(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
+
 
 # csvから読み取り、stringをintに変換
 def wait_time(table_num, line):
@@ -20,9 +33,6 @@ def wait_time(table_num, line):
         df.append(int(row[line]))
     csv_file.close()
     return df
-
-
-class_City = calc.City  # calc.pyのCityクラス
 
 
 # 現在時刻からスタート時間取得
@@ -51,18 +61,15 @@ def random_name(n):
 
 @app.route("/")
 def search():
-    render_page = render_template("index.html")
     # 画像の削除
     for x in glob.glob('static/result/*.png'):
         os.remove(x)
-    return render_page
+    return render_template("index.html", city=city)
 
 
 @app.route("/result", methods=['POST'])
 def result():
-    city = []
     city_list = []
-    entrance_distance = []
 
     attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     get_start = int(request.form.get('START'))  # スタート位置
@@ -73,27 +80,14 @@ def result():
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
-    # data.csvのデータを2次元配列dataに格納
-    with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
-        reader = csv.reader(f)
-        data = [row for row in reader]
-        data.pop(0)
-
-    entrance_point = class_City(x=int(80), y=int(190))  # エントランスの座標
-
-    # スタート地点・ゴール地点の座標配列city[]
-    for i in range(len(data)):
-        city.append(class_City(x=int(data[i][1]), y=int(data[i][2])))
-
     # 選択されたアトラクションのデータをappendしていく
     for i in range(len(attraction_num)):
         num = int(attraction_num[i])
         city_list.append(class_City(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
                                     time_list=wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])),
-                                    ride_time=int(data[num][5])))
-        entrance_distance.append(int(data[num][6]))
+                                    ride_time=int(data[num][5]), num=i))
 
-    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
     now_hour = now.hour
     now_minute = now.minute
 
@@ -116,20 +110,12 @@ def result():
         distance_flag = False
 
     # スタート・ゴール地点取得
-    if get_start == 100:
-        start = entrance_point
-    else:
-        start = city[get_start]
-
-    if get_end == 100:
-        end = entrance_point
-    else:
-        end = city[get_end]
+    start = city[get_start]
+    end = city[get_end]
 
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
-    ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time,
-                               entrance_distance, random_url)
+    ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time, random_url)
     result_output = ga.main()
 
     img_url = result_output[0]

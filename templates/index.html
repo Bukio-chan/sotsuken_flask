@@ -11,37 +11,19 @@
 <h2>アトラクションを選択（※2つ以上）</h2>
 <form action="/result" method="POST">
   <div class="box11">
-    <label><input type="checkbox" name="attraction" value="0"> スパイダーマン</label><br>
-    <label><input type="checkbox" name="attraction" value="1"> ミニオンパーク</label> <br>
-    <label><input type="checkbox" name="attraction" value="2"> フライングダイナソー</label><br>
-    <label><input type="checkbox" name="attraction" value="3"> ジョーズ</label><br>
-    <label><input type="checkbox" name="attraction" value="4"> ハリーポッター</label><br>
-    <label><input type="checkbox" name="attraction" value="5"> ハリウッドドリームザライド</label><br>
-    <label><input type="checkbox" name="attraction" value="6"> バックドロップ</label><br>
-    <label><input type="checkbox" name="attraction" value="7"> ヒッポグリフ</label> <br>
-    <label><input type="checkbox" name="attraction" value="8"> ジュラシックパークザライド</label><br>
-    <label><input type="checkbox" name="attraction" value="9"> スヌーピーのグレートレース</label><br>
-    <label><input type="checkbox" name="attraction" value="10"> フライングスヌーピー</label><br>
-    <label><input type="checkbox" name="attraction" value="11"> エルモのバブルバブル</label>
+      {% for i in city[1:] %}
+      <label><input type="checkbox" name="attraction" value="{{i.num}}"> {{i.name}}</label><br>
+      {% endfor %}
   </div>
   <hr>
 
   <h2>スタート地点</h2>
   <div class="cp_select cp_sl03">
     <select name="START" class="select_box">
-      <option value="100">エントランス(入口)</option>
-      <option value="0">スパイダーマン</option>
-      <option value="1">ミニオンパーク</option>
-      <option value="2">フライングダイナソー</option>
-      <option value="3">ジョーズ</option>
-      <option value="4">ハリーポッター</option>
-      <option value="5">ハリウッドドリームザライド</option>
-      <option value="6">バックドロップ</option>
-      <option value="7">ヒッポグリフ</option>
-      <option value="8">ジュラシックパークザライド</option>
-　　   <option value="9">スヌーピーのグレートレース</option>
-      <option value="10">フライングスヌーピー</option>
-      <option value="11">エルモのバブルバブル</option>
+        <option value="0">エントランス（入口）</option>
+        {% for i in city %}
+        <option value="{{i.num}}">{{i.name}}</option>
+        {% endfor %}
     </select><br>
   </div>
   <hr>
@@ -49,19 +31,10 @@
   <h2>ゴール地点</h2>
   <div class="cp_select cp_sl03">
     <select name="END" class="select_box">
-      <option value="100">エントランス(入口)</option>
-      <option value="0">スパイダーマン</option>
-      <option value="1">ミニオンパーク</option>
-      <option value="2">フライングダイナソー</option>
-      <option value="3">ジョーズ</option>
-      <option value="4">ハリーポッター</option>
-      <option value="5">ハリウッドドリームザライド</option>
-      <option value="6">バックドロップ</option>
-      <option value="7">ヒッポグリフ</option>
-      <option value="8">ジュラシックパークザライド</option>
-　　   <option value="9">スヌーピーのグレートレース</option>
-      <option value="10">フライングスヌーピー</option>
-      <option value="11">エルモのバブルバブル</option>
+        <option value="0">エントランス（入口）</option>
+        {% for i in city %}
+        <option value="{{i.num}}">{{i.name}}</option>
+        {% endfor %}
     </select>
   </div>
   <hr>
