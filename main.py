@@ -109,7 +109,7 @@ def result():
         priority = "距離優先"
     else:
         distance_flag = False
-        priority = "待ち時間優先"
+        priority = "時間優先"
 
     # スタート・ゴール地点取得
     start_place = city[get_start]

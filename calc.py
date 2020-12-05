@@ -212,7 +212,7 @@ def plot_route(route, start_place, end_place, url, title=None):  # 表示
         next_city = route[(i + 1) % len(route)]
         bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
                          linestyle='-')
-        pyplot.text(city.x, city.y - 10, i + 1, bbox=bbox_dict)  # 番号の表示
+        pyplot.text(city.x, city.y - 15, i + 1, bbox=bbox_dict)  # 番号の表示
         plt.scatter(city.x, city.y, c='red')
         if i >= len(route) - 1:
             break
@@ -220,8 +220,8 @@ def plot_route(route, start_place, end_place, url, title=None):  # 表示
         if title:
             plt.title(title, fontname="MS Gothic")
     # スタート地点・ゴール地点のplot
-    plt.scatter(start_place.x, start_place.y, c='red')
-    plt.scatter(end_place.x, end_place.y, c='red')
+    plt.scatter(start_place.x, start_place.y, c='blue')
+    plt.scatter(end_place.x, end_place.y, c='blue')
     plt.plot((start_place.x, route[0].x), (start_place.y, route[0].y), c='black')
     plt.plot((end_place.x, route[-1].x), (end_place.y, route[-1].y), c='black')
 
