@@ -110,12 +110,13 @@ def result():
         distance_flag = False
 
     # スタート・ゴール地点取得
-    start = city[get_start]
-    end = city[get_end]
+    start_place = city[get_start]
+    end_place = city[get_end]
 
     random_url = f"static/result/USJ_route_{random_name(6)}.png"
 
-    ga = calc.GeneticAlgorithm(city_list, distance_flag, start, end, start_time, random_url)
+    ga = calc.GeneticAlgorithm(city_list, distance_flag, start_place, end_place,
+                               start_time, random_url)
     result_output = ga.main()
 
     img_url = result_output[0]
@@ -127,10 +128,10 @@ def result():
         comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
-        end_result = start_result + datetime.timedelta(minutes=time_result)
+        end_result = start_result + datetime.timedelta(minutes=time_result[0])
 
-    time_hour = int(time_result / 60)
-    time_minute = time_result % 60
+    time_hour = int(time_result[0] / 60)
+    time_minute = time_result[0] % 60
     # 0埋め
     start_minute = format(start_result.minute, '02')
     end_minute = format(end_result.minute, '02')
@@ -139,7 +140,8 @@ def result():
     return render_template('result.html', time=time_result, time_hour=time_hour, time_minute=time_minute,
                            distance=distance_result, order=order_result, img_url=img_url,
                            start_hour=start_result.hour, start_minute=start_minute,
-                           end_hour=end_result.hour, end_minute=end_minute)
+                           end_hour=end_result.hour, end_minute=end_minute,
+                           start_place=start_place, end_place=end_place)
 
 
 if __name__ == "__main__":

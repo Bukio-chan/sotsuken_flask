@@ -30,11 +30,13 @@ def wait_time_total(route, start_place, end_place, start_time, city_list):
     foot = on_foot(route, start_place, end_place)
     wait = 0
     flag = True
+    each_wait = []
     for i in range(len(route)):
         if start_time < 29:
             wait += foot[i]  # 徒歩時間
             for j in range(len(city_list)):
                 if route[i] == city_list[j]:
+                    each_wait.append(city_list[j].time_list[start_time])
                     wait += city_list[j].time_list[start_time]
                     wait += city_list[j].ride_time  # 乗車時間
                     if wait >= 30:
@@ -42,11 +44,11 @@ def wait_time_total(route, start_place, end_place, start_time, city_list):
         else:
             flag = False
             break
-
+    wait += foot[-1]  # 最後のアトラクションからゴール位置までの時間
     if flag:
-        return wait
+        return wait, each_wait, foot
     else:
-        return wait * 10000
+        return wait * 10000, each_wait, foot
 
 
 class City:
@@ -84,6 +86,8 @@ class Calculation:
         self.start_time = ga.start_time
         self.city_list = ga.city_list
         self._time = 0
+        self._each_time = 0  # 待ち時間list
+        self._foot = 0  # 徒歩時間list
         self._distance = 0
         self._fitness = 0
 
@@ -92,8 +96,10 @@ class Calculation:
         if self._time == 0:
             path_time = wait_time_total(self.route, self.start_place, self.end_place,
                                         self.start_time, self.city_list)
-            self._time = path_time
-        return self._time
+            self._time = path_time[0]
+            self._each_time = path_time[1]
+            self._foot = path_time[2]
+        return self._time, self._each_time, self._foot
 
     @property
     def distance(self):  # 総距離の計算
@@ -116,7 +122,7 @@ class Calculation:
     @property
     def time_fitness(self):
         if self._fitness == 0:
-            self._fitness = 1 / float(self.time)
+            self._fitness = 1 / float(self.time[0])
         return self._fitness
 
     @property
@@ -281,7 +287,7 @@ class GeneticAlgorithm:
             time_result = round(1 / self.rank_routes(pop)[0][1])
             distance_result = round(calc.distance, 2)
 
-        if not self.distance_flag and time_result > 10000:
+        if not self.distance_flag and time_result[0] > 10000:
             time_result = 0
 
         return best_route, time_result, distance_result

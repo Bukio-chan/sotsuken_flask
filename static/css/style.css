@@ -65,6 +65,21 @@ div.box11 {
 	padding: 8px 38px 8px 8px;
 }
 
+table{
+  border-collapse:collapse;
+  margin:0 20px;
+}
+td,th{
+  padding:10px;
+}
+th{
+  color:#fff;
+  background:#005ab3;
+}
+table tr:nth-child(even){
+  background:#e6f2ff;
+}
+
 @media screen and (max-width: 480px) {
 font-size: 150%;
 
@@ -83,7 +98,13 @@ div.box11 {
   margin: 10px 10px;
 }
 
+table{
+  border-collapse:collapse;
+  margin:0 auto;
+}
+
 img {
-  width: 100%;
+  width: 90%;
+  margin:0 auto;
 }
 }
