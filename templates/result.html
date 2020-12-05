@@ -25,7 +25,7 @@
                 <tr><td> </td><td>{{start_place}}</td><td> </td></tr>
                 <tr><td> </td><td>↓ 徒歩 約{{time[2][0]}}分</td><td> </td></tr>
                 {% for i in order %}
-                <tr><td>約{{time[1][loop.index-1]}}分</td><td>{{i}}</td><td>約{{i.ride_time}}分</td></tr>
+                <tr><td align="center">約{{time[1][loop.index-1]}}分</td><td>{{i}}</td><td align="center">約{{i.ride_time}}分</td></tr>
                 <tr><td> </td><td>↓ 徒歩 約{{time[2][loop.index]}}分</td><td> </td></tr>
                 {% endfor %}
                 <tr><td> </td><td>{{end_place}}</td><td> </td></tr>
