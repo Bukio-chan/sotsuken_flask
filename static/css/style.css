@@ -68,6 +68,7 @@ div.box11 {
 table{
   border-collapse:collapse;
   margin:0 40px;
+  width:50%
 }
 td,th{
   padding:10px 0;
@@ -84,17 +85,15 @@ div.image{
   margin:0 40px;
 }
 
-@media screen and (max-width: 480px) {
-font-size: 150%;
+div.button1 {
+  text-align:center
+}
 
+@media screen and (max-width: 480px) {
 button.button2 {
   font-size: 1.0em;
   font-weight: bold;
   padding: 10px 30px;
-}
-
-div.button1 {
-  text-align:center
 }
 
 div.box11 {

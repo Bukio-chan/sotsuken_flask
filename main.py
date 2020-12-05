@@ -106,8 +106,10 @@ def result():
     # 優先取得
     if request.form.get("priority") == "True":
         distance_flag = True
+        priority = "距離優先"
     else:
         distance_flag = False
+        priority = "待ち時間優先"
 
     # スタート・ゴール地点取得
     start_place = city[get_start]
@@ -137,7 +139,7 @@ def result():
     end_minute = format(end_result.minute, '02')
 
     # htmlへ出力
-    return render_template('result.html', time=time_result, time_hour=time_hour, time_minute=time_minute,
+    return render_template('result.html', priority=priority, time=time_result, time_hour=time_hour, time_minute=time_minute,
                            distance=distance_result, order=order_result, img_url=img_url,
                            start_hour=start_result.hour, start_minute=start_minute,
                            end_hour=end_result.hour, end_minute=end_minute,

@@ -8,7 +8,7 @@
         <meta http-equiv="content-type" charset="utf-8">
     </head>
     <body>
-        <h2>結果</h2>
+        <h2>結果 ({{priority}})</h2>
         <div class="box11">
             <ul>
                 {% if time[0] > 10000 %}
@@ -17,7 +17,7 @@
                 <li><font size="+2">{{start_hour}}:{{start_minute}} ⇒ {{end_hour}}:{{end_minute}}</font></li>
                 <li>所要時間: 約{{time_hour}}時間{{time_minute}}分</li>
                 {% endif %}
-                <li>総移動距離: 約{{distance}}m</li>
+                <li>移動距離: 約{{distance}}m</li>
             </ul>
         </div>
             <table>
@@ -34,5 +34,6 @@
         <div class="image">
         <img src="{{img_url}}" alt ="地図">
         </div>
+    <br>
     </body>
 </html>

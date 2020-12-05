@@ -20,7 +20,6 @@
   <h2>スタート地点</h2>
   <div class="cp_select cp_sl03">
     <select name="START" class="select_box">
-        <option value="0">エントランス（入口）</option>
         {% for i in city %}
         <option value="{{i.num}}">{{i.name}}</option>
         {% endfor %}
@@ -31,7 +30,6 @@
   <h2>ゴール地点</h2>
   <div class="cp_select cp_sl03">
     <select name="END" class="select_box">
-        <option value="0">エントランス（入口）</option>
         {% for i in city %}
         <option value="{{i.num}}">{{i.name}}</option>
         {% endfor %}

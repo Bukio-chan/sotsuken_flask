@@ -204,7 +204,7 @@ def selection(population_ranked, elite_size):
     return selection_results
 
 
-def plot_route(route, url, title=None):  # 表示
+def plot_route(route, start_place, end_place, url, title=None):  # 表示
     img = imread("static/USJ_map.png")
     plt.figure()
     for i in range(len(route)):
@@ -219,6 +219,11 @@ def plot_route(route, url, title=None):  # 表示
         plt.plot((city.x, next_city.x), (city.y, next_city.y), c='black')
         if title:
             plt.title(title, fontname="MS Gothic")
+    # スタート地点・ゴール地点のplot
+    plt.scatter(start_place.x, start_place.y, c='red')
+    plt.scatter(end_place.x, end_place.y, c='red')
+    plt.plot((start_place.x, route[0].x), (start_place.y, route[0].y), c='black')
+    plt.plot((end_place.x, route[-1].x), (end_place.y, route[-1].y), c='black')
 
     plt.imshow(img)
     # plt.show()
@@ -284,7 +289,7 @@ class GeneticAlgorithm:
             time_result = calc.time
             distance_result = round(1 / self.rank_routes(pop)[0][1], 2)
         else:
-            time_result = round(1 / self.rank_routes(pop)[0][1])
+            time_result = calc.time
             distance_result = round(calc.distance, 2)
 
         if not self.distance_flag and time_result[0] > 10000:
@@ -294,7 +299,7 @@ class GeneticAlgorithm:
 
     def main(self):
         best_route = self.solve()
-        img_name = plot_route(best_route[0], self.random_url)
+        img_name = plot_route(best_route[0], self.start_place, self.end_place, self.random_url)
 
         order_result = best_route[0]
         time_result = best_route[1]
