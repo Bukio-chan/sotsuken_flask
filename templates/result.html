@@ -19,8 +19,9 @@
                 {% endif %}
                 <li>総移動距離: 約{{distance}}m</li>
             </ul>
+        </div>
             <table>
-              <tr align="left"><th>待ち時間</th><th>経路</th><th>乗車時間</th></tr>
+              <tr><th>待ち時間</th><th>経路</th><th>乗車時間</th></tr>
                 <tr><td> </td><td>{{start_place}}</td><td> </td></tr>
                 <tr><td> </td><td>↓ 徒歩 約{{time[2][0]}}分</td><td> </td></tr>
                 {% for i in order %}
@@ -29,7 +30,9 @@
                 {% endfor %}
                 <tr><td> </td><td>{{end_place}}</td><td> </td></tr>
             </table>
-        </div><br>
+        <br>
+        <div class="image">
         <img src="{{img_url}}" alt ="地図">
+        </div>
     </body>
 </html>
