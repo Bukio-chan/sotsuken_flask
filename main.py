@@ -134,22 +134,24 @@ def result():
     time_hour = int(time_result[0] / 60)
     time_minute = time_result[0] % 60
 
-    elapsed_hour = []
-    elapsed_minute = []
-    add = start_time_result
-    # 時間経過
-    for i in range(len(attraction_list)):
-        arrival = add + datetime.timedelta(minutes=time_result[2][i])
-        elapsed_hour.append(arrival.hour)
-        elapsed_minute.append(format(arrival.minute, '02'))
-        depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(minutes=order_result[i].ride_time)
-        elapsed_hour.append(depart.hour)
-        elapsed_minute.append(format(depart.minute, '02'))
-        add = depart
-
     # 0埋め
     start_minute = format(start_time_result.minute, '02')
     end_minute = format(end_time_result.minute, '02')
+
+    elapsed_hour = []
+    elapsed_minute = []
+    add = start_time_result
+    if time_result[0] <= 10000:
+        # 時間経過
+        for i in range(len(attraction_list)):
+            arrival = add + datetime.timedelta(minutes=time_result[2][i])
+            elapsed_hour.append(arrival.hour)
+            elapsed_minute.append(format(arrival.minute, '02'))
+            depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(
+                minutes=order_result[i].ride_time)
+            elapsed_hour.append(depart.hour)
+            elapsed_minute.append(format(depart.minute, '02'))
+            add = depart
 
     # htmlへ出力
     return render_template('result.html', priority=priority, time_result=time_result,

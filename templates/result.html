@@ -27,7 +27,7 @@
                 <tr><td align="center"> ↓ </td><td>徒歩 約{{time_result[2][0]}}分</td><td> </td></tr>
                 {% for i in order %}
                 <tr><td align="center" style="padding-bottom:0;">{{elapsed_hour[(loop.index-1)*2]}}:{{elapsed_minute[(loop.index-1)*2]}}</td><td style="padding-bottom:0;"><b>{{i}}</b></td><td align="center" rowspan="2">約{{i.ride_time}}分</td></tr>
-                <tr><td align="center" style="padding-top:0;">{{elapsed_hour[((loop.index-1)*2)+1]}}:{{elapsed_minute[((loop.index-1)*2)+1]}}</td><td style="padding-top:0;">(予想待ち時間 {{time_result[1][loop.index-1]}}分)</b></td></tr>
+                <tr><td align="center" style="padding-top:0;">{{elapsed_hour[((loop.index-1)*2)+1]}}:{{elapsed_minute[((loop.index-1)*2)+1]}}</td><td style="padding-top:0;">(予想待ち時間 {{time_result[1][loop.index-1]}}分)</td></tr>
                 <tr><td align="center"> ↓ </td><td>徒歩 約{{time_result[2][loop.index]}}分</td><td> </td></tr>
                 {% endfor %}
                 <tr><td align="center">{{end_hour}}:{{end_minute}}</td><td><b>{{end_place}}</b></td><td> </td></tr>
