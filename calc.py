@@ -9,18 +9,20 @@ from matplotlib.image import imread
 from matplotlib import pyplot
 import csv
 
+walk_speed = 40
+
 
 # 徒歩時間の追加
 def add_walk_time(route, start_place, end_place):
     # foot = [round(start_place.setting_distance(route[0]) / 80)]  # 最初の地点
-    foot = [round(start_place.distance(route[0]) / 80)]  # 最初の地点
+    foot = [round(start_place.distance(route[0]) / walk_speed)]  # 最初の地点
     for i in range(len(route) - 1):  # 距離
         from_city = route[i]
         to_city = route[(i + 1) % len(route)]
         # foot.append(round(from_city.setting_distance(to_city) / 80))  # どっちか
-        foot.append(round(from_city.distance(to_city) / 80))  # どっちか
+        foot.append(round(from_city.distance(to_city) / walk_speed))  # どっちか
     # foot.append(round(end_place.setting_distance(route[-1]) / 80))  # 最後の地点
-    foot.append(round(end_place.distance(route[-1]) / 80))  # 最後の地点
+    foot.append(round(end_place.distance(route[-1]) / walk_speed))  # 最後の地点
     return foot
 
 

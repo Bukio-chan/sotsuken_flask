@@ -133,6 +133,20 @@ def result():
 
     time_hour = int(time_result[0] / 60)
     time_minute = time_result[0] % 60
+
+    elapsed_hour = []
+    elapsed_minute = []
+    add = start_time_result
+    # 時間経過
+    for i in range(len(attraction_list)):
+        arrival = add + datetime.timedelta(minutes=time_result[2][i])
+        elapsed_hour.append(arrival.hour)
+        elapsed_minute.append(format(arrival.minute, '02'))
+        depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(minutes=order_result[i].ride_time)
+        elapsed_hour.append(depart.hour)
+        elapsed_minute.append(format(depart.minute, '02'))
+        add = depart
+
     # 0埋め
     start_minute = format(start_time_result.minute, '02')
     end_minute = format(end_time_result.minute, '02')
@@ -143,7 +157,8 @@ def result():
                            distance=distance_result, order=order_result, img_filename=img_filename,
                            start_hour=start_time_result.hour, start_minute=start_minute,
                            end_hour=end_time_result.hour, end_minute=end_minute,
-                           start_place=start_place, end_place=end_place)
+                           start_place=start_place, end_place=end_place,
+                           elapsed_hour=elapsed_hour, elapsed_minute=elapsed_minute)
 
 
 if __name__ == "__main__":
