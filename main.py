@@ -11,7 +11,7 @@ import csv
 
 app = Flask(__name__)
 
-class_City = calc.City  # calc.pyのCityクラス
+class_Attraction = calc.Attraction  # calc.pyのCityクラス
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
@@ -19,14 +19,14 @@ with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
     data = [row for row in reader]
     data.pop(0)
 
-city = []
-# スタート地点・ゴール地点の座標配列city[]
+all_attraction = []
+# スタート地点・ゴール地点の座標配列all_attraction[]
 for j in range(len(data)):
-    city.append(class_City(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
+    all_attraction.append(class_Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
 
 
 # csvから読み取り、stringをintに変換
-def wait_time(table_num, line):
+def load_from_csv(table_num, line):
     csv_file = open(table_num, 'r')
     df = []
     for row in csv.reader(csv_file):
@@ -49,13 +49,13 @@ def get_start_time(hour, minute):
 
 
 # 選択された時間を取得
-def get_input_time(set_time, time_num):
+def get_selected_time(set_time, time_num):
     set_time += datetime.timedelta(minutes=time_num * 30)
     return set_time
 
 
 # random文字列生成
-def random_name(n):
+def generate_random_string(n):
     return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
 
@@ -64,44 +64,43 @@ def search():
     # 画像の削除
     for x in glob.glob('static/result/*.png'):
         os.remove(x)
-    return render_template("index.html", city=city)
+    return render_template("index.html", city=all_attraction)
 
 
 @app.route("/result", methods=['POST'])
 def result():
-    city_list = []
+    attraction_list = []
 
-    attraction_num = request.form.getlist('attraction')  # 選択されたアトラクションの取得
-    get_start = int(request.form.get('START'))  # スタート位置
-    get_end = int(request.form.get('END'))  # 終わり位置
+    attraction_number = request.form.getlist('attraction')  # 選択されたアトラクションの取得
+    selected_start_place = int(request.form.get('START'))  # スタート位置
+    selected_end_place = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))  # スタート時間
 
-    if len(attraction_num) < 2:
+    if len(attraction_number) < 2:
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
     # 選択されたアトラクションのデータをappendしていく
-    for i in range(len(attraction_num)):
-        num = int(attraction_num[i])
-        city_list.append(class_City(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
-                                    time_list=wait_time(f'static/csv/table_{data[num][3]}.csv', int(data[num][4])),
-                                    ride_time=int(data[num][5]), num=i))
+    for i in range(len(attraction_number)):
+        num = int(attraction_number[i])
+        attraction_list.append(class_Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
+                                                wait_time_list=load_from_csv(f'static/csv/table_{data[num][3]}.csv',
+                                                                             int(data[num][4])),
+                                                ride_time=int(data[num][5]), num=i))
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
-    now_hour = now.hour
-    now_minute = now.minute
 
-    start_result = now
+    start_time_result = now
 
     if int(request.form.get('start_time')) == 100:  # スタート時間
-        if 8 <= now_hour <= 21:
-            start_time = get_start_time(now_hour, now_minute)
+        if 8 <= now.hour <= 21:
+            start_time = get_start_time(now.hour, now.minute)
         else:
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
     else:
-        start_result = get_input_time(datetime.datetime(now.year, now.month, now.day, 7, 45),
-                                      start_time)
+        start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 45),
+                                              start_time)
 
     # 優先取得
     if request.form.get("priority") == "True":
@@ -112,37 +111,38 @@ def result():
         priority = "時間優先"
 
     # スタート・ゴール地点取得
-    start_place = city[get_start]
-    end_place = city[get_end]
+    start_place = all_attraction[selected_start_place]
+    end_place = all_attraction[selected_end_place]
 
-    random_url = f"static/result/USJ_route_{random_name(6)}.png"
+    random_string = f"static/result/USJ_route_{generate_random_string(6)}.png"
 
-    ga = calc.GeneticAlgorithm(city_list, distance_flag, start_place, end_place,
-                               start_time, random_url)
-    result_output = ga.main()
+    ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place,
+                               start_time, random_string)
+    output_result = ga.main()
 
-    img_url = result_output[0]
-    order_result = result_output[1]
-    time_result = result_output[2]
-    distance_result = result_output[3]
+    img_filename = output_result[0]
+    order_result = output_result[1]
+    time_result = output_result[2]
+    distance_result = output_result[3]
 
     if time_result == 0:
         comment = "時間が足りないかも！"
         return render_template('error.html', comment=comment)
     else:
-        end_result = start_result + datetime.timedelta(minutes=time_result[0])
+        end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])
 
     time_hour = int(time_result[0] / 60)
     time_minute = time_result[0] % 60
     # 0埋め
-    start_minute = format(start_result.minute, '02')
-    end_minute = format(end_result.minute, '02')
+    start_minute = format(start_time_result.minute, '02')
+    end_minute = format(end_time_result.minute, '02')
 
     # htmlへ出力
-    return render_template('result.html', priority=priority, time=time_result, time_hour=time_hour, time_minute=time_minute,
-                           distance=distance_result, order=order_result, img_url=img_url,
-                           start_hour=start_result.hour, start_minute=start_minute,
-                           end_hour=end_result.hour, end_minute=end_minute,
+    return render_template('result.html', priority=priority, time_result=time_result,
+                           time_hour=time_hour, time_minute=time_minute,
+                           distance=distance_result, order=order_result, img_filename=img_filename,
+                           start_hour=start_time_result.hour, start_minute=start_minute,
+                           end_hour=end_time_result.hour, end_minute=end_minute,
                            start_place=start_place, end_place=end_place)
 
 

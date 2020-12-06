@@ -11,7 +11,7 @@
         <div class="box">
         <h2>結果</h2>
             <div class="bullets">
-                {% if time[0] > 10000 %}
+                {% if time_result[0] > 10000 %}
                 時間が足りないかも！
                 <br>
                 {% else %}
@@ -24,16 +24,16 @@
             <table>
               <tr><th>待ち時間</th><th>経路</th><th>乗車時間</th></tr>
                 <tr><td> </td><td><b>{{start_place}}</b></td><td> </td></tr>
-                <tr><td> </td><td>↓ 徒歩 約{{time[2][0]}}分</td><td> </td></tr>
+                <tr><td> </td><td>↓ 徒歩 約{{time_result[2][0]}}分</td><td> </td></tr>
                 {% for i in order %}
-                <tr><td align="center">約{{time[1][loop.index-1]}}分</td><td><b>{{i}}</b></td><td align="center">約{{i.ride_time}}分</td></tr>
-                <tr><td> </td><td>↓ 徒歩 約{{time[2][loop.index]}}分</td><td> </td></tr>
+                <tr><td align="center">約{{time_result[1][loop.index-1]}}分</td><td><b>{{i}}</b></td><td align="center">約{{i.ride_time}}分</td></tr>
+                <tr><td> </td><td>↓ 徒歩 約{{time_result[2][loop.index]}}分</td><td> </td></tr>
                 {% endfor %}
                 <tr><td> </td><td><b>{{end_place}}</b></td><td> </td></tr>
             </table>
         <br>
         <div class="image">
-        <img src="{{img_url}}" alt ="地図">
+        <img src="{{img_filename}}" alt ="地図">
         </div>
         <br>
         </div>

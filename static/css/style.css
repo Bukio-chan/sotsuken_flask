@@ -1,3 +1,7 @@
+body {
+  font-family: 'arial';
+}
+
 h2 {
   position: relative;
   padding: 1rem 1rem;
@@ -18,7 +22,7 @@ div.bullets {
 
 .cp_select {
 	overflow: hidden;
-	width: 90%;
+	width: 95%;
 	margin: 2em auto;
 	text-align: center;
 }
@@ -63,7 +67,11 @@ div.bullets {
 
 table{
   border-collapse:collapse;
-  width:100%
+  width:100%;
+  margin: 10px 0px;
+}
+table tr:nth-child(even){
+  background:#eee;
 }
 td,th{
   padding:10px 0;
@@ -71,9 +79,6 @@ td,th{
 th{
   color:#fff;
   background:#094;
-}
-table tr:nth-child(even){
-  background:#fdf5e6;
 }
 
 div.image{
@@ -85,9 +90,8 @@ button.button2 {
   font-size: 1.0em;
   font-weight: bold;
   padding: 10px 10%;
-  border-radius: 10px;
+  border-radius: 5px;
 }
-
 div.button1 {
   text-align:center
 }
@@ -112,7 +116,6 @@ table{
   margin:0 auto;
   width:100%
 }
-
 th{
   font-size: 0.8em;
 }
