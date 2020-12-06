@@ -84,7 +84,7 @@ table tr:nth-child(3n){
   background: #fff;
 }
 td,th{
-  padding:10px 0;
+  padding:10px 5px;
 }
 th{
   color:#fff;
@@ -125,10 +125,6 @@ table{
   border-collapse:collapse;
   margin:0 auto;
 }
-th{
-  font-size: 0.8em;
-}
-
 div.image{
   margin:0 auto;
 }
