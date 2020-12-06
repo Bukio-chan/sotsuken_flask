@@ -11,27 +11,24 @@
         <div class="box">
         <h2>結果</h2>
             <div class="bullets">
-            <ul>
-                <li>{{priority}}</li>
                 {% if time[0] > 10000 %}
-                <li>時間が足りないかも！</li>
+                時間が足りないかも！
                 {% else %}
-                <li><font size="+2">{{start_hour}}:{{start_minute}} ⇒ {{end_hour}}:{{end_minute}}</font></li>
-                <li>所要時間: 約{{time_hour}}時間{{time_minute}}分</li>
+                <span style="font-size:130%;">{{start_hour}}:{{start_minute}}→{{end_hour}}:{{end_minute}}</span>({{time_hour}}時間{{time_minute}}分)
+                <br>
                 {% endif %}
-                <li>移動距離: 約{{distance}}m</li>
-            </ul>
+                {{priority}}  約{{distance}}m
             </div>
 
             <table>
               <tr><th>待ち時間</th><th>経路</th><th>乗車時間</th></tr>
-                <tr><td> </td><td>{{start_place}}</td><td> </td></tr>
+                <tr><td> </td><td><b>{{start_place}}</b></td><td> </td></tr>
                 <tr><td> </td><td>↓ 徒歩 約{{time[2][0]}}分</td><td> </td></tr>
                 {% for i in order %}
-                <tr><td align="center">約{{time[1][loop.index-1]}}分</td><td>{{i}}</td><td align="center">約{{i.ride_time}}分</td></tr>
+                <tr><td align="center">約{{time[1][loop.index-1]}}分</td><td><b>{{i}}</b></td><td align="center">約{{i.ride_time}}分</td></tr>
                 <tr><td> </td><td>↓ 徒歩 約{{time[2][loop.index]}}分</td><td> </td></tr>
                 {% endfor %}
-                <tr><td> </td><td>{{end_place}}</td><td> </td></tr>
+                <tr><td> </td><td><b>{{end_place}}</b></td><td> </td></tr>
             </table>
         <br>
         <div class="image">
