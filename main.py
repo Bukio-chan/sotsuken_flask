@@ -11,7 +11,7 @@ import csv
 
 app = Flask(__name__)
 
-class_Attraction = calc.Attraction  # calc.pyのCityクラス
+class_Attraction = calc.Attraction  # calc.pyのAttractionクラス
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
@@ -131,6 +131,7 @@ def result():
     else:
         end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])
 
+    # ?分を?時間?分の形に変更
     time_hour = int(time_result[0] / 60)
     time_minute = time_result[0] % 60
 
@@ -142,7 +143,7 @@ def result():
     elapsed_minute = []
     add = start_time_result
     if time_result[0] <= 10000:
-        # 時間経過
+        # 経過時間毎の時刻
         for i in range(len(attraction_list)):
             arrival = add + datetime.timedelta(minutes=time_result[2][i])
             elapsed_hour.append(arrival.hour)

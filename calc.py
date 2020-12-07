@@ -14,14 +14,13 @@ walk_speed = 40
 
 # 徒歩時間の追加
 def add_walk_time(route, start_place, end_place):
-    # walk_time = [round(start_place.setting_distance(route[0]) / walk_speed)]  # 最初の地点
     walk_time = [round(start_place.distance(route[0]) / walk_speed)]  # 最初の地点
+
     for i in range(len(route) - 1):  # 距離
-        from_city = route[i]
-        to_city = route[(i + 1) % len(route)]
-        # walk_time.append(round(from_city.setting_distance(to_city) / walk_speed))  # どっちか
-        walk_time.append(round(from_city.distance(to_city) / walk_speed))  # どっちか
-    # walk_time.append(round(end_place.setting_distance(route[-1]) / walk_speed))  # 最後の地点
+        from_attraction = route[i]
+        to_attraction = route[(i + 1) % len(route)]
+        walk_time.append(round(from_attraction.distance(to_attraction) / walk_speed))  # どっちか
+
     walk_time.append(round(end_place.distance(route[-1]) / walk_speed))  # 最後の地点
     return walk_time
 
@@ -67,13 +66,10 @@ class Attraction:
         self.ride_time = ride_time
         self.num = num
 
-    def distance(self, attraction):  # 二点間の距離の計算
-        distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)
-        return distance
-
-    # 設定した距離データで計算
-    def setting_distance(self, attraction):
-        distance = int(self.distance_list[self.num][attraction.num])
+    # 距離の計算
+    def distance(self, attraction):
+        distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
+        # distance = int(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
         return distance
 
     def __repr__(self):
@@ -87,9 +83,9 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.attraction_list = ga.attraction_list
-        self._time = 0
         self._each_time = 0  # 待ち時間list
         self.walk_time = 0  # 徒歩時間list
+        self._time = 0
         self._distance = 0
         self._fitness = 0
 
@@ -107,16 +103,13 @@ class Calculation:
     def distance(self):  # 総距離の計算
         if self._distance == 0:
             path_distance = 0
-            # path_distance += self.start_place.setting_distance(self.route[0])  # 最初の地点
             path_distance += self.start_place.distance(self.route[0])  # 最初の地点
 
             for i in range(len(self.route) - 1):  # 距離
-                from_city = self.route[i]
-                to_city = self.route[(i + 1) % len(self.route)]
-                # path_distance += from_city.setting_distance(to_city)  # どっちか
-                path_distance += from_city.distance(to_city)  # どっちか
+                from_attraction = self.route[i]
+                to_attraction = self.route[(i + 1) % len(self.route)]
+                path_distance += from_attraction.distance(to_attraction)  # どっちか
 
-            # path_distance += self.end_place.setting_distance(self.route[-1])  # 最後の地点
             path_distance += self.end_place.distance(self.route[-1])  # 最後の地点
             self._distance = path_distance
         return self._distance
@@ -134,20 +127,20 @@ class Calculation:
         return self._fitness
 
 
-def mutate(individual, mutation_rate):  # 突然変異
+def mutate(individual):  # 突然変異
     # This has mutation_rate chance of swapping ANY city, instead of having mutation_rate chance of doing
     # a swap on this given route...
     for swapped in range(len(individual)):
-        if random.random() < mutation_rate:
+        if random.random() < 0.01:  # 突然変異率
             swap_with = int(random.random() * len(individual))
             individual[swapped], individual[swap_with] = individual[swap_with], individual[swapped]
     return individual
 
 
-def mutate_population(population, mutation_rate):
+def mutate_population(population):
     mutated_pop = []
     for ind in population:
-        mutated = mutate(ind, mutation_rate)
+        mutated = mutate(ind)
         mutated_pop.append(mutated)
     return mutated_pop
 
@@ -245,18 +238,13 @@ class GeneticAlgorithm:
         self.start_time = start_time
         self.random_string = random_string
 
-        self.generation = 50  # 世代数
-        self.population_size = self.generation
-        self.elite = int(self.population_size / 5)
-        self.mutation_rate = 0.01
-
     def create_route(self):
         route = random.sample(self.attraction_list, len(self.attraction_list))
         return route
 
-    def create_initial_population(self):
+    def create_initial_population(self, population_size):
         population = []
-        for i in range(self.population_size):
+        for i in range(population_size):
             population.append(self.create_route())
         return population
 
@@ -270,19 +258,19 @@ class GeneticAlgorithm:
                 fitness_results[i] = calc.time_fitness
         return sorted(fitness_results.items(), key=operator.itemgetter(1), reverse=True)
 
-    def next_generation(self, current_gen, elite_size, mutation_rate):
+    def next_generation(self, current_gen, elite_size):
         pop_ranked = self.rank_routes(current_gen)
         selection_results = selection(pop_ranked, elite_size)
         mate_pool = mating_pool(current_gen, selection_results)
         children = breed_population(mate_pool, elite_size)
-        next_gen = mutate_population(children, mutation_rate)
+        next_gen = mutate_population(children)
         return next_gen
 
-    def solve(self):
-        pop = self.create_initial_population()
+    def solve(self, generation, population_size, elite):
+        pop = self.create_initial_population(population_size)
 
-        for g in range(self.generation):
-            pop = self.next_generation(pop, self.elite, self.mutation_rate)
+        for g in range(generation):
+            pop = self.next_generation(pop, elite)
 
         best_route_index = self.rank_routes(pop)[0][0]
         best_route = pop[best_route_index]
@@ -300,7 +288,11 @@ class GeneticAlgorithm:
         return best_route, time_result, distance_result
 
     def main(self):
-        best_route = self.solve()
+        generation = 50  # 世代数
+        population_size = generation
+        elite = int(population_size / 5)
+
+        best_route = self.solve(generation, population_size, elite)
         img_name = plot_route(best_route[0], self.start_place, self.end_place, self.random_string)
 
         order_result = best_route[0]

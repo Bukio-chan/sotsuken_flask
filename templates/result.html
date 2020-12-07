@@ -12,7 +12,7 @@
         <h2>結果</h2>
             <div class="bullets">
                 {% if time_result[0] > 10000 %}
-                <p>時間が足りないかも！</p>
+                <b>時間が足りないかも！</b>
                 <br>
                 {% else %}
                 <span style="font-size:130%;">{{start_hour}}:{{start_minute}}→{{end_hour}}:{{end_minute}}</span>({{time_hour}}時間{{time_minute}}分)
