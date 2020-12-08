@@ -67,6 +67,7 @@ def result():
     selected_end_place = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))  # スタート時間
     priority = request.form.get("priority")  # 優先
+    generation = int(request.form.get("generation"))  # 世代数
 
     if len(attraction_number) < 2:
         comment = "アトラクションは2つ以上選んでください！"
@@ -109,7 +110,7 @@ def result():
 
     ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place,
                                start_time)
-    output_result = ga.main()  # main()を実行
+    output_result = ga.main(generation)  # main()を実行
 
     order_result, time_result, distance_result, img_filename = output_result
 

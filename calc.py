@@ -10,8 +10,6 @@ from matplotlib.image import imread
 from matplotlib import pyplot
 import csv
 
-walk_speed = 40
-
 
 class Attraction:
     # distance.csvのデータを2次元配列distance_listに格納
@@ -44,6 +42,7 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.attraction_list = ga.attraction_list
+        self.walk_speed = 40  # 歩く速さ
         self._each_wait_time = 0  # 待ち時間list
         self._each_walk_time = 0  # 徒歩時間list
         self._time = 0
@@ -52,14 +51,14 @@ class Calculation:
 
     # 徒歩時間の追加
     def add_walk_time(self, route):
-        walk_time = [round(self.start_place.distance(route[0]) / walk_speed)]  # 最初の地点
+        walk_time = [round(self.start_place.distance(route[0]) / self.walk_speed)]  # 最初の地点
 
         for i in range(len(route) - 1):  # 距離
             from_attraction = route[i]
             to_attraction = route[(i + 1) % len(route)]
-            walk_time.append(round(from_attraction.distance(to_attraction) / walk_speed))  # どっちか
+            walk_time.append(round(from_attraction.distance(to_attraction) / self.walk_speed))  # どっちか
 
-        walk_time.append(round(self.end_place.distance(route[-1]) / walk_speed))  # 最後の地点
+        walk_time.append(round(self.end_place.distance(route[-1]) / self.walk_speed))  # 最後の地点
         return walk_time
 
     # 所要時間の合計
@@ -289,8 +288,7 @@ class GeneticAlgorithm:
 
         return best_route, time_result, distance_result
 
-    def main(self):
-        generation = 50  # 世代数
+    def main(self, generation):
         population_size = generation
         elite = int(population_size / 5)
 
