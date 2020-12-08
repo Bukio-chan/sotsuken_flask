@@ -94,9 +94,7 @@ class Calculation:
         if self._time == 0:
             path_time = wait_time_total(self.route, self.start_place, self.end_place,
                                         self.start_time, self.attraction_list)
-            self._time = path_time[0]
-            self._each_time = path_time[1]
-            self.walk_time = path_time[2]
+            self._time, self._each_time, self.walk_time = path_time
         return self._time, self._each_time, self.walk_time
 
     @property
@@ -293,10 +291,7 @@ class GeneticAlgorithm:
         elite = int(population_size / 5)
 
         best_route = self.solve(generation, population_size, elite)
-        img_name = plot_route(best_route[0], self.start_place, self.end_place, self.random_string)
+        order_result, time_result, distance_result = best_route
+        img_filename = plot_route(order_result, self.start_place, self.end_place, self.random_string)
 
-        order_result = best_route[0]
-        time_result = best_route[1]
-        distance_result = best_route[2]
-
-        return img_name, order_result, time_result, distance_result
+        return img_filename, order_result, time_result, distance_result

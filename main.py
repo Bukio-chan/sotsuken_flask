@@ -120,10 +120,7 @@ def result():
                                start_time, random_string)
     output_result = ga.main()
 
-    img_filename = output_result[0]
-    order_result = output_result[1]
-    time_result = output_result[2]
-    distance_result = output_result[3]
+    img_filename, order_result, time_result, distance_result = output_result
 
     if time_result == 0:
         comment = "時間が足りないかも！"
