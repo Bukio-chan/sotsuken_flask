@@ -80,7 +80,7 @@ def result():
         attraction_list.append(class_Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
                                                 wait_time_list=load_from_csv(f'static/csv/table_{data[num][3]}.csv',
                                                                              int(data[num][4])),
-                                                ride_time=int(data[num][5]), num=i))
+                                                ride_time=int(data[num][5]), num=num))
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 

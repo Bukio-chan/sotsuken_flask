@@ -27,8 +27,8 @@ class Attraction:
 
     # 距離の計算
     def distance(self, attraction):
-        distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
-        # distance = int(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
+        # distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
+        distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
         return distance
 
     def __repr__(self):
@@ -42,7 +42,7 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.attraction_list = ga.attraction_list
-        self.walk_speed = 40  # 歩く速さ
+        self.walk_speed = 80  # 歩く速さ
         self._each_wait_time = 0  # 待ち時間list
         self._each_walk_time = 0  # 徒歩時間list
         self._time = 0
