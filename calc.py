@@ -42,7 +42,7 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.attraction_list = ga.attraction_list
-        self.walk_speed = 80  # 歩く速さ
+        self.walk_speed = 60  # 歩く速さ
         self._each_wait_time = 0  # 待ち時間list
         self._each_walk_time = 0  # 徒歩時間list
         self._time = 0

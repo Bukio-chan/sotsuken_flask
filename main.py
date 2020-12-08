@@ -108,8 +108,7 @@ def result():
     start_place = all_attraction[selected_start_place]
     end_place = all_attraction[selected_end_place]
 
-    ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place,
-                               start_time)
+    ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time)
     output_result = ga.main(generation)  # main()を実行
 
     order_result, time_result, distance_result, img_filename = output_result
