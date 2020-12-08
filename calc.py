@@ -44,8 +44,8 @@ class Calculation:
         self.end_place = ga.end_place
         self.start_time = ga.start_time
         self.attraction_list = ga.attraction_list
-        self._each_time = 0  # 待ち時間list
-        self.walk_time = 0  # 徒歩時間list
+        self._each_wait_time = 0  # 待ち時間list
+        self._each_walk_time = 0  # 徒歩時間list
         self._time = 0
         self._distance = 0
         self._fitness = 0
@@ -93,8 +93,8 @@ class Calculation:
     def time(self):  # 時間の計算
         if self._time == 0:
             path_time = self.calculate_total_time(self.route)
-            self._time, self._each_time, self.walk_time = path_time
-        return self._time, self._each_time, self.walk_time
+            self._time, self._each_wait_time, self._each_walk_time = path_time
+        return self._time, self._each_wait_time, self._each_walk_time
 
     @property
     def distance(self):  # 総距離の計算

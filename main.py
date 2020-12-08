@@ -62,18 +62,18 @@ def search():
 
 @app.route("/result", methods=['POST'])
 def result():
-    attraction_list = []
-
     attraction_number = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     selected_start_place = int(request.form.get('START'))  # スタート位置
     selected_end_place = int(request.form.get('END'))  # 終わり位置
     start_time = int(request.form.get('start_time'))  # スタート時間
+    priority = request.form.get("priority")  # 優先
 
     if len(attraction_number) < 2:
         comment = "アトラクションは2つ以上選んでください！"
         return render_template('error.html', comment=comment)
 
     # 選択されたアトラクションのデータをappendしていく
+    attraction_list = []
     for i in range(len(attraction_number)):
         num = int(attraction_number[i])
         attraction_list.append(class_Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
@@ -85,7 +85,7 @@ def result():
 
     start_time_result = now
 
-    if int(request.form.get('start_time')) == 100:  # スタート時間
+    if start_time == 100:  # スタート時間
         if 8 <= now.hour <= 21:
             start_time = get_start_time(now.hour, now.minute)
         else:
@@ -96,7 +96,7 @@ def result():
                                               start_time)
 
     # 優先取得
-    if request.form.get("priority") == "True":
+    if priority == "True":
         distance_flag = True
         priority = "距離優先"
     else:
@@ -136,8 +136,7 @@ def result():
             arrival = add + datetime.timedelta(minutes=time_result[2][i])
             elapsed_hour.append(arrival.hour)
             elapsed_minute.append(format(arrival.minute, '02'))
-            depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(
-                minutes=order_result[i].ride_time)
+            depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(minutes=order_result[i].ride_time)
             elapsed_hour.append(depart.hour)
             elapsed_minute.append(format(depart.minute, '02'))
             add = depart
