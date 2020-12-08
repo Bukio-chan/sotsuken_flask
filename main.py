@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request
 import datetime
-import random
-import string
 import calc
 import os
 import glob
@@ -52,11 +50,6 @@ def get_start_time(hour, minute):
 def get_selected_time(set_time, time_num):
     set_time += datetime.timedelta(minutes=time_num * 30)
     return set_time
-
-
-# random文字列生成
-def generate_random_string(n):
-    return ''.join([random.choice(string.ascii_letters + string.digits) for i in range(n)])
 
 
 @app.route("/")
@@ -114,13 +107,11 @@ def result():
     start_place = all_attraction[selected_start_place]
     end_place = all_attraction[selected_end_place]
 
-    random_string = f"static/result/USJ_route_{generate_random_string(6)}.png"
-
     ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place,
-                               start_time, random_string)
-    output_result = ga.main()
+                               start_time)
+    output_result = ga.main()  # main()を実行
 
-    img_filename, order_result, time_result, distance_result = output_result
+    order_result, time_result, distance_result, img_filename = output_result
 
     if time_result == 0:
         comment = "時間が足りないかも！"

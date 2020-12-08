@@ -5,51 +5,12 @@ import random
 import operator
 import pandas as pd
 import matplotlib.pyplot as plt
+import string
 from matplotlib.image import imread
 from matplotlib import pyplot
 import csv
 
 walk_speed = 40
-
-
-# 徒歩時間の追加
-def add_walk_time(route, start_place, end_place):
-    walk_time = [round(start_place.distance(route[0]) / walk_speed)]  # 最初の地点
-
-    for i in range(len(route) - 1):  # 距離
-        from_attraction = route[i]
-        to_attraction = route[(i + 1) % len(route)]
-        walk_time.append(round(from_attraction.distance(to_attraction) / walk_speed))  # どっちか
-
-    walk_time.append(round(end_place.distance(route[-1]) / walk_speed))  # 最後の地点
-    return walk_time
-
-
-# 待ち時間の合計
-def wait_time_total(route, start_place, end_place, start_time, attraction_list):
-    fixed_time = start_time
-    walk_time = add_walk_time(route, start_place, end_place)
-    wait_time = 0
-    flag = True
-    each_wait_time = []
-    for i in range(len(route)):
-        if start_time < 29:
-            wait_time += walk_time[i]  # 徒歩時間
-            for j in range(len(attraction_list)):
-                if route[i] == attraction_list[j]:
-                    each_wait_time.append(attraction_list[j].wait_time_list[start_time])
-                    wait_time += attraction_list[j].wait_time_list[start_time]
-                    wait_time += attraction_list[j].ride_time  # 乗車時間
-                    if wait_time >= 30:
-                        start_time = fixed_time + round(wait_time / 30)
-        else:
-            flag = False
-            break
-    wait_time += walk_time[-1]  # 最後のアトラクションからゴール位置までの時間
-    if flag:
-        return wait_time, each_wait_time, walk_time
-    else:
-        return wait_time * 10000, each_wait_time, walk_time
 
 
 class Attraction:
@@ -89,11 +50,49 @@ class Calculation:
         self._distance = 0
         self._fitness = 0
 
+    # 徒歩時間の追加
+    def add_walk_time(self, route):
+        walk_time = [round(self.start_place.distance(route[0]) / walk_speed)]  # 最初の地点
+
+        for i in range(len(route) - 1):  # 距離
+            from_attraction = route[i]
+            to_attraction = route[(i + 1) % len(route)]
+            walk_time.append(round(from_attraction.distance(to_attraction) / walk_speed))  # どっちか
+
+        walk_time.append(round(self.end_place.distance(route[-1]) / walk_speed))  # 最後の地点
+        return walk_time
+
+    # 所要時間の合計
+    def calculate_total_time(self, route):
+        start_time = self.start_time
+        fixed_time = start_time  # スタート時間の固定
+        each_walk_time = self.add_walk_time(route)
+        total_time = 0
+        flag = True
+        each_wait_time = []
+        for i in range(len(route)):
+            if start_time < 29:
+                total_time += each_walk_time[i]  # 徒歩時間
+                for j in range(len(self.attraction_list)):
+                    if route[i] == self.attraction_list[j]:
+                        each_wait_time.append(self.attraction_list[j].wait_time_list[start_time])
+                        total_time += self.attraction_list[j].wait_time_list[start_time]
+                        total_time += self.attraction_list[j].ride_time  # 乗車時間
+                        if total_time >= 30:
+                            start_time = fixed_time + round(total_time / 30)
+            else:
+                flag = False
+                break
+        total_time += each_walk_time[-1]  # 最後のアトラクションからゴール位置までの時間
+        if flag:
+            return total_time, each_wait_time, each_walk_time
+        else:
+            return total_time * 10000, each_wait_time, each_walk_time
+
     @property
     def time(self):  # 時間の計算
         if self._time == 0:
-            path_time = wait_time_total(self.route, self.start_place, self.end_place,
-                                        self.start_time, self.attraction_list)
+            path_time = self.calculate_total_time(self.route)
             self._time, self._each_time, self.walk_time = path_time
         return self._time, self._each_time, self.walk_time
 
@@ -197,54 +196,25 @@ def selection(population_ranked, elite_size):
     return selection_results
 
 
-def plot_route(route, start_place, end_place, img_filename, title=None):  # 表示
-    img = imread("static/USJ_map.png")
-    plt.figure()
-    for i in range(len(route)):
-        attraction = route[i]
-        next_attraction = route[(i + 1) % len(route)]
-        bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
-                         linestyle='-')
-        pyplot.text(attraction.x, attraction.y - 15, i + 1, bbox=bbox_dict)  # 番号の表示
-        plt.scatter(attraction.x, attraction.y, c='red')
-        if i >= len(route) - 1:
-            break
-        plt.plot((attraction.x, next_attraction.x), (attraction.y, next_attraction.y), c='black')
-        if title:
-            plt.title(title, fontname="MS Gothic")
-    # スタート地点・ゴール地点のplot
-    plt.scatter(start_place.x, start_place.y, c='blue')
-    plt.scatter(end_place.x, end_place.y, c='blue')
-    plt.plot((start_place.x, route[0].x), (start_place.y, route[0].y), c='black')
-    plt.plot((end_place.x, route[-1].x), (end_place.y, route[-1].y), c='black')
+def create_route(attraction_list):
+    route = random.sample(attraction_list, len(attraction_list))
+    return route
 
-    plt.imshow(img)
-    # plt.show()
-    plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
-    plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
-    # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
-    plt.savefig(img_filename, bbox_inches='tight', pad_inches=0)  # 画像で保存
-    return img_filename
+
+def create_initial_population(population_size, attraction_list):
+    population = []
+    for i in range(population_size):
+        population.append(create_route(attraction_list))
+    return population
 
 
 class GeneticAlgorithm:
-    def __init__(self, attraction_list, distance_flag, start_place, end_place, start_time, random_string):
+    def __init__(self, attraction_list, distance_flag, start_place, end_place, start_time):
         self.attraction_list = attraction_list
         self.distance_flag = distance_flag
         self.start_place = start_place
         self.end_place = end_place
         self.start_time = start_time
-        self.random_string = random_string
-
-    def create_route(self):
-        route = random.sample(self.attraction_list, len(self.attraction_list))
-        return route
-
-    def create_initial_population(self, population_size):
-        population = []
-        for i in range(population_size):
-            population.append(self.create_route())
-        return population
 
     def rank_routes(self, population):
         fitness_results = {}
@@ -264,8 +234,42 @@ class GeneticAlgorithm:
         next_gen = mutate_population(children)
         return next_gen
 
+    def plot_route(self, route, title=None):  # 表示
+        img = imread("static/USJ_map.png")
+
+        # 画像ファイル名のランダム文字列
+        random_string = ''.join([random.choice(string.ascii_letters + string.digits) for i in range(6)])
+        img_filename = f"static/result/USJ_route_{random_string}.png"
+
+        plt.figure()
+        for i in range(len(route)):
+            attraction = route[i]
+            next_attraction = route[(i + 1) % len(route)]
+            bbox_dict = dict(boxstyle='round', facecolor='#00bfff', edgecolor='#0000ff', alpha=0.75, linewidth=2.5,
+                             linestyle='-')
+            pyplot.text(attraction.x, attraction.y - 15, i + 1, bbox=bbox_dict)  # 番号の表示
+            plt.scatter(attraction.x, attraction.y, c='red')
+            if i >= len(route) - 1:
+                break
+            plt.plot((attraction.x, next_attraction.x), (attraction.y, next_attraction.y), c='black')
+            if title:
+                plt.title(title, fontname="MS Gothic")
+        # スタート地点・ゴール地点のplot
+        plt.scatter(self.start_place.x, self.start_place.y, c='blue')
+        plt.scatter(self.end_place.x, self.end_place.y, c='blue')
+        plt.plot((self.start_place.x, route[0].x), (self.start_place.y, route[0].y), c='black')
+        plt.plot((self.end_place.x, route[-1].x), (self.end_place.y, route[-1].y), c='black')
+
+        plt.imshow(img)
+        # plt.show()
+        plt.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)  # ラベル消す
+        plt.tick_params(bottom=False, left=False, right=False, top=False)  # ラベル消す
+        # plt.subplots_adjust(left=0, right=0.975, bottom=0.1, top=0.9)  # 余白調整
+        plt.savefig(img_filename, bbox_inches='tight', pad_inches=0)  # 画像で保存
+        return img_filename
+
     def solve(self, generation, population_size, elite):
-        pop = self.create_initial_population(population_size)
+        pop = create_initial_population(population_size, self.attraction_list)
 
         for g in range(generation):
             pop = self.next_generation(pop, elite)
@@ -292,6 +296,6 @@ class GeneticAlgorithm:
 
         best_route = self.solve(generation, population_size, elite)
         order_result, time_result, distance_result = best_route
-        img_filename = plot_route(order_result, self.start_place, self.end_place, self.random_string)
+        img_filename = self.plot_route(order_result)
 
-        return img_filename, order_result, time_result, distance_result
+        return order_result, time_result, distance_result, img_filename
