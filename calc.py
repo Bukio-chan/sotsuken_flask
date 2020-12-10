@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from matplotlib.image import imread
+from matplotlib import pyplot
 import numpy as np
 import random
 import operator
 import pandas as pd
 import matplotlib.pyplot as plt
 import string
-from matplotlib.image import imread
-from matplotlib import pyplot
 import csv
 
 
@@ -29,6 +29,20 @@ class Attraction:
     def distance(self, attraction):
         # distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
         distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
+        """
+        wonderland_x = 170
+        wonderland_y = 160
+        if self.distance_list[self.num][attraction.num] is None:
+            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
+        elif self.num >= 12:
+            distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
+            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2)  # 二点間の距離の計算
+        elif attraction.num >= 12:
+            distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
+            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2)  # 二点間の距離の計算
+        else:
+            distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
+        """
         return distance
 
     def __repr__(self):
@@ -75,7 +89,7 @@ class Calculation:
                 for j in range(len(self.attraction_list)):
                     if route[i] == self.attraction_list[j]:
                         each_wait_time.append(self.attraction_list[j].wait_time_list[start_time])
-                        total_time += self.attraction_list[j].wait_time_list[start_time]
+                        total_time += self.attraction_list[j].wait_time_list[start_time]  # 待ち時間
                         total_time += self.attraction_list[j].ride_time  # 乗車時間
                         if total_time >= 30:
                             start_time = fixed_time + round(total_time / 30)

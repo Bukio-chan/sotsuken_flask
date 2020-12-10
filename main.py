@@ -1,15 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, request
+from calc import Attraction, GeneticAlgorithm
 import datetime
-import calc
 import os
 import glob
 import csv
 
 app = Flask(__name__)
-
-class_Attraction = calc.Attraction  # calc.pyのAttractionクラス
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
@@ -20,7 +18,7 @@ with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
 all_attraction = []
 # スタート地点・ゴール地点の座標配列all_attraction[]
 for j in range(len(data)):
-    all_attraction.append(class_Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
+    all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
 
 
 # csvから読み取り、stringをintに変換
@@ -77,10 +75,10 @@ def result():
     attraction_list = []
     for i in range(len(attraction_number)):
         num = int(attraction_number[i])
-        attraction_list.append(class_Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
-                                                wait_time_list=load_from_csv(f'static/csv/table_{data[num][3]}.csv',
-                                                                             int(data[num][4])),
-                                                ride_time=int(data[num][5]), num=num))
+        attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
+                                          wait_time_list=load_from_csv(f'static/csv/table_{data[num][3]}.csv',
+                                                                       int(data[num][4])),
+                                          ride_time=int(data[num][5]), num=num))
 
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 
@@ -97,18 +95,16 @@ def result():
                                               start_time)
 
     # 優先取得
-    if priority == "True":
+    if priority == "距離優先":
         distance_flag = True
-        priority = "距離優先"
     else:
         distance_flag = False
-        priority = "時間優先"
 
     # スタート・ゴール地点取得
     start_place = all_attraction[selected_start_place]
     end_place = all_attraction[selected_end_place]
 
-    ga = calc.GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time)
+    ga = GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time)
     output_result = ga.main(generation)  # main()を実行
 
     order_result, time_result, distance_result, img_filename = output_result
@@ -136,7 +132,8 @@ def result():
             arrival = add + datetime.timedelta(minutes=time_result[2][i])
             elapsed_hour.append(arrival.hour)
             elapsed_minute.append(format(arrival.minute, '02'))
-            depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(minutes=order_result[i].ride_time)
+            depart = arrival + datetime.timedelta(minutes=time_result[1][i]) + datetime.timedelta(
+                minutes=order_result[i].ride_time)
             elapsed_hour.append(depart.hour)
             elapsed_minute.append(format(depart.minute, '02'))
             add = depart
