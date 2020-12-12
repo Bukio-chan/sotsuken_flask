@@ -30,16 +30,16 @@ class Attraction:
         # distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
         distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
         """
-        wonderland_x = 170
+        wonderland_x = 165
         wonderland_y = 160
         if self.distance_list[self.num][attraction.num] is None:
-            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2)  # 二点間の距離の計算
+            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2) * (140/41.231)
         elif self.num >= 12:
-            distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
-            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2)  # 二点間の距離の計算
+            distance = float(self.distance_list[self.num][attraction.num])
+            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2) * (140/41.231)
         elif attraction.num >= 12:
-            distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
-            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2)  # 二点間の距離の計算
+            distance = float(self.distance_list[self.num][attraction.num])
+            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2) * (140/41.231)
         else:
             distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
         """
@@ -70,7 +70,7 @@ class Calculation:
         for i in range(len(route) - 1):  # 距離
             from_attraction = route[i]
             to_attraction = route[(i + 1) % len(route)]
-            walk_time.append(round(from_attraction.distance(to_attraction) / self.walk_speed))  # どっちか
+            walk_time.append(round(from_attraction.distance(to_attraction) / self.walk_speed))
 
         walk_time.append(round(self.end_place.distance(route[-1]) / self.walk_speed))  # 最後の地点
         return walk_time
