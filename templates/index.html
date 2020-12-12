@@ -10,10 +10,13 @@
 <div class="box"><h2>そつけん</h2></div>
 <form action="/result" method="POST">
     <div class="box">
-    <p>アトラクションを選択（※2つ以上）</p>
+    <p>アトラクションを選択</p>
         <div class="bullets">
           {% for i in city[1:] %}
-          <label><input type="checkbox" name="attraction" value="{{i.num}}"> {{i.name}}</label><br>
+          <div class="check">
+          <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
+          <label class="attraction" for="{{i.num}}"> {{i.name}}</label>
+          </div>
           {% endfor %}
         </div>
     <hr>
@@ -76,8 +79,8 @@
 
   <p>優先</p>
     <div class="bullets">
-    <label><input type="radio" name="priority" value="距離優先" checked> 距離優先</label>
-    <label><input type="radio" name="priority" value="時間優先"> 時間優先</label>
+    <input type="radio" name="priority" value="距離優先" id="distance" checked><label for="distance"> 距離優先</label>
+    <input type="radio" name="priority" value="時間優先" id="time"><label for="time"> 時間優先</label>
     </div>
     <hr>
 

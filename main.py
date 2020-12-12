@@ -67,8 +67,12 @@ def result():
     priority = request.form.get("priority")  # 優先
     generation = int(request.form.get("generation"))  # 世代数
 
-    if len(attraction_number) < 2:
-        comment = "アトラクションは2つ以上選んでください！"
+    # スタート・ゴール地点取得
+    start_place = all_attraction[selected_start_place]
+    end_place = all_attraction[selected_end_place]
+
+    if len(attraction_number) < 1:
+        comment = "アトラクションを選んでください！"
         return render_template('error.html', comment=comment)
 
     # 選択されたアトラクションのデータをappendしていく
@@ -99,10 +103,6 @@ def result():
         distance_flag = True
     else:
         distance_flag = False
-
-    # スタート・ゴール地点取得
-    start_place = all_attraction[selected_start_place]
-    end_place = all_attraction[selected_end_place]
 
     ga = GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time)
     output_result = ga.main(generation)  # main()を実行

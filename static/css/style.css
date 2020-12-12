@@ -28,6 +28,20 @@ div.box {
 div.bullets {
   margin: 10px 5%;
 }
+div.check {
+  margin: 5px 0;
+}
+
+input.attraction {
+  display: block;
+  float: left;
+  clear: left;
+}
+label.attraction {
+  display: block;
+  clear: none;
+  margin-left: 25px;
+}
 
 .cp_select {
 	overflow: hidden;
