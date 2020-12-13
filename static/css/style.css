@@ -24,6 +24,7 @@ div.inline {
 
 div.box {
   margin: 10px 20%;
+  position: relative;
 }
 
 div.bullets {

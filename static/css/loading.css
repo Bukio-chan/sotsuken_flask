@@ -1,0 +1,43 @@
+.loading {
+  perspective: 1000px;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  font-size: 2.0rem;
+  position: absolute;
+  text-align: center;
+  top: 150%;
+}
+.loading span {
+  display: inline-block;
+  margin: 0 -.05em;
+  transform-origin: 50% 50% -25px;
+  transform-style: preserve-3d;
+  animation: loading 1.6s infinite;
+}
+.loading span:nth-child(2) {
+  animation-delay: .1s;
+}
+.loading span:nth-child(3) {
+  animation-delay: .2s;
+}
+.loading span:nth-child(4) {
+  animation-delay: .3s;
+}
+.loading span:nth-child(5) {
+  animation-delay: .4s;
+}
+.loading span:nth-child(6) {
+  animation-delay: .5s;
+}
+.loading span:nth-child(7) {
+  animation-delay: .6s;
+}
+@keyframes loading {
+  0% {
+    transform: rotateX(-360deg);
+  }
+  70% {
+    transform: rotateX(0);
+  }
+}
