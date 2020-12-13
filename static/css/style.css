@@ -1,5 +1,6 @@
 body {
   font-family: 'arial';
+  background: #fafafa;
 }
 
 h2 {
@@ -103,7 +104,7 @@ table{
   background: #eee;
 }
 table tr:nth-child(3n){
-  background: #fff;
+  background: #fafafa;
 }
 td,th{
   padding:10px 5px;
@@ -128,7 +129,7 @@ div.button1 {
 button.button2 {
   font-weight: bold;
   color: #fff;
-  background: #1A73E8;
+  background: #1a73e8;
   display: inline-block;
   border-radius: 5px;
   border: none;
@@ -136,7 +137,7 @@ button.button2 {
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
 }
 button.button2:hover {
-  background-color: #59b1eb;
+  background: #1f559c;
 }
 
 @media screen and (max-width: 480px) {
