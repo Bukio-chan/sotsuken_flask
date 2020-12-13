@@ -95,10 +95,6 @@ label.attraction {
   border-radius: 5px;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
 }
-.normal-box3 p{
-  margin: 0;
-  padding: 0;
-}
 
 table{
   border-collapse:collapse;
@@ -123,22 +119,27 @@ div.range {
 
 div.image{
   text-align: center;
-  margin:0 40px;
 }
 
-button.button2 {
-  font-weight: bold;
-}
 div.button1 {
   text-align:center;
   padding:10px 0px;
 }
-
-@media screen and (max-width: 480px) {
 button.button2 {
   font-weight: bold;
+  color: #fff;
+  background: #1A73E8;
+  display: inline-block;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
+}
+button.button2:hover {
+  background-color: #59b1eb;
 }
 
+@media screen and (max-width: 480px) {
 div.box {
   margin: 10px 0px;
 }
@@ -156,6 +157,6 @@ div.image{
   margin:0 auto;
 }
 img{
-  width: 90%
+  width: 100%
 }
 }

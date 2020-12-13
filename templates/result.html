@@ -10,6 +10,11 @@
     <body>
         <div class="box">
         <h2>結果</h2>
+        <div class="normal-box3">
+        <div class="image">
+        <img src="{{img_filename}}" alt ="地図">
+        </div>
+        </div>
             <div class="normal-box3">
                 {% if time_result[0] > 10000 %}
                 <b>時間が足りないかも！</b>
@@ -32,11 +37,6 @@
                 {% endfor %}
                 <tr><td align="center">{{end_hour}}:{{end_minute}}</td><td><b>{{end_place}}</b></td><td> </td></tr>
             </table>
-        <br>
-        <div class="image">
-        <img src="{{img_filename}}" alt ="地図">
-        </div>
-        <br>
         </div>
     </body>
 </html>
