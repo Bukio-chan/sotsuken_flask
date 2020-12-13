@@ -10,6 +10,8 @@
 <div class="box"><h2>そつけん</h2></div>
 <form action="/result" method="POST">
     <div class="box">
+
+    <div class="normal-box3">
     <p>アトラクションを選択</p>
         <div class="bullets">
           {% for i in city[1:] %}
@@ -19,17 +21,17 @@
           </div>
           {% endfor %}
         </div>
-    <hr>
+    </div>
 
-  <p>スタート地点</p>
-  <div class="cp_select cp_sl03">
-    <select name="START" class="select_box">
-        {% for i in city %}
-        <option value="{{i.num}}">{{i.name}}</option>
-        {% endfor %}
-    </select><br>
-  </div>
-  <hr>
+      <div class="normal-box3">
+      <p>スタート地点</p>
+      <div class="cp_select cp_sl03">
+        <select name="START" class="select_box">
+            {% for i in city %}
+            <option value="{{i.num}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+      </div>
 
   <p>ゴール地点</p>
   <div class="cp_select cp_sl03">
@@ -39,8 +41,9 @@
         {% endfor %}
     </select>
   </div>
-  <hr>
+  </div>
 
+  <div class="normal-box3">
   <p>スタート時間</p>
   <div class="cp_select cp_sl03">
     <select name="start_time" class="select_box">
@@ -73,29 +76,30 @@
       <option value="26">20:45</option>
 　　   <option value="27">21:15</option>
       <option value="28">21:45</option>
-    </select><br>
+    </select>
   </div>
-    <hr>
+  </div>
 
+  <div class="normal-box3">
   <p>優先</p>
     <div class="bullets">
     <input type="radio" name="priority" value="距離優先" id="distance" checked><label for="distance"> 距離優先</label>
     <input type="radio" name="priority" value="時間優先" id="time"><label for="time"> 時間優先</label>
     </div>
-    <hr>
-
-  <p>世代数（計算の精度）</p>
-    <div class="bullets">
-        <b>5</b> <input type="range" name="generation" min="5" max="100" step="5" value="40" style="width: 50%"> <b>100</b>
-    </div>
-    <hr>
-
-  <div class="button1">
-    <br>
-    <button class="Button2">実行</button>
   </div>
+
+  <div class="normal-box3">
+  <div class="button1">
+    <button class="Button2" style="width:100%; padding: 5px">検索</button>
+  </div>
+  <p>世代数（計算の精度）</p>
+    <div class="range">
+    <b>5</b> <input type="range" name="generation" min="5" max="100" step="5" value="40" style="width: 80%"> <b>100</b>
+    </div>
+
+  </div>
+
 </div>
-    <br>
 </form>
 
 </body>

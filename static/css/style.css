@@ -26,7 +26,7 @@ div.box {
 }
 
 div.bullets {
-  margin: 10px 5%;
+  margin: 10px 3%;
 }
 div.check {
   margin: 5px 0;
@@ -88,6 +88,18 @@ label.attraction {
 	padding: 8px 38px 8px 8px;
 }
 
+.normal-box3{
+  margin: 1em 0;
+  padding: 1em;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.4);
+}
+.normal-box3 p{
+  margin: 0;
+  padding: 0;
+}
+
 table{
   border-collapse:collapse;
   width:100%;
@@ -105,26 +117,26 @@ th{
   background:#094;
 }
 
+div.range {
+  text-align: center;
+}
+
 div.image{
   text-align: center;
   margin:0 40px;
 }
 
 button.button2 {
-  font-size: 1.0em;
   font-weight: bold;
-  padding: 10px 10%;
-  border-radius: 5px;
 }
 div.button1 {
-  text-align:center
+  text-align:center;
+  padding:10px 0px;
 }
 
 @media screen and (max-width: 480px) {
 button.button2 {
-  font-size: 1.0em;
   font-weight: bold;
-  padding: 10px 10%;
 }
 
 div.box {
@@ -132,7 +144,7 @@ div.box {
 }
 
 div.bullets {
-  margin: 10px 3%;
+  margin: 10px 0;
 }
 
 table{

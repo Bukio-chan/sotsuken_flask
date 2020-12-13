@@ -1,11 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request
-from calc import Attraction, GeneticAlgorithm
 import datetime
 import os
 import glob
 import csv
+from flask import Flask, render_template, request
+from calc import Attraction, GeneticAlgorithm
 
 app = Flask(__name__)
 
