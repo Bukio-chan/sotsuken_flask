@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 import requests
 from bs4 import BeautifulSoup
 import datetime
@@ -33,7 +32,7 @@ for j in range(len(data)):
 
 # csvから読み取り、stringをintに変換
 def load_from_csv(line):
-    csv_file = open(today_csv, 'r', encoding="utf-8")
+    csv_file = open(today_csv, 'r')
     df = []
     for row in csv.reader(csv_file):
         df.append((row[line]))
