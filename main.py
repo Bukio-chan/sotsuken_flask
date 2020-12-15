@@ -77,7 +77,6 @@ def result():
     if now.hour <= 9:
         table = soup.find(class_="rank-yoso a")
         rank = table.string
-        print(rank)
     else:
         table = soup.find(class_="rank-col rank")
         rank = table.contents[1]  # A,B,C,D,E,F,S
