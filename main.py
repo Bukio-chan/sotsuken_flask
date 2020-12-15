@@ -13,10 +13,6 @@ app = Flask(__name__)
 url = 'https://usjreal.asumirai.info/'
 html = requests.get(url, verify=False)
 soup = BeautifulSoup(html.content, "html.parser")
-table = soup.find(class_="rank-col rank")
-rank = table.contents[1]  # A,B,C,D,E,F,S
-rank = rank.lower()  # 小文字に変換
-today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
@@ -31,8 +27,8 @@ for j in range(len(data)):
 
 
 # csvから読み取り、stringをintに変換
-def load_from_csv(line):
-    csv_file = open(today_csv, 'r')
+def load_from_csv(line, today_csv):
+    csv_file = open(today_csv, 'r', encoding="utf-8")
     df = []
     for row in csv.reader(csv_file):
         df.append((row[line]))
@@ -77,6 +73,17 @@ def search():
 
 @app.route("/result", methods=['POST'])
 def result():
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
+    if now.hour <= 9:
+        table = soup.find(class_="rank-yoso a")
+        rank = table.string
+        print(rank)
+    else:
+        table = soup.find(class_="rank-col rank")
+        rank = table.contents[1]  # A,B,C,D,E,F,S
+    rank = rank.lower()  # 小文字に変換
+    today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
+
     attraction_number = request.form.getlist('attraction')  # 選択されたアトラクションの取得
     selected_start_place = int(request.form.get('START'))  # スタート位置
     selected_end_place = int(request.form.get('END'))  # 終わり位置
@@ -97,10 +104,8 @@ def result():
     for i in range(len(attraction_number)):
         num = int(attraction_number[i])
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
-                                          wait_time_list=load_from_csv(int(data[num][3])),
+                                          wait_time_list=load_from_csv(int(data[num][3]), today_csv),
                                           ride_time=int(data[num][4]), num=num))
-
-    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 
     start_time_result = now
 
