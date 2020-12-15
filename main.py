@@ -111,7 +111,7 @@ def result():
             comment = '時間を選択してね！'
             return render_template('error.html', comment=comment)
     else:
-        start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 45),
+        start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
                                               start_time)
 
     # 優先取得
