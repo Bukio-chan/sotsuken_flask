@@ -129,8 +129,8 @@ def result():
     for i in range(len(attraction_number)):
         num = int(attraction_number[i])
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
-                                          wait_time_list=load_from_csv(int(data[num][3]), today_csv),
-                                          ride_time=int(data[num][4]), num=num))
+                                          wait_time_list=load_from_csv(int(data[num][4]), today_csv),
+                                          ride_time=int(data[num][3]), num=num))
 
     start_time_result = now
 
@@ -173,6 +173,7 @@ def result():
     elapsed_minute = []
     add = start_time_result
     if time_result[0] <= 10000:
+        end_hour = end_time_result.hour
         # 経過時間毎の時刻
         for i in range(len(attraction_list)):
             arrival = add + datetime.timedelta(minutes=time_result[2][i])
@@ -183,13 +184,16 @@ def result():
             elapsed_hour.append(depart.hour)
             elapsed_minute.append(format(depart.minute, '02'))
             add = depart
+    else:
+        end_hour = "??"
+        end_minute = "??"
 
     # htmlへ出力
     return render_template('result.html', priority=priority, time_result=time_result,
                            time_hour=time_hour, time_minute=time_minute,
                            distance=distance_result, order=order_result, img_filename=img_filename,
                            start_hour=start_time_result.hour, start_minute=start_minute,
-                           end_hour=end_time_result.hour, end_minute=end_minute,
+                           end_hour=end_hour, end_minute=end_minute,
                            start_place=start_place, end_place=end_place,
                            elapsed_hour=elapsed_hour, elapsed_minute=elapsed_minute)
 
