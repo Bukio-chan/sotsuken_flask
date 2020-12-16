@@ -114,6 +114,12 @@ th{
   color:#fff;
   background:#094;
 }
+td.ico {
+  padding-left: 20px;
+  background-image: url('../walk.ico');
+  background-position: center left;
+  background-repeat: no-repeat;
+}
 
 div.range {
   text-align: center;
