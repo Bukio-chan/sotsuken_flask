@@ -135,7 +135,7 @@ def result():
     start_time_result = now
 
     if start_time == 100:  # スタート時間
-        if 9 <= now.hour <= 18:
+        if opening_time <= now.hour <= 18:
             start_time = get_start_time(now.hour, now.minute)
         else:
             comment = '時間を選択してね！'
