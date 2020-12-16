@@ -17,13 +17,14 @@ class Attraction:
         reader = csv.reader(f)
         distance_list = [row for row in reader]
 
-    def __init__(self, x, y, name=None, wait_time_list=None, ride_time=None, num=None):
+    def __init__(self, x, y, name, wait_time_list=None, ride_time=None, num=None, now_wait_time=None):
         self.x = x
         self.y = y
         self.name = name
         self.wait_time_list = wait_time_list
         self.ride_time = ride_time
         self.num = num
+        self.now_wait_time = now_wait_time
 
     # 距離の計算
     def distance(self, attraction):
@@ -33,13 +34,14 @@ class Attraction:
         wonderland_x = 165
         wonderland_y = 160
         if self.distance_list[self.num][attraction.num] == 'None':
-            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2) * (140/41.231)
+            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2) * (140 / 41.231)
         elif self.num >= 12:
             distance = float(self.distance_list[self.num][attraction.num])
-            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2) * (140/41.231)
+            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2) * (140 / 41.231)
         elif attraction.num >= 12:
             distance = float(self.distance_list[self.num][attraction.num])
-            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2) * (140/41.231)
+            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2) * (
+                        140 / 41.231)
         else:
             distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
 
@@ -55,7 +57,6 @@ class Calculation:
         self.start_place = ga.start_place
         self.end_place = ga.end_place
         self.start_time = ga.start_time
-        self.attraction_list = ga.attraction_list
         self.walk_speed = 80  # 歩く速さ
         self._each_wait_time = 0  # 待ち時間list
         self._each_walk_time = 0  # 徒歩時間list
@@ -86,16 +87,16 @@ class Calculation:
         for i in range(len(route)):
             if start_time < 23:
                 total_time += each_walk_time[i]  # 徒歩時間
-                for j in range(len(self.attraction_list)):
-                    if route[i] == self.attraction_list[j]:
-                        each_wait_time.append(self.attraction_list[j].wait_time_list[start_time])
-                        total_time += self.attraction_list[j].wait_time_list[start_time]  # 待ち時間
-                        total_time += self.attraction_list[j].ride_time  # 乗車時間
-                        if total_time >= 30:
-                            start_time = fixed_time + round(total_time / 30)
+                total_time += route[i].ride_time  # 乗車時間
+                each_wait_time.append(route[i].wait_time_list[start_time])  # アトラクション毎の待ち時間
+                if total_time >= 30:
+                    start_time = fixed_time + round(total_time / 30)
             else:
                 flag = False
                 break
+        if route[0].now_wait_time.isdigit():  # 現在時刻のときの待ち時間
+            each_wait_time[0] = route[0].now_wait_time
+        total_time += sum(each_wait_time)  # 待ち時間の合計
         total_time += each_walk_time[-1]  # 最後のアトラクションからゴール位置までの時間
         if flag:
             return total_time, each_wait_time, each_walk_time

@@ -29,6 +29,14 @@ for j in range(len(data)):
     all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
 
 
+def now_wait_time_extraction(attraction_url):
+    attraction_html = requests.get(attraction_url, verify=False)
+    attraction_soup = BeautifulSoup(attraction_html.content, "html.parser")
+    now_wait_time = attraction_soup.find(class_="realtime")
+    now_wait_time = now_wait_time.find("td").string
+    return now_wait_time
+
+
 # csvから読み取り、stringをintに変換
 def load_from_csv(line, today_csv):
     csv_file = open(today_csv, 'r', encoding="utf-8")
@@ -77,11 +85,11 @@ def time_for_index():  # index.html用
     for i in range(6):  # 終了時刻まで削る
         df.pop(-1)
         value.pop(-1)
-    if opening_time == 9:  # 開始時刻まで削る
+    if opening_time <= 9:  # 開始時刻まで削る
         for i in range(4):
             df.pop(0)
             value.pop(0)
-    if opening_time == 10:  # 開始時刻まで削る
+    if opening_time >= 10:  # 開始時刻まで削る
         for i in range(6):
             df.pop(0)
             value.pop(0)
@@ -130,15 +138,18 @@ def result():
         num = int(attraction_number[i])
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
                                           wait_time_list=load_from_csv(int(data[num][4]), today_csv),
-                                          ride_time=int(data[num][3]), num=num))
+                                          ride_time=int(data[num][3]), num=num,
+                                          now_wait_time=now_wait_time_extraction(f"{data[num][5]}")))
 
     start_time_result = now
 
     if start_time == 100:  # スタート時間
-        if opening_time <= now.hour <= 18:
+        if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
+            for i in range(len(attraction_list)):
+                attraction_list[i].now_wait_time = int(attraction_list[i].now_wait_time)
         else:
-            comment = '時間を選択してね！'
+            comment = '時間を選択してください！'
             return render_template('error.html', comment=comment)
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),

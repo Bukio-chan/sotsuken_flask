@@ -1,20 +1,20 @@
-名前,x座標,y座標,所要時間,列
-エントランス（入口）,80,190,0,0
-『STAND BY ME ドラえもん２』XRライド,80,120,10,1
-ハリウッド・ドリーム・ザ・ライド,130,170,3,2
-ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3
-ザ・フライング・ダイナソー,230,80,3,4
-ジュラシック・パーク・ザ・ライド,230,90,7,5
-ミニオン・ハチャメチャ・ライド,170,35,18,6
-ハリー・ポッター・アンド・ザ・フォービドゥン・ジャーニー,200,270,5,7
-アメージング・アドベンチャー・オブ・スパイダーマン・ザ・ライド 4K3D,120,60,5,8
-フライト・オブ・ザ・ヒッポグリフ,190,240,2,9
-ジョーズ,200,150,7,14
-ミニオン・ハチャメチャ・アイス,165,50,2,15
-フライング・スヌーピー,160,180,3,20
-ハローキティのカップケーキ・ドリーム,155,190,2,23
-エルモのゴーゴー・スケートボード,140,195,2,24
-モッピーのバルーン・トリップ,140,205,2,25
-エルモのリトル・ドライブ,150,210,2,27
-ビッグバードのビッグトップ・サーカス,160,205,2,28
-エルモのバブル・バブル,145,235,3,29
+名前,x座標,y座標,所要時間,列,サイトurl
+エントランス（入口）,80,190,0,0,None
+『STAND BY ME ドラえもん２』XRライド,80,120,10,1,https://usjreal.asumirai.info/attraction/ev_doraemon_xr.html
+ハリウッド・ドリーム・ザ・ライド,130,170,3,2,https://usjreal.asumirai.info/attraction/hw_dream.html
+ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3,https://usjreal.asumirai.info/attraction/hw_bkdrop.html
+ザ・フライング・ダイナソー,230,80,3,4,https://usjreal.asumirai.info/attraction/jp_dinosaur.html
+ジュラシック・パーク・ザ・ライド,230,90,7,5,https://usjreal.asumirai.info/attraction/jp_ride.html
+ミニオン・ハチャメチャ・ライド,170,35,18,6,https://usjreal.asumirai.info/attraction/mi_minions.html
+ハリー・ポッター・アンド・ザ・フォービドゥン・ジャーニー,200,270,5,7,https://usjreal.asumirai.info/attraction/hp_journey.html
+アメージング・アドベンチャー・オブ・スパイダーマン・ザ・ライド 4K3D,120,60,5,8,https://usjreal.asumirai.info/attraction/ny_spiderman.html
+フライト・オブ・ザ・ヒッポグリフ,190,240,2,9,https://usjreal.asumirai.info/attraction/hp_hippo.html
+ジョーズ,200,150,7,14,https://usjreal.asumirai.info/attraction/am_jaws.html
+ミニオン・ハチャメチャ・アイス,165,50,2,15,https://usjreal.asumirai.info/attraction/mi_minionsice.html
+フライング・スヌーピー,160,180,3,20,https://usjreal.asumirai.info/attraction/un_flysnoopy.html
+ハローキティのカップケーキ・ドリーム,155,190,2,23,https://usjreal.asumirai.info/attraction/un_cupcake.html
+エルモのゴーゴー・スケートボード,140,195,2,24,https://usjreal.asumirai.info/attraction/un_skateboad.html
+モッピーのバルーン・トリップ,140,205,2,25,https://usjreal.asumirai.info/attraction/un_balloon.html
+エルモのリトル・ドライブ,150,210,2,27,https://usjreal.asumirai.info/attraction/un_littledrive.html
+ビッグバードのビッグトップ・サーカス,160,205,2,28,https://usjreal.asumirai.info/attraction/un_bigbird.html
+エルモのバブル・バブル,145,235,3,29,https://usjreal.asumirai.info/attraction/un_bubble.html
