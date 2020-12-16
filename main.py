@@ -13,6 +13,9 @@ app = Flask(__name__)
 url = 'https://usjreal.asumirai.info/'
 html = requests.get(url, verify=False)
 soup = BeautifulSoup(html.content, "html.parser")
+opening = soup.find(class_="wave").string
+opening_time = int(opening[0:2])
+closing_time = int(opening[8:10])
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
@@ -63,23 +66,46 @@ def get_selected_time(set_time, time_num):
     return set_time
 
 
+def time_for_index():  # index.html用
+    csv_file = open('static/csv/TimeList/rank-a-average.csv', 'r', encoding="utf-8")
+    df = []
+    for row in csv.reader(csv_file):
+        df.append((row[0]))
+    csv_file.close()
+    df.pop(0)
+    value = list(range(len(df)))
+    for i in range(6):  # 終了時刻まで削る
+        df.pop(-1)
+        value.pop(-1)
+    if opening_time == 9:  # 開始時刻まで削る
+        for i in range(4):
+            df.pop(0)
+            value.pop(0)
+    if opening_time == 10:  # 開始時刻まで削る
+        for i in range(6):
+            df.pop(0)
+            value.pop(0)
+    return df, value
+
+
 @app.route("/")
 def search():
     # 画像の削除
     for x in glob.glob('static/result/*.png'):
         os.remove(x)
-    return render_template("index.html", city=all_attraction)
+    index_time, value = time_for_index()
+    return render_template("index.html", city=all_attraction, index_time=index_time, value=value)
 
 
 @app.route("/result", methods=['POST'])
 def result():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
     if now.hour <= 9:
-        table = soup.find(class_="rank-yoso a")
-        rank = table.string
+        yoso = soup.find(class_="rank-yoso a")
+        rank = yoso.string  # A,B,C,D,E,F,S
     else:
-        table = soup.find(class_="rank-col rank")
-        rank = table.contents[1]  # A,B,C,D,E,F,S
+        yoso = soup.find(class_="rank-col rank")
+        rank = yoso.contents[1]  # A,B,C,D,E,F,S
     rank = rank.lower()  # 小文字に変換
     today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
 
