@@ -6,7 +6,7 @@
   display: inline-block;
   margin: 0 -.01em;
   animation: loading .7s infinite;
-  font-size: 80px;
+  font-size: 250%;
 }
 .loading span:nth-child(2) {
   animation-delay: .1s;
@@ -33,11 +33,4 @@
   50% {
     transform: translateY(15px);
   }
-}
-
-@media screen and (max-width: 480px) {
-.loading span {
-  font-size: 50px;
-  margin-top: 50%;
-}
 }
