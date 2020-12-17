@@ -156,6 +156,8 @@ def result():
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
                                               start_time)
+        for i in range(len(attraction_list)):
+            attraction_list[0].now_wait_time = 'not now'
 
     # 優先取得
     if priority == "距離優先":
