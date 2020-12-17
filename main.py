@@ -150,14 +150,14 @@ def result():
     if start_time == 100:  # スタート時間
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
+            for i in range(len(attraction_list)):
+                attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
         else:
             comment = '時間を選択してください！'
             return render_template('error.html', comment=comment)
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
                                               start_time)
-        for i in range(len(attraction_list)):
-            attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
 
     # 優先取得
     if priority == "距離優先":
