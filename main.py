@@ -49,7 +49,7 @@ def load_from_csv(line, today_csv):
     df.pop(0)
     a = []
     for i in range(len(df)):
-        if df[i] == 'None ' or df[i] == 'None':
+        if df[i] == 'None ' or df[i] == 'None' or ' None ':
             a.append(0)
         else:
             float_n = float(df[i])
