@@ -33,11 +33,11 @@ def now_wait_time_extraction(attraction_url):
     attraction_html = requests.get(attraction_url, verify=False)
     attraction_soup = BeautifulSoup(attraction_html.content, "html.parser")
     now_wait_time = attraction_soup.find(class_="realtime")
-    now_wait_time = now_wait_time.find("td").string
+    now_wait_time = now_wait_time.find("td").text
     if now_wait_time is None:
         now_wait_time = 'None'
     else:
-        now_wait_time = str(now_wait_time)
+        now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
     return now_wait_time
 
 
@@ -150,9 +150,6 @@ def result():
     if start_time == 100:  # スタート時間
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
-            for i in range(len(attraction_list)):
-                if not type(attraction_list[i].now_wait_time) is str:
-                    attraction_list[i].now_wait_time = int(attraction_list[i].now_wait_time)
         else:
             comment = '時間を選択してください！'
             return render_template('error.html', comment=comment)

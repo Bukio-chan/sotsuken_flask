@@ -94,7 +94,7 @@ class Calculation:
             else:
                 flag = False
                 break
-        if route[0].now_wait_time.isdigit():  # 現在時刻のときの待ち時間
+        if type(route[0].now_wait_time) == int:  # 現在時刻のときの待ち時間
             each_wait_time[0] = route[0].now_wait_time
         total_time += sum(each_wait_time)  # 待ち時間の合計
         total_time += each_walk_time[-1]  # 最後のアトラクションからゴール位置までの時間
