@@ -149,7 +149,7 @@ def result():
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
             for i in range(len(attraction_list)):
-                if attraction_list[i].now_wait_time.isdigit():
+                if type(attraction_list[i].now_wait_time) is not str:
                     attraction_list[i].now_wait_time = int(attraction_list[i].now_wait_time)
         else:
             comment = '時間を選択してください！'
