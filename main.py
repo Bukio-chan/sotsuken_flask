@@ -34,6 +34,8 @@ def now_wait_time_extraction(attraction_url):
     attraction_soup = BeautifulSoup(attraction_html.content, "html.parser")
     now_wait_time = attraction_soup.find(class_="realtime")
     now_wait_time = now_wait_time.find("td").string
+    if now_wait_time is None:
+        now_wait_time = 'None'
     return now_wait_time
 
 
