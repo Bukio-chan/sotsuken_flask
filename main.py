@@ -36,6 +36,8 @@ def now_wait_time_extraction(attraction_url):
     now_wait_time = now_wait_time.find("td").string
     if now_wait_time is None:
         now_wait_time = 'None'
+    else:
+        now_wait_time = str(now_wait_time)
     return now_wait_time
 
 
