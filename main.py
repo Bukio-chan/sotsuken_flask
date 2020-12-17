@@ -143,7 +143,7 @@ def result():
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
                                           wait_time_list=load_from_csv(int(data[num][4]), today_csv),
                                           ride_time=int(data[num][3]), num=num,
-                                          now_wait_time=now_wait_time_extraction(f"{data[num][5]}")))
+                                          now_wait_time='not now'))
 
     start_time_result = now
 
@@ -157,7 +157,7 @@ def result():
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
                                               start_time)
         for i in range(len(attraction_list)):
-            attraction_list[0].now_wait_time = 'not now'
+            attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
 
     # 優先取得
     if priority == "距離優先":
