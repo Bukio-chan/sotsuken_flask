@@ -147,6 +147,13 @@ button.button2:hover {
   background: #1f559c;
 }
 
+.panel{
+  display:none;
+}
+.panel.is-show{
+  display:block;
+}
+
 @media screen and (max-width: 480px) {
 div.box {
   margin: 10px 0px;

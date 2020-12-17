@@ -2,13 +2,23 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
 <link href="../static/css/style.css" media="all" rel="stylesheet">
+<link href="../static/css/loading.css" media="all" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="../static/icon.png">
 <title>そつけん</title>
 <meta http-equiv="content-type" charset="utf-8">
 <meta name="google-site-verification" content="x53O8x_H6U95U8wmXJIZKL5GGweQKK_EPfwehgLZtmQ" />
+<script type="text/javascript">
+  // タブをクリックすると実行する関数
+  function btnClick(){
+    // コンテンツのclassの値を変更
+    document.getElementsByClassName('is-show')[0].classList.remove('is-show');
+    document.getElementsByClassName('panel')[1].classList.add('is-show');
+  };
+</script>
 </head>
 <body>
 <div class="box"><h2>そつけん</h2></div>
+<div class="panel tab-A is-show">
 <form action="/result" method="POST">
     <div class="box">
 
@@ -66,7 +76,7 @@
 
   <div class="normal-box3">
   <div class="button1">
-    <button class="Button2" style="width:100%; padding: 7px">検索</button>
+    <button class="Button2" style="width:100%; padding: 7px" onclick="btnClick()">検索</button>
   </div>
   <p>世代数（計算の精度）</p>
     <div class="range">
@@ -75,8 +85,23 @@
 
   </div>
 
+
 </div>
 </form>
 <br>
+</div>
+
+<div class="panel tab-B">
+    <div class="loading">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </div>
+</div>
+
 </body>
 </html>
