@@ -35,10 +35,10 @@ def now_wait_time_extraction(attraction_url):
     now_wait_time = attraction_soup.find(class_="realtime")
     now_wait_time = now_wait_time.find("td").text
 
-    if not now_wait_time:
-        now_wait_time = 'None'
-    else:
+    if '分待ち' in now_wait_time:
         now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
+    else:
+        now_wait_time = 'None'
     return now_wait_time
 
 
