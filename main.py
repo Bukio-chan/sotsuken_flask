@@ -13,9 +13,9 @@ app = Flask(__name__)
 url = 'https://usjreal.asumirai.info/'
 html = requests.get(url, verify=False)
 soup = BeautifulSoup(html.content, "html.parser")
-opening = soup.find(class_="wave").string
-opening_time = int(opening[0:2])
-closing_time = int(opening[8:10])
+opening = soup.find(class_="wave").string.replace(':', ' ').split()
+opening_time = int(opening[0])
+closing_time = int(opening[3])
 
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
