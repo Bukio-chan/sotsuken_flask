@@ -34,7 +34,8 @@ def now_wait_time_extraction(attraction_url):
     attraction_soup = BeautifulSoup(attraction_html.content, "html.parser")
     now_wait_time = attraction_soup.find(class_="realtime")
     now_wait_time = now_wait_time.find("td").text
-    if now_wait_time is None:
+
+    if not now_wait_time:
         now_wait_time = 'None'
     else:
         now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
@@ -51,7 +52,7 @@ def load_from_csv(line, today_csv):
     df.pop(0)
     a = []
     for i in range(len(df)):
-        if df[i] == 'None ' or df[i] == 'None' or df[i] == ' None ':
+        if 'None' in df[i]:
             a.append(0)
         else:
             float_n = float(df[i])

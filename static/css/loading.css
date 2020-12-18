@@ -1,12 +1,16 @@
+.gif {
+  text-align: center;
+  margin-top: 40vh;
+}
 .loading {
   text-align: center;
-  margin-top: 10%;
+  margin-top: 20px;
 }
 .loading span {
   display: inline-block;
-  margin: 0 -.01em;
+  margin: 0 -.03em;
   animation: loading .7s infinite;
-  font-size: 250%;
+  font-size: 60px;
 }
 .loading span:nth-child(2) {
   animation-delay: .1s;
@@ -33,4 +37,10 @@
   50% {
     transform: translateY(15px);
   }
+}
+
+@media screen and (max-width: 480px) {
+.loading span {
+  font-size: 40px;
+}
 }
