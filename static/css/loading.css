@@ -1,6 +1,9 @@
 .gif {
   text-align: center;
-  margin-top: 40vh;
+  margin-top: 20vh;
+}
+.minion {
+  width: 20%;
 }
 .loading {
   text-align: center;
@@ -42,5 +45,8 @@
 @media screen and (max-width: 480px) {
 .loading span {
   font-size: 40px;
+}
+.minion {
+  width: 40%;
 }
 }
