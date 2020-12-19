@@ -19,6 +19,12 @@ h1:before {
   background: #00cc5b;
 }
 
+h3 {
+  position: relative;
+  padding: 0.5rem;
+  text-align: center;
+}
+
 .inline {
   display: inline;
 }
@@ -160,7 +166,7 @@ button.button2:hover {
 
 @media screen and (max-width: 480px) {
 .explanation {
-  margin: 10px 20px;
+  margin: 10px 10px;
 }
 .box {
   margin: 10px 0px;

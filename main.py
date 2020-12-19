@@ -13,7 +13,8 @@ app = Flask(__name__)
 url = 'https://usjreal.asumirai.info/'
 html = requests.get(url, verify=False)
 soup = BeautifulSoup(html.content, "html.parser")
-opening = soup.find(class_="wave").string.replace(':', ' ').split()
+business_hours = soup.find(class_="wave").string
+opening = business_hours.replace(':', ' ').split()
 opening_time = int(opening[0])
 closing_time = int(opening[3])
 
@@ -107,7 +108,8 @@ def search():
     for x in glob.glob('static/result/*.png'):
         os.remove(x)
     index_time, value = time_for_index()
-    return render_template("index.html", city=all_attraction, index_time=index_time, value=value)
+    return render_template("index.html", city=all_attraction, index_time=index_time,
+                           value=value, opening=business_hours)
 
 
 @app.route("/result", methods=['POST'])
@@ -154,7 +156,7 @@ def result():
             for i in range(len(attraction_list)):
                 attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
         else:
-            comment = '現在は営業時間外です。時間を選択してください！'
+            comment = '現在は営業時間外です！時間を選択してください。'
             return render_template('error.html', comment=comment)
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
