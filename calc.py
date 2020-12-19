@@ -84,19 +84,19 @@ class Calculation:
         total_time = 0
         flag = True
         each_wait_time = []
+        if type(route[0].now_wait_time) == int:  # 現在時刻のときの待ち時間
+            each_wait_time[0] = route[0].now_wait_time
         for i in range(len(route)):
             if start_time < 23:
                 total_time += each_walk_time[i]  # 徒歩時間
                 total_time += route[i].ride_time  # 乗車時間
                 each_wait_time.append(route[i].wait_time_list[start_time])  # アトラクション毎の待ち時間
+                total_time += each_wait_time[i]  # 待ち時間の合計
                 if total_time >= 30:
                     start_time = fixed_time + round(total_time / 30)
             else:
                 flag = False
                 break
-        if type(route[0].now_wait_time) == int:  # 現在時刻のときの待ち時間
-            each_wait_time[0] = route[0].now_wait_time
-        total_time += sum(each_wait_time)  # 待ち時間の合計
         total_time += each_walk_time[-1]  # 最後のアトラクションからゴール位置までの時間
         if flag:
             return total_time, each_wait_time, each_walk_time

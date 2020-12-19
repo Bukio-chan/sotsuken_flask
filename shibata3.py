@@ -263,9 +263,9 @@ class StatisticalQueue(object):
         fouts_ave = []
         for (i, sym) in enumerate(symbols):
             filename = 'static/csv/TimeList/{0}{1}-variance{2}'.format(prefix, sym, suffix)
-            fouts_var.append(open(filename, mode='w'))
+            fouts_var.append(open(filename, mode='w', encoding="utf-8"))
             filename = 'static/csv/TimeList/{0}{1}-average{2}'.format(prefix, sym, suffix)
-            fouts_ave.append(open(filename, mode='w'))
+            fouts_ave.append(open(filename, mode='w', encoding="utf-8"))
 
         attractions_list = self.reference_dateinfo.attractions_list
         time_list = self.reference_dateinfo.renew_timelist

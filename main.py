@@ -113,7 +113,7 @@ def search():
 @app.route("/result", methods=['POST'])
 def result():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
-    if now.hour <= 9:
+    if now.hour <= opening_time:
         yoso = soup.find(class_="rank-yoso a")
         rank = yoso.string  # A,B,C,D,E,F,S
     else:
