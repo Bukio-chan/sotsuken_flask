@@ -4,7 +4,7 @@
 <link href="../static/css/style.css" media="all" rel="stylesheet">
 <link href="../static/css/loading.css" media="all" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="../static/icon.png">
-<title>そつけん</title>
+<title>USJ Planner</title>
 <meta http-equiv="content-type" charset="utf-8">
 <meta name="google-site-verification" content="x53O8x_H6U95U8wmXJIZKL5GGweQKK_EPfwehgLZtmQ" />
 <script type="text/javascript">
@@ -18,9 +18,21 @@
 </head>
 <body>
 <div class="panel tab-A is-show">
-<div class="box"><h2>そつけん</h2></div>
+<div class="box"><h2>USJ Planner</h2></div>
 <form action="/result" method="POST">
     <div class="box">
+
+  <div class="normal-box3">
+  <p>スタート時間</p>
+  <div class="cp_select cp_sl03">
+    <select name="start_time" class="select_box">
+      <option value="100" selected>現在時刻</option>
+      {% for i in index_time %}
+        <option value="{{value[loop.index-1]}}">{{i}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  </div>
 
     <div class="normal-box3">
     <p>アトラクションを選択</p>
@@ -34,15 +46,15 @@
         </div>
     </div>
 
-      <div class="normal-box3">
-      <p>スタート地点</p>
-      <div class="cp_select cp_sl03">
-        <select name="START" class="select_box">
-            {% for i in city %}
-            <option value="{{i.num}}">{{i.name}}</option>
-            {% endfor %}
-        </select>
-      </div>
+  <div class="normal-box3">
+  <p>スタート地点</p>
+  <div class="cp_select cp_sl03">
+    <select name="START" class="select_box">
+        {% for i in city %}
+        <option value="{{i.num}}">{{i.name}}</option>
+        {% endfor %}
+    </select>
+  </div>
 
   <p>ゴール地点</p>
   <div class="cp_select cp_sl03">
@@ -50,18 +62,6 @@
         {% for i in city %}
         <option value="{{i.num}}">{{i.name}}</option>
         {% endfor %}
-    </select>
-  </div>
-  </div>
-
-  <div class="normal-box3">
-  <p>スタート時間</p>
-  <div class="cp_select cp_sl03">
-    <select name="start_time" class="select_box">
-      <option value="100" selected>現在時刻</option>
-      {% for i in index_time %}
-        <option value="{{value[loop.index-1]}}">{{i}}</option>
-      {% endfor %}
     </select>
   </div>
   </div>

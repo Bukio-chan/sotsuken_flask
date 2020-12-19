@@ -85,7 +85,7 @@ class Calculation:
         flag = True
         each_wait_time = []
         if type(route[0].now_wait_time) == int:  # 現在時刻のときの待ち時間
-            each_wait_time[0] = route[0].now_wait_time
+            route[0].wait_time_list[start_time] = route[0].now_wait_time
         for i in range(len(route)):
             if start_time < 23:
                 total_time += each_walk_time[i]  # 徒歩時間
