@@ -154,7 +154,7 @@ def result():
             for i in range(len(attraction_list)):
                 attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
         else:
-            comment = '時間を選択してください！'
+            comment = '現在は営業時間外です。時間を選択してください！'
             return render_template('error.html', comment=comment)
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
@@ -172,7 +172,7 @@ def result():
     order_result, time_result, distance_result, img_filename = output_result
 
     if time_result == 0:
-        comment = "時間が足りないかも！"
+        comment = "時間が足りないかも！ アトラクションを減らすか、スタート時間を変更してください。"
         return render_template('error.html', comment=comment)
     else:
         end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])

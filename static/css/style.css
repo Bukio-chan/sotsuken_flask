@@ -3,12 +3,13 @@ body {
   background: #fafafa;
 }
 
-h2 {
+h1 {
   position: relative;
   padding: 1rem 1rem;
   border-bottom: 6px solid #094;
+  font-size: 1.7em;
 }
-h2:before {
+h1:before {
   position: absolute;
   bottom: -6px;
   left: 0;
@@ -18,19 +19,22 @@ h2:before {
   background: #00cc5b;
 }
 
-div.inline {
+.inline {
   display: inline;
 }
 
-div.box {
+.explanation {
+  margin: 10px 22%;
+}
+.box {
   margin: 10px 20%;
   position: relative;
 }
 
-div.bullets {
+.bullets {
   margin: 10px 3%;
 }
-div.check {
+.check {
   margin: 5px 0;
 }
 
@@ -121,15 +125,15 @@ td.ico {
   background-repeat: no-repeat;
 }
 
-div.range {
+.range {
   text-align: center;
 }
 
-div.image{
+.image{
   text-align: center;
 }
 
-div.button1 {
+.button1 {
   text-align:center;
   padding:10px 0px;
 }
@@ -155,11 +159,14 @@ button.button2:hover {
 }
 
 @media screen and (max-width: 480px) {
-div.box {
+.explanation {
+  margin: 10px 20px;
+}
+.box {
   margin: 10px 0px;
 }
 
-div.bullets {
+.bullets {
   margin: 10px 0;
 }
 
@@ -168,7 +175,7 @@ table{
   margin:0 auto;
 }
 
-div.image{
+.image{
   margin:0 auto;
 }
 img.result{
