@@ -18,6 +18,10 @@ opening = business_hours.replace(':', ' ').split()
 opening_time = int(opening[0])
 closing_time = int(opening[3])
 
+time_url = 'https://usjreal.asumirai.info/realtime/usj-wait-today.html'
+time_html = requests.get(time_url, verify=False)
+time_soup = BeautifulSoup(time_html.content, "html.parser")
+
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
     reader = csv.reader(f)
@@ -30,11 +34,9 @@ for j in range(len(data)):
     all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
 
 
-def now_wait_time_extraction(attraction_url):
-    attraction_html = requests.get(attraction_url, verify=False)
-    attraction_soup = BeautifulSoup(attraction_html.content, "html.parser")
-    now_wait_time = attraction_soup.find(class_="realtime")
-    now_wait_time = now_wait_time.find("td").text
+def now_wait_time_extraction(attraction_id):
+    table = time_soup.select(f'#{attraction_id} p')
+    now_wait_time = table[2].text
 
     if '分待ち' in now_wait_time:
         now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
