@@ -175,8 +175,9 @@ def result():
             for i in range(len(attraction_list)):
                 attraction_list[i].now_wait_time = now_time_list[int(attraction_number[i])-1]
         else:
-            comment = '現在は営業時間外です！時間を選択してください。'
-            return render_template('error.html', comment=comment)
+            comment = '現在は営業時間外です！'
+            sub_comment = '時間を選択してください。'
+            return render_template('error.html', comment=comment, sub_comment=sub_comment)
     else:
         start_time_result = get_selected_time(datetime.datetime(now.year, now.month, now.day, 7, 15),
                                               start_time)
