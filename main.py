@@ -162,7 +162,7 @@ def result():
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
             for i in range(len(attraction_list)):
-                attraction_list[i].now_wait_time = now_wait_time_extraction(f"{data[int(attraction_number[i])][5]}")
+                attraction_list[i].now_wait_time = now_ave[int(attraction_number[i])-1]
         else:
             comment = '現在は営業時間外です！時間を選択してください。'
             return render_template('error.html', comment=comment)
