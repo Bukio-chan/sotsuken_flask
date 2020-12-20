@@ -41,7 +41,7 @@ def now_wait_time_extraction(attraction_id):
     if '分待ち' in now_wait_time:
         now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
     else:
-        now_wait_time = 'None'
+        now_wait_time = None
     return now_wait_time
 
 
@@ -104,6 +104,20 @@ def time_for_index():  # index.html用
     return df, value
 
 
+# 待ち時間予想の係数
+def calculate_factor(now, today_csv):
+    now_ave = []
+    forecast_ave = []
+    factor = 1
+    if opening_time + 1 <= now.hour <= closing_time - 1:
+        for i in range(len(all_attraction) - 1):
+            now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
+            forecast_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])
+        print(now_ave, forecast_ave)
+        factor = sum(now_ave) / sum(forecast_ave)
+    return factor, now_ave
+
+
 @app.route("/")
 def search():
     # 画像の削除
@@ -117,6 +131,7 @@ def search():
 @app.route("/result", methods=['POST'])
 def result():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
+
     if now.hour <= opening_time:
         yoso = soup.find(class_="rank-yoso a")
         rank = yoso.string  # A,B,C,D,E,F,S
@@ -142,12 +157,7 @@ def result():
         return render_template('error.html', comment=comment)
 
     # 待ち時間予想の係数
-    now_ave = []
-    forecast_ave = []
-    for i in range(len(all_attraction) - 1):
-        now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
-        forecast_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])
-    factor = sum(now_ave) / sum(forecast_ave)
+    factor, now_time_list = calculate_factor(now, today_csv)
 
     # 選択されたアトラクションのデータをappendしていく
     attraction_list = []
@@ -159,12 +169,11 @@ def result():
                                           now_wait_time='not now'))
 
     start_time_result = now
-
     if start_time == 100:  # 現在時刻が選択されたときのスタート時間
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
             for i in range(len(attraction_list)):
-                attraction_list[i].now_wait_time = now_ave[int(attraction_number[i])-1]
+                attraction_list[i].now_wait_time = now_time_list[int(attraction_number[i])-1]
         else:
             comment = '現在は営業時間外です！時間を選択してください。'
             return render_template('error.html', comment=comment)
@@ -184,8 +193,9 @@ def result():
     order_result, time_result, distance_result, img_filename = output_result
 
     if time_result == 0:
-        comment = "時間が足りないかも！ アトラクションを減らすか、スタート時間を変更してください。"
-        return render_template('error.html', comment=comment)
+        comment = "時間が足りないかも！"
+        sub_comment = "アトラクションを減らすか、スタート時間を変更してください。"
+        return render_template('error.html', comment=comment, sub_comment=sub_comment)
     else:
         end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])
 
