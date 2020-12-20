@@ -25,6 +25,7 @@ class Attraction:
         self.ride_time = ride_time
         self.num = num
         self.now_wait_time = now_wait_time
+        self.scale = 140 / 41.231  # 縮尺
 
     # 距離の計算
     def distance(self, attraction):
@@ -34,14 +35,13 @@ class Attraction:
         wonderland_x = 165
         wonderland_y = 160
         if self.distance_list[self.num][attraction.num] == 'None':
-            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2) * (140 / 41.231)
+            distance = np.sqrt((self.x - attraction.x) ** 2 + (self.y - attraction.y) ** 2) * self.scale
         elif self.num >= 12:
             distance = float(self.distance_list[self.num][attraction.num])
-            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2) * (140 / 41.231)
+            distance += np.sqrt((self.x - wonderland_x) ** 2 + (self.y - wonderland_y) ** 2) * self.scale
         elif attraction.num >= 12:
             distance = float(self.distance_list[self.num][attraction.num])
-            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2) * (
-                        140 / 41.231)
+            distance += np.sqrt((wonderland_x - attraction.x) ** 2 + (wonderland_y - attraction.y) ** 2) * self.scale
         else:
             distance = float(self.distance_list[self.num][attraction.num])  # 設定した距離データで計算
 
@@ -57,6 +57,7 @@ class Calculation:
         self.start_place = ga.start_place
         self.end_place = ga.end_place
         self.start_time = ga.start_time
+        self.factor = ga.factor
         self.walk_speed = 80  # 歩く速さ
         self._each_wait_time = 0  # 待ち時間list
         self._each_walk_time = 0  # 徒歩時間list
@@ -223,12 +224,13 @@ def create_initial_population(population_size, attraction_list):
 
 
 class GeneticAlgorithm:
-    def __init__(self, attraction_list, distance_flag, start_place, end_place, start_time):
+    def __init__(self, attraction_list, distance_flag, start_place, end_place, start_time, factor):
         self.attraction_list = attraction_list
         self.distance_flag = distance_flag
         self.start_place = start_place
         self.end_place = end_place
         self.start_time = start_time
+        self.factor = factor
 
     def rank_routes(self, population):
         fitness_results = {}

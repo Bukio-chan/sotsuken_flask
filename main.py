@@ -44,7 +44,7 @@ def now_wait_time_extraction(attraction_url):
 
 
 # csvから読み取り、stringをintに変換
-def load_from_csv(line, today_csv):
+def load_from_csv(line, today_csv, factor=1.0):
     csv_file = open(today_csv, 'r', encoding="utf-8")
     df = []
     for row in csv.reader(csv_file):
@@ -57,14 +57,14 @@ def load_from_csv(line, today_csv):
             a.append(0)
         else:
             float_n = float(df[i])
-            a.append(int(float_n))
+            a.append(int(float_n * factor))
     return a
 
 
 # 現在時刻からスタート時間取得
 def get_start_time(hour, minute):
     num_result = 0
-    num = 1
+    num = 2
     for i in range(8, 21):
         if hour == i:
             num_result = num
@@ -139,18 +139,26 @@ def result():
         comment = "アトラクションを選んでください！"
         return render_template('error.html', comment=comment)
 
+    # 待ち時間予想の係数
+    now_ave = []
+    forecast_ave = []
+    for i in range(len(all_attraction) - 1):
+        now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
+        forecast_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])
+    factor = sum(now_ave) / sum(forecast_ave)
+
     # 選択されたアトラクションのデータをappendしていく
     attraction_list = []
     for i in range(len(attraction_number)):
         num = int(attraction_number[i])
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
-                                          wait_time_list=load_from_csv(int(data[num][4]), today_csv),
+                                          wait_time_list=load_from_csv(int(data[num][4]), today_csv, factor),
                                           ride_time=int(data[num][3]), num=num,
                                           now_wait_time='not now'))
 
     start_time_result = now
 
-    if start_time == 100:  # スタート時間
+    if start_time == 100:  # 現在時刻が選択されたときのスタート時間
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
             for i in range(len(attraction_list)):
@@ -168,7 +176,7 @@ def result():
     else:
         distance_flag = False
 
-    ga = GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time)
+    ga = GeneticAlgorithm(attraction_list, distance_flag, start_place, end_place, start_time, factor)
     output_result = ga.main(generation)  # main()を実行
 
     order_result, time_result, distance_result, img_filename = output_result
