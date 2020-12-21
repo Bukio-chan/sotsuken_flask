@@ -36,7 +36,10 @@ for j in range(len(data)):
 
 def now_wait_time_extraction(attraction_id):
     table = time_soup.select(f'#{attraction_id} p')
-    now_wait_time = table[2].text
+    if len(table) > 2:
+        now_wait_time = table[2].text
+    else:
+        now_wait_time = 'None'
 
     if '分待ち' in now_wait_time:
         now_wait_time = int(now_wait_time.replace(' 分待ち', ''))

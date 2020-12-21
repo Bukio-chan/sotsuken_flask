@@ -3,8 +3,9 @@ body {
   background: #fafafa;
 }
 
-h1 {
+h1.logo {
   margin: 0;
+  height: 30px
 }
 header {
   background: #fff;
@@ -35,7 +36,7 @@ h3 {
   padding: 0.5rem;
   text-align: center;
 }
-h3 span {
+h2 span,h3 span {
   background: linear-gradient(transparent 70%, #ffc037 80%)
 }
 
@@ -188,7 +189,7 @@ p.comment {
   margin-left: 0px;
 }
 .space {
-  margin: 80px
+  margin: 70px
 }
 
 .box {
