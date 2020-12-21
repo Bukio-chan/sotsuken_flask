@@ -190,6 +190,10 @@ button.button2:hover {
   display:block;
 }
 
+p.comment {
+  font-style: oblique;
+}
+
 @media screen and (max-width: 480px) {
 .logo img {
   height: 30px;
