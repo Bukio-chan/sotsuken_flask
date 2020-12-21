@@ -8,6 +8,7 @@ h1 {
 }
 header {
   background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   display: flex;
   position: fixed;
   top: 0;
@@ -18,7 +19,7 @@ header {
   z-index: 1;
 }
 .logo img {
-  height: 50px;
+  height: 40px;
   margin-left: 10px;
 }
 .top_img {
