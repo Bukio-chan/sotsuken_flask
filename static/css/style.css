@@ -5,7 +5,7 @@ body {
 
 h1.logo {
   margin: 0;
-  height: 30px
+  height: 40px
 }
 header {
   background: #fff;
@@ -187,6 +187,9 @@ p.comment {
 .logo img {
   height: 30px;
   margin-left: 0px;
+}
+h1.logo {
+  height: 30px
 }
 .space {
   margin: 70px
