@@ -1,6 +1,6 @@
 body {
   font-family: 'arial';
-  background: #fafafa;
+  background: #f9f9f9;
 }
 
 h1.logo {
@@ -31,13 +31,16 @@ header {
   margin: 100px
 }
 
+h2 span,h3 span {
+  background: linear-gradient(transparent 70%, #ffc037 80%)
+}
+h2 {
+  padding-left: 0.5rem;
+}
 h3 {
   position: relative;
   padding: 0.5rem;
   text-align: center;
-}
-h2 span,h3 span {
-  background: linear-gradient(transparent 70%, #ffc037 80%)
 }
 
 .inline {
@@ -130,7 +133,7 @@ table{
   background: #eee;
 }
 table tr:nth-child(3n){
-  background: #fafafa;
+  background: #f9f9f9;
 }
 td,th{
   padding:10px 5px;
