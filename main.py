@@ -139,7 +139,7 @@ def result():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 
     if now.hour <= opening_time:
-        yoso = soup.find(class_="rank-yoso a")
+        yoso = soup.find(class_="rank-yoso")
         rank = yoso.string  # A,B,C,D,E,F,S
     else:
         yoso = soup.find(class_="rank-col rank")

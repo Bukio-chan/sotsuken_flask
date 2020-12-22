@@ -2,7 +2,6 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
 <link href="../static/css/style.css" media="all" rel="stylesheet">
-<link href="../static/css/loading.css" media="all" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="../static/logo.jpg">
 <title>USJ Planner</title>
 <meta http-equiv="content-type" charset="utf-8">
@@ -89,9 +88,9 @@
   <div class="button1">
     <button class="Button2" style="width:100%; padding: 10px" onclick="btnClick()">検索</button>
   </div>
-  <p>世代数（計算の精度）</p>
+  <p>計算の精度</p>
     <div class="range">
-    <b>5</b> <input type="range" name="generation" min="5" max="100" step="5" value="40" style="width: 80%"> <b>100</b>
+    <b>5</b> <input type="range" name="generation" min="5" max="100" step="5" value="30" style="width: 80%"> <b>100</b>
     </div>
 
   </div>
@@ -103,18 +102,10 @@
 </div>
 
 <div class="panel tab-B">
-    <div class="gif">
-    <img class="minion" src="../static/minion.gif" alt ="minion">
+    <div class="svg">
+    <img class="loading" src="../static/loading.svg" alt ="loading">
     </div>
-    <div class="loading">
-      <span>L</span>
-      <span>O</span>
-      <span>A</span>
-      <span>D</span>
-      <span>I</span>
-      <span>N</span>
-      <span>G</span>
-    </div>
+  <p style="text-align: center; font-size: 30px;">お待ちください...</p>
 </div>
 
 </body>

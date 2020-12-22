@@ -141,7 +141,8 @@ th{
 }
 td.ico {
   padding-left: 20px;
-  background-image: url('../walk.ico');
+  background-image: url('../walk.png');
+  background-size: 16px;
   background-position: center left;
   background-repeat: no-repeat;
 }
@@ -179,8 +180,12 @@ button.button2:hover {
   display:block;
 }
 
-p.comment {
-  font-style: oblique;
+.svg {
+  text-align: center;
+  margin-top: 30vh;
+}
+.loading {
+  width: 10%;
 }
 
 @media screen and (max-width: 480px) {
@@ -213,5 +218,9 @@ table{
 }
 img.result{
   width: 100%
+}
+
+.loading {
+  width: 20%;
 }
 }
