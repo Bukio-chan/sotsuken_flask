@@ -48,18 +48,22 @@
     <div class="normal-box3">
     <p>アトラクションを選択</p>
         <div class="bullets">
-          <ul>
+          <div class="surround">
           {% for i in city[1:] %}
           <div class="cp_ipcheck">
             <div class="box">
-              <li>
-              <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
-              <label class="attraction" for="{{i.num}}"><a href="{{i.url}}"> {{i.name}}</a></label>
-              </li>
+              <div class="cp_menu">
+                <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
+                <label class="attraction" for="{{i.num}}"> {{i.name}}<label class="menu" for="cp_menu_bar{{i.num}}"></label></label>
+                <input type="checkbox" id="cp_menu_bar{{i.num}}" class="accordion" />
+                <ul id="link{{i.num}}">
+                    <li><a href="{{i.url}}">公式サイトへ</a></li>
+                </ul>
+              </div>
             </div>
           </div>
           {% endfor %}
-          </ul>
+          </div>
         </div>
     </div>
 
@@ -110,7 +114,7 @@
 
 <div class="panel tab-B">
     <div class="svg">
-    <img class="loading" src="../static/loading.svg" alt ="loading">
+    <object type="image/svg+xml" class="loading" data="../static/loading.svg"></object>
     </div>
   <p class="wait" style="">計算中...</p>
 </div>

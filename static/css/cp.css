@@ -22,7 +22,6 @@
 }
 .cp_select.cp_sl03 {
 	position: relative;
-	border-radius: 2px;
 	border-bottom: 1px solid #000;
 }
 .cp_select.cp_sl03::before {
@@ -42,6 +41,11 @@
 	padding: 8px 38px 8px 8px;
 }
 
+
+
+.surround {
+  border-top: 1px dashed #ccc;
+}
 .cp_ipcheck {
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
@@ -58,28 +62,20 @@
 .cp_ipcheck input[type=checkbox] {
 	display: none;
 }
-.cp_ipcheck label:focus,
-.cp_ipcheck label:hover,
-.cp_ipcheck label:active,
-.cp_ipcheck input:checked + label {
-	color: #FF3600;
-}
-.cp_ipcheck label:focus:before,
-.cp_ipcheck label:hover:before,
-.cp_ipcheck label:active:before,
-.cp_ipcheck input:checked + label:before {
+.cp_ipcheck label.attraction:focus:before,
+.cp_ipcheck label.attraction:hover:before,
+.cp_ipcheck label.attraction:active:before,
+.cp_ipcheck input:checked + label.attraction:before {
 	border-color: #ccc;
 	background: #fff;
 }
-.cp_ipcheck label {
+.cp_ipcheck label.attraction {
 	font-size: 1em;
-	font-weight: bold;
 	padding: 1em 1em;
-	padding-bottom: 2em;
 	-webkit-transition: all 0.15s ease;
 	        transition: all 0.15s ease;
 }
-.cp_ipcheck label:before {
+.cp_ipcheck label.attraction:before {
 	position: absolute;
 	top: 1em;
 	left: 0.5em;
@@ -88,7 +84,61 @@
 	content: '';
 	border: 0.2em solid #ccc;
 }
-.cp_ipcheck input:checked + label:before {
-	border-color: #ccc;
-	background: #FF3600;
+.cp_ipcheck input:checked + label.attraction:before {
+	border-color: #fff;
+	background: #1a73e8;
+}
+
+
+
+.cp_menu {
+  border-bottom: 1px dashed #ccc
+}
+.cp_menu a {
+	display: block;
+    margin-left: 20%;
+	padding: 10px;
+	color: blue;
+}
+.cp_menu label.menu::before {
+	position: absolute;
+	content: '▼';
+	right: 0.5em;
+	font-size: 20px;
+	cursor: pointer;
+}
+.cp_menu input {
+	display: none;
+}
+.cp_menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.cp_menu li {
+	overflow-y: hidden;
+	max-height: 0;
+	transition: all 0.5s;
+}
+/*リストが増えたらULごとに追加してください*/
+#cp_menu_bar1:checked ~ #link1 li,
+#cp_menu_bar2:checked ~ #link2 li,
+#cp_menu_bar3:checked ~ #link3 li,
+#cp_menu_bar4:checked ~ #link4 li,
+#cp_menu_bar5:checked ~ #link5 li,
+#cp_menu_bar6:checked ~ #link6 li,
+#cp_menu_bar7:checked ~ #link7 li,
+#cp_menu_bar8:checked ~ #link8 li,
+#cp_menu_bar9:checked ~ #link9 li,
+#cp_menu_bar10:checked ~ #link10 li,
+#cp_menu_bar11:checked ~ #link11 li,
+#cp_menu_bar12:checked ~ #link12 li,
+#cp_menu_bar13:checked ~ #link13 li,
+#cp_menu_bar14:checked ~ #link14 li,
+#cp_menu_bar15:checked ~ #link15 li,
+#cp_menu_bar16:checked ~ #link16 li,
+#cp_menu_bar17:checked ~ #link17 li,
+#cp_menu_bar18:checked ~ #link18 li {
+	max-height: 46px;
+	opacity: 1;
 }
