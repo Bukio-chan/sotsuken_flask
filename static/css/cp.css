@@ -1,0 +1,93 @@
+.cp_select {
+	overflow: hidden;
+	width: 95%;
+	margin: 2em auto;
+	text-align: center;
+}
+.cp_select select {
+	width: 100%;
+	padding-right: 1em;
+	text-indent: 0.01px;
+	text-overflow: ellipsis;
+	border: none;
+	outline: none;
+	background: transparent;
+	background-image: none;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.cp_select select::-ms-expand {
+    display: none;
+}
+.cp_select.cp_sl03 {
+	position: relative;
+	border-radius: 2px;
+	border-bottom: 1px solid #000000;
+}
+.cp_select.cp_sl03::before {
+	position: absolute;
+	top: 0.8em;
+	right: 0.8em;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #000000;
+	pointer-events: none;
+}
+.cp_select.cp_sl03 select {
+	padding: 8px 38px 8px 8px;
+}
+
+.cp_ipcheck {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+.cp_ipcheck:before, .cp_ipcheck:after {
+	-webkit-box-sizing: inherit;
+	        box-sizing: inherit;
+}
+.cp_ipcheck .box {
+	margin: 0em auto;
+	text-align: left;
+    position: relative;
+}
+.cp_ipcheck input[type=checkbox] {
+	display: none;
+}
+.cp_ipcheck label:focus,
+.cp_ipcheck label:hover,
+.cp_ipcheck label:active,
+.cp_ipcheck input:checked + label {
+	color: #FF3600;
+}
+.cp_ipcheck label:focus:before,
+.cp_ipcheck label:hover:before,
+.cp_ipcheck label:active:before,
+.cp_ipcheck input:checked + label:before {
+	border-color: #FF3600;
+	background: #ffffff;
+}
+.cp_ipcheck label {
+	font-size: 1em;
+	font-weight: bold;
+	padding: 1em 1em 1em 1em;
+	-webkit-transition: all 0.15s ease;
+	        transition: all 0.15s ease;
+}
+.cp_ipcheck label:before {
+	position: absolute;
+	top: 1em;
+	left: 0.5em;
+	width: 15px;
+	height: 15px;
+	content: '';
+	border: 0.2em solid #cccccc;
+}
+.cp_ipcheck input:checked + label:before {
+	border-color: #FF3600;
+	background: #FF3600;
+}

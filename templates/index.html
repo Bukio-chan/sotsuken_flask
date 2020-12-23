@@ -2,6 +2,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
 <link href="../static/css/style.css" media="all" rel="stylesheet">
+  <link href="../static/css/cp.css" media="all" rel="stylesheet">
 <link rel="icon" type="image/x-icon" href="../static/logo.jpg">
 <title>USJ Planner</title>
 <meta http-equiv="content-type" charset="utf-8">
@@ -48,9 +49,11 @@
     <p>アトラクションを選択</p>
         <div class="bullets">
           {% for i in city[1:] %}
-          <div class="check">
-          <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
-          <label class="attraction" for="{{i.num}}"> {{i.name}}</label>
+          <div class="cp_ipcheck">
+            <div class="box">
+              <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
+              <label class="attraction" for="{{i.num}}"><a href="{{i.url}}"> {{i.name}}</a></label>
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -105,7 +108,7 @@
     <div class="svg">
     <img class="loading" src="../static/loading.svg" alt ="loading">
     </div>
-  <p style="text-align: center; font-size: 30px;">お待ちください...</p>
+  <p class="wait" style="">計算中...</p>
 </div>
 
 </body>

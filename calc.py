@@ -17,7 +17,7 @@ class Attraction:
         reader = csv.reader(f)
         distance_list = [row for row in reader]
 
-    def __init__(self, x, y, name, wait_time_list=None, ride_time=None, num=None, now_wait_time=None):
+    def __init__(self, x, y, name, wait_time_list=None, ride_time=None, num=None, now_wait_time=None, url=None):
         self.x = x
         self.y = y
         self.name = name
@@ -25,6 +25,7 @@ class Attraction:
         self.ride_time = ride_time
         self.num = num
         self.now_wait_time = now_wait_time
+        self.url = url
         self.scale = 140 / 41.231  # 縮尺
 
     # 距離の計算

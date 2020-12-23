@@ -31,7 +31,7 @@ with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
 all_attraction = []
 # スタート地点・ゴール地点の座標配列all_attraction[]
 for j in range(len(data)):
-    all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j))
+    all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j, url=data[j][6]))
 
 
 def now_wait_time_extraction(attraction_id):

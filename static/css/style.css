@@ -43,6 +43,10 @@ h3 {
   text-align: center;
 }
 
+a {
+  color: blue;
+}
+
 .inline {
   display: inline;
 }
@@ -52,7 +56,6 @@ h3 {
 }
 .box {
   margin: 10px 20%;
-  position: relative;
 }
 
 .bullets {
@@ -61,7 +64,6 @@ h3 {
 .check {
   margin: 5px 0;
 }
-
 input.attraction {
   display: block;
   float: left;
@@ -70,52 +72,7 @@ input.attraction {
 label.attraction {
   display: block;
   clear: none;
-  margin-left: 25px;
-}
-
-.cp_select {
-	overflow: hidden;
-	width: 95%;
-	margin: 2em auto;
-	text-align: center;
-}
-.cp_select select {
-	width: 100%;
-	padding-right: 1em;
-	cursor: pointer;
-	text-indent: 0.01px;
-	text-overflow: ellipsis;
-	border: none;
-	outline: none;
-	background: transparent;
-	background-image: none;
-	box-shadow: none;
-	-webkit-appearance: none;
-	appearance: none;
-}
-.cp_select select::-ms-expand {
-    display: none;
-}
-.cp_select.cp_sl03 {
-	position: relative;
-	border-radius: 2px;
-	border-bottom: 1px solid #000000;
-}
-.cp_select.cp_sl03::before {
-	position: absolute;
-	top: 0.8em;
-	right: 0.8em;
-	width: 0;
-	height: 0;
-	padding: 0;
-	content: '';
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-top: 6px solid #000000;
-	pointer-events: none;
-}
-.cp_select.cp_sl03 select {
-	padding: 8px 38px 8px 8px;
+  margin-left: 30px;
 }
 
 .normal-box3{
@@ -190,6 +147,10 @@ button.button2:hover {
 .loading {
   width: 10%;
 }
+.wait {
+  text-align: center;
+  font-size: 30px;
+}
 
 @media screen and (max-width: 480px) {
 .logo img {
@@ -225,5 +186,8 @@ img.result{
 
 .loading {
   width: 20%;
+}
+.wait {
+  font-size: 20px;
 }
 }
