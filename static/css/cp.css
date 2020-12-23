@@ -68,7 +68,7 @@
 .cp_ipcheck label:hover:before,
 .cp_ipcheck label:active:before,
 .cp_ipcheck input:checked + label:before {
-	border-color: #FF3600;
+	border-color: #cccccc;
 	background: #ffffff;
 }
 .cp_ipcheck label {
@@ -82,12 +82,12 @@
 	position: absolute;
 	top: 1em;
 	left: 0.5em;
-	width: 15px;
-	height: 15px;
+	width: 10px;
+	height: 10px;
 	content: '';
 	border: 0.2em solid #cccccc;
 }
 .cp_ipcheck input:checked + label:before {
-	border-color: #FF3600;
+	border-color: #cccccc;
 	background: #FF3600;
 }
