@@ -48,14 +48,18 @@
     <div class="normal-box3">
     <p>アトラクションを選択</p>
         <div class="bullets">
+          <ul>
           {% for i in city[1:] %}
           <div class="cp_ipcheck">
             <div class="box">
+              <li>
               <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
               <label class="attraction" for="{{i.num}}"><a href="{{i.url}}"> {{i.name}}</a></label>
+              </li>
             </div>
           </div>
           {% endfor %}
+          </ul>
         </div>
     </div>
 

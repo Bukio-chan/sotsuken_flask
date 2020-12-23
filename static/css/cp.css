@@ -23,7 +23,7 @@
 .cp_select.cp_sl03 {
 	position: relative;
 	border-radius: 2px;
-	border-bottom: 1px solid #000000;
+	border-bottom: 1px solid #000;
 }
 .cp_select.cp_sl03::before {
 	position: absolute;
@@ -68,26 +68,26 @@
 .cp_ipcheck label:hover:before,
 .cp_ipcheck label:active:before,
 .cp_ipcheck input:checked + label:before {
-	border-color: #cccccc;
-	background: #ffffff;
+	border-color: #ccc;
+	background: #fff;
 }
 .cp_ipcheck label {
 	font-size: 1em;
 	font-weight: bold;
-	padding: 1em 1em 1em 1em;
+	padding: 1.5em 1em;
 	-webkit-transition: all 0.15s ease;
 	        transition: all 0.15s ease;
 }
 .cp_ipcheck label:before {
 	position: absolute;
-	top: 1.2em;
+	top: 1.5em;
 	left: 0.5em;
 	width: 14px;
 	height: 14px;
 	content: '';
-	border: 0.2em solid #cccccc;
+	border: 0.2em solid #ccc;
 }
 .cp_ipcheck input:checked + label:before {
-	border-color: #cccccc;
+	border-color: #ccc;
 	background: #FF3600;
 }
