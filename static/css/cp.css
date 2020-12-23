@@ -73,7 +73,6 @@
 }
 .cp_ipcheck label {
 	font-size: 1em;
-	line-height: 1;
 	font-weight: bold;
 	padding: 1em 1em 1em 1em;
 	-webkit-transition: all 0.15s ease;
@@ -81,7 +80,7 @@
 }
 .cp_ipcheck label:before {
 	position: absolute;
-	top: 1em;
+	top: 1.5em;
 	left: 0.5em;
 	width: 14px;
 	height: 14px;
