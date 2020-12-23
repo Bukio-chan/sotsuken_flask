@@ -136,6 +136,6 @@
 #cp_menu_bar16:checked ~ #link16 li,
 #cp_menu_bar17:checked ~ #link17 li,
 #cp_menu_bar18:checked ~ #link18 li {
-	max-height: 46px;
+	max-height: 100px;
 	opacity: 1;
 }
