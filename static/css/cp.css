@@ -43,99 +43,179 @@
 
 
 
-.surround {
-  border-top: 1px dashed #ccc;
-}
 .cp_ipcheck {
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
-}
-.cp_ipcheck:before, .cp_ipcheck:after {
-	-webkit-box-sizing: inherit;
-	        box-sizing: inherit;
-}
-.cp_ipcheck .box {
-	margin: 0em auto;
 	text-align: left;
-    position: relative;
+	border-top: 1px dashed #ccc;
 }
-.cp_ipcheck input[type=checkbox] {
-	display: none;
-}
-.cp_ipcheck label.attraction:focus:before,
-.cp_ipcheck label.attraction:hover:before,
-.cp_ipcheck label.attraction:active:before,
-.cp_ipcheck input:checked + label.attraction:before {
-	border-color: #ccc;
-	background: #fff;
-}
-.cp_ipcheck label.attraction {
-	font-size: 1em;
-	padding: 1em 1em;
-	-webkit-transition: all 0.15s ease;
-	        transition: all 0.15s ease;
-}
-.cp_ipcheck label.attraction:before {
-	position: absolute;
-	top: 1em;
-	left: 0.5em;
-	width: 14px;
-	height: 14px;
-	content: '';
-	border: 0.2em solid #ccc;
-}
-.cp_ipcheck input:checked + label.attraction:before {
-	border-color: #fff;
-	background: #1a73e8;
-}
-
-
-
-.cp_menu {
-  border-bottom: 1px dashed #ccc
-}
-.cp_menu a {
-	color: blue;
-}
-.cp_menu label.menu::before {
-	position: absolute;
-	content: '▼';
-	right: 0.8em;
-	font-size: 15px;
+.cp_ipcheck .option-input02 {
+	position: relative;
+	top: 13.33333px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
 	cursor: pointer;
+	transition: all 0.15s ease-out 0s;
+	color: #ffffff;
+	border: none;
+	outline: none;
+	background: #d7cbcb;
+	-webkit-appearance: none;
+	        appearance: none;
 }
-.cp_menu input {
-	display: none;
+.cp_ipcheck .option-input02:hover {
+	background: #d6a9a9;
 }
-.cp_menu ul {
-	margin: 0;
-	list-style: none;
+.cp_ipcheck .option-input02:checked {
+	background: #da3c41;
+}
+.cp_ipcheck .option-input02:checked::before {
+	font-size: 20px;
+	line-height: 30px;
+	position: absolute;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	content: '✔';
 	text-align: center;
 }
-.cp_menu li {
-	overflow-y: hidden;
-	max-height: 0;
-	transition: all 0.5s;
+.cp_ipcheck .option-input02:checked::after {
+	position: relative;
+	display: block;
+	content: '';
+	-webkit-animation: click-wave 0.65s;
+	        animation: click-wave 0.65s;
+	background: #da3c41;
 }
-/*リストが増えたらULごとに追加してください*/
-#cp_menu_bar1:checked ~ #link1 li,
-#cp_menu_bar2:checked ~ #link2 li,
-#cp_menu_bar3:checked ~ #link3 li,
-#cp_menu_bar4:checked ~ #link4 li,
-#cp_menu_bar5:checked ~ #link5 li,
-#cp_menu_bar6:checked ~ #link6 li,
-#cp_menu_bar7:checked ~ #link7 li,
-#cp_menu_bar8:checked ~ #link8 li,
-#cp_menu_bar9:checked ~ #link9 li,
-#cp_menu_bar10:checked ~ #link10 li,
-#cp_menu_bar11:checked ~ #link11 li,
-#cp_menu_bar12:checked ~ #link12 li,
-#cp_menu_bar13:checked ~ #link13 li,
-#cp_menu_bar14:checked ~ #link14 li,
-#cp_menu_bar15:checked ~ #link15 li,
-#cp_menu_bar16:checked ~ #link16 li,
-#cp_menu_bar17:checked ~ #link17 li,
-#cp_menu_bar18:checked ~ #link18 li {
-	max-height: 100px;
-	opacity: 1;
+.cp_ipcheck .option-input02.radio {
+	border-radius: 50%;
+}
+.cp_ipcheck .option-input02.radio::after {
+	border-radius: 50%;
+}
+.cp_ipcheck label {
+	display: block;
+}
+
+.box1 {
+	width: 320px;
+}
+.box2 {
+	width: 480px;
+}
+
+.cp_ipcheck label {
+	display: block;
+	margin: 10px;
+	padding: 10px;
+	text-align: left;
+	cursor: pointer;
+}
+.cp_ipcheck label:after {
+	content: "";
+	clear: both;
+	display: block;
+}
+.cp_ipcheck label input { float: left; }
+.cp_ipcheck label p {
+	float: left;
+	padding-top: 2px;
+	width: calc(100% - 24px);
+}
+
+
+ul,li {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+ul.keep li {
+  float: left;
+  width: 100%;
+  border-bottom: 1px dashed #ccc;
+}
+
+ul.keep input {
+  display: block;
+  float: left;
+}
+
+ul.keep span {
+  display: block;
+  overflow: hidden; /* モダンブラウザ用 */
+  zoom: 1; /* IE6用 */
+}
+
+/* クリアフィックス */
+.clearfix:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.clearfix {
+  overflow: hidden;
+  zoom: 1;
+}
+
+
+
+.cp_ipradio {
+	text-align: left;
+}
+.cp_ipradio .option-input {
+	position: relative;
+	top: 9px;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 30px;
+	height: 30px;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	transition: all 0.15s ease-out 0s;
+	color: #ffffff;
+	border: none;
+	outline: none;
+	background: #d7cbcb;
+	-webkit-appearance: none;
+	        appearance: none;
+}
+.cp_ipradio .option-input:hover {
+	background: #d6a9a9;
+}
+.cp_ipradio .option-input:checked {
+	background: #da3c41;
+}
+.cp_ipradio .option-input:checked::before {
+	font-size: 20px;
+	line-height: 30px;
+	position: absolute;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	content: '✔';
+	text-align: center;
+}
+.cp_ipradio .option-input:checked::after {
+	position: relative;
+	display: block;
+	content: '';
+	-webkit-animation: click-wave 0.65s;
+	        animation: click-wave 0.65s;
+	background: #da3c41;
+}
+.cp_ipradio .option-input.radio {
+	border-radius: 50%;
+}
+.cp_ipradio .option-input.radio::after {
+	border-radius: 50%;
+}
+.cp_ipradio label {
+	margin-right: 30px
 }

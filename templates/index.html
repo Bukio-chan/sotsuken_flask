@@ -46,25 +46,24 @@
   </div>
 
     <div class="normal-box3">
-    <p>アトラクションを選択</p>
+      <p>アトラクションを選択</p>
         <div class="bullets">
-          <div class="surround">
+              <div class="cp_ipcheck">
+                <ul class="keep clearfix">
+
           {% for i in city[1:] %}
-          <div class="cp_ipcheck">
-            <div class="box">
-              <div class="cp_menu">
-                <input type="checkbox" class="attraction" name="attraction" id="{{i.num}}" value="{{i.num}}">
-                <label class="attraction" for="{{i.num}}"> {{i.name}}<label class="menu" for="cp_menu_bar{{i.num}}"></label></label>
-                <input type="checkbox" id="cp_menu_bar{{i.num}}" class="accordion" />
-                <ul id="link{{i.num}}">
-                    <li style="height: 40px"><a href="{{i.url}}">公式サイトへ</a></li>
+                    <li>
+                        <input type="checkbox" class="option-input02 checkbox"  name="attraction" id="{{i.num}}" value="{{i.num}}">
+                        <span>
+                            <label for="{{i.num}}">
+                                {{i.name}}
+                            </label>
+                        </span>
+                    </li>
+          {% endfor %}
                 </ul>
               </div>
-            </div>
           </div>
-          {% endfor %}
-          </div>
-        </div>
     </div>
 
   <div class="normal-box3">
@@ -90,8 +89,16 @@
   <div class="normal-box3">
   <p>優先</p>
     <div class="bullets">
-    <input type="radio" name="priority" value="距離優先" id="distance" checked><label for="distance"> 距離優先</label>
-    <input type="radio" name="priority" value="時間優先" id="time"><label for="time"> 時間優先</label>
+      <div class="cp_ipradio">
+        <label>
+        <input type="radio" class="option-input radio" name="priority" value="距離優先" id="distance" checked >
+        距離優先
+        </label>
+        <label>
+        <input type="radio" class="option-input radio" name="priority" value="時間優先" id="time">
+        時間優先
+        </label>
+      </div>
     </div>
   </div>
 
