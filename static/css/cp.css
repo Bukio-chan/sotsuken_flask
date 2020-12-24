@@ -63,9 +63,6 @@
 	-webkit-appearance: none;
 	        appearance: none;
 }
-.cp_ipcheck .option-input02:hover {
-	background: #d6a9a9;
-}
 .cp_ipcheck .option-input02:checked {
 	background: #fff;
 }
@@ -183,9 +180,6 @@ ul.keep span {
 	border: 1px solid #ccc;
 	-webkit-appearance: none;
 	        appearance: none;
-}
-.cp_ipradio .option-input:hover {
-	background: #d6a9a9;
 }
 .cp_ipradio .option-input:checked {
 	background: #fff;
