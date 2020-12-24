@@ -118,6 +118,9 @@ td.ico {
 }
 button.button2 {
   font-weight: bold;
+  font-size: 14px;
+  width:100%;
+  padding: 8px;
   color: #fff;
   background: #1a73e8;
   display: inline-block;
@@ -128,25 +131,6 @@ button.button2 {
 }
 button.button2:hover {
   background: #1f559c;
-}
-
-.panel{
-  display:none;
-}
-.panel.is-show{
-  display:block;
-}
-
-.svg {
-  text-align: center;
-  margin-top: 30vh;
-}
-.loading {
-  width: 10%;
-}
-.wait {
-  text-align: center;
-  font-size: 30px;
 }
 
 @media screen and (max-width: 480px) {
@@ -179,12 +163,5 @@ table{
 }
 img.result{
   width: 100%
-}
-
-.loading {
-  width: 20%;
-}
-.wait {
-  font-size: 20px;
 }
 }

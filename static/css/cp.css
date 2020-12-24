@@ -57,7 +57,7 @@
 	height: 20px;
 	cursor: pointer;
 	transition: all 0.15s ease-out 0s;
-	color: #ffffff;
+	color: #fff;
 	border: none;
 	outline: none;
 	background: #d7cbcb;
@@ -78,6 +78,7 @@
 	width: 20px;
 	height: 20px;
 	content: '✔';
+	color: #fff;
 	text-align: center;
 }
 .cp_ipcheck .option-input02:checked::after {
@@ -178,7 +179,7 @@ ul.keep span {
 	margin-right: 0.5rem;
 	cursor: pointer;
 	transition: all 0.15s ease-out 0s;
-	color: #ffffff;
+	color: #fff;
 	border: none;
 	outline: none;
 	background: #d7cbcb;
@@ -199,6 +200,7 @@ ul.keep span {
 	width: 20px;
 	height: 20px;
 	content: '✔';
+	color: #fff;
 	text-align: center;
 }
 .cp_ipradio .option-input:checked::after {

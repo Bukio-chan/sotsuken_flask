@@ -7,19 +7,13 @@
 <title>USJ Planner</title>
 <meta http-equiv="content-type" charset="utf-8">
 <meta name="google-site-verification" content="x53O8x_H6U95U8wmXJIZKL5GGweQKK_EPfwehgLZtmQ" />
-<script type="text/javascript">
-  function btnClick(){
-    // コンテンツのclassの値を変更
-    document.getElementsByClassName('is-show')[0].classList.remove('is-show');
-    document.getElementsByClassName('panel')[1].classList.add('is-show');
-  };
-</script>
 </head>
+
 <body>
 <header>
 <h1 class="logo"><img src="../static/logo_header.png" alt="USJ Planner"></h1>
 </header>
-<div class="panel tab-A is-show">
+
 <div class="box">
   <img class="top_img" src="../static/top_img.jpg">
   <div class="explanation">
@@ -106,7 +100,7 @@
 
   <div class="normal-box3">
   <div class="button1">
-    <button class="Button2" style="width:100%; padding: 10px" onclick="btnClick()">検索</button>
+    <button class="Button2">検索</button>
   </div>
   <p>計算の精度</p>
     <div class="range">
@@ -119,14 +113,5 @@
 </div>
 </form>
 <br>
-</div>
-
-<div class="panel tab-B">
-    <div class="svg">
-    <object type="image/svg+xml" class="loading" data="../static/loading.svg"></object>
-    </div>
-  <p class="wait" style="">計算中...</p>
-</div>
-
 </body>
 </html>
