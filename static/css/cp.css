@@ -71,8 +71,8 @@
 	background: #da3c41;
 }
 .cp_ipcheck .option-input02:checked::before {
-	font-size: 16px;
-	line-height: 24px;
+	font-size: 14px;
+	line-height: 22px;
 	position: absolute;
 	display: inline-block;
 	width: 20px;
@@ -192,8 +192,8 @@ ul.keep span {
 	background: #da3c41;
 }
 .cp_ipradio .option-input:checked::before {
-	font-size: 16px;
-	line-height: 24px;
+	font-size: 14px;
+	line-height: 22px;
 	position: absolute;
 	display: inline-block;
 	width: 20px;
