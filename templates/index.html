@@ -16,7 +16,7 @@
 
 <div class="box">
   <img class="top_img" src="../static/top_img.jpg">
-  <p class="explanation" style="line-height: 1.9;">
+  <p class="explanation" style="line-height: 1.6;">
   　USJ Plannerは、USJの乗りたいアトラクションから、最適なコースを提案してくれるアプリです。
     スタート時間、アトラクションなどを選択すると、移動距離や所要時間の大まかな予測ができます。
     USJを訪れる際のプランニングに役立つかもしれません。
@@ -73,6 +73,7 @@
                             <label for="{{i.num}}">
                                 {{i.name}}
                             </label>
+
                         </span>
                     </li>
           {% endfor %}
@@ -85,12 +86,12 @@
   <p>優先</p>
     <div class="bullets">
       <div class="cp_ipradio">
-        <label>
         <input type="radio" class="option-input radio" name="priority" value="距離優先" id="distance" checked >
+        <label for="distance">
         距離優先
         </label>
-        <label>
         <input type="radio" class="option-input radio" name="priority" value="時間優先" id="time">
+        <label for="time">
         時間優先
         </label>
       </div>
