@@ -231,10 +231,6 @@ position: absolute;
 z-index: -1;
 opacity: 0;
 }
-.cp_linetab label {
-position: relative;
-cursor: pointer;
-}
 .cp_linetab .cp_linetab-content {
 overflow: hidden;
 max-height: 0;
