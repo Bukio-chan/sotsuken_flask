@@ -122,6 +122,7 @@
 }
 
 
+
 ul,li {
   margin: 0;
   padding: 0;
@@ -212,10 +213,42 @@ ul.keep span {
 }
 .cp_ipradio label {
 	margin-right: 30px;
-	padding: 10px;
 }
 
 
 
 
 
+.cp_linetab {
+position: relative;
+overflow: hidden;
+margin: 0 3px;
+float: left;
+width: 100%;
+}
+.cp_linetab input {
+position: absolute;
+z-index: -1;
+opacity: 0;
+}
+.cp_linetab label {
+position: relative;
+cursor: pointer;
+}
+.cp_linetab .cp_linetab-content {
+overflow: hidden;
+max-height: 0;
+-webkit-transition: max-height 0.5s;
+transition: max-height 0.5s;
+}
+.cp_linetab .cp_linetab-content p {
+margin: 1em;
+font-size: 14px;
+}
+.cp_linetab p{
+margin-bottom:0px;
+}
+
+.cp_linetab input:checked ~ .cp_linetab-content {
+max-height: 20em;
+}

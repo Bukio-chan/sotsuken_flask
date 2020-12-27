@@ -112,7 +112,7 @@ def calculate_factor(now, today_csv):
     now_ave = []
     forecast_ave = []
     factor = 1
-    if opening_time + 1 <= now.hour <= closing_time - 1:
+    if opening_time + 1 <= now.hour < closing_time - 1:
         for i in range(len(all_attraction) - 1):
             now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
             forecast_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])

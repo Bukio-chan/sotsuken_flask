@@ -70,9 +70,16 @@
                     <li>
                         <input type="checkbox" class="option-input02 checkbox"  name="attraction" id="{{i.num}}" value="{{i.num}}">
                         <span>
-                            <label for="{{i.num}}">
-                                {{i.name}}
-                            </label>
+
+                            <div class="cp_linetab">
+                                <label for="tab-{{i.num}}">
+                                    {{i.name}}
+                                </label>
+                                <input id="tab-{{i.num}}" name="tabs" type="checkbox" />
+                                <div class="cp_linetab-content">
+                                    <p>&#9658;<a href="{{i.url}}">公式サイトへ</a></p>
+                                </div>
+                            </div>
 
                         </span>
                     </li>
