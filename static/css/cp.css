@@ -268,3 +268,33 @@ ul.keep span {
     top: 32px;
 /*   .openクラスがついた時の要素の角度を指定 */
 }
+
+
+.arrow{
+    position: relative;
+    display: inline-block;
+    padding: 0 0 0 16px;
+    color: #000;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 15px;
+}
+.arrow::before,
+.arrow::after{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    content: "";
+    vertical-align: super;
+}
+.sample5-2::before{
+    left: 3px;
+    width: 4px;
+    height: 4px;
+    border-top: 2px solid #7a0;
+    border-right: 2px solid #7a0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
