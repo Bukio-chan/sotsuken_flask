@@ -133,6 +133,14 @@ button.button2:hover {
   background: #1f559c;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 @media screen and (max-width: 480px) {
 .logo img {
   height: 30px;
