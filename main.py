@@ -172,7 +172,7 @@ def result():
         attraction_list.append(Attraction(name=data[num][0], x=int(data[num][1]), y=int(data[num][2]),
                                           wait_time_list=load_from_csv(int(data[num][4]), today_csv, factor),
                                           ride_time=int(data[num][3]), num=num,
-                                          now_wait_time='not now'))
+                                          now_wait_time='not now', url=data[num][6]))
 
     start_time_result = now
     if start_time == 100:  # 現在時刻が選択されたときのスタート時間
