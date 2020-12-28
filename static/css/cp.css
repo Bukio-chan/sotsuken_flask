@@ -251,7 +251,7 @@ ul.keep span {
     content: "";
     position: absolute;
     right: 10px;
-    top: 24px;
+    top: 26px;
     transition: all 0.2s ease-in-out;
     display: block;
     width: 8px;
@@ -265,6 +265,6 @@ ul.keep span {
 .cp_linetab input:checked ~ label::after {
     -webkit-transform: rotate(-45deg);
     transform: rotate(-45deg);
-    top: 30px;
+    top: 32px;
 /*   .openクラスがついた時の要素の角度を指定 */
 }
