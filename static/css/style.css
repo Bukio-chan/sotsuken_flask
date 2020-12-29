@@ -136,9 +136,14 @@ button.button2:hover {
 a {
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
+}
+
+.back img{
+  width: 26px;
+  vertical-align: text-bottom;
+  margin-right: 6px;
 }
 
 @media screen and (max-width: 480px) {

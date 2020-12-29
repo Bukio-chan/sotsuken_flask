@@ -59,7 +59,7 @@
 	transition: all 0.15s ease-out 0s;
 	outline: none;
 	background: #fff;
-	border: 1px solid #ccc;
+	border: 2px solid #aaa;
 	border-radius: 4px;
 	-webkit-appearance: none;
 	        appearance: none;
@@ -68,23 +68,17 @@
 	background: #fff;
 }
 .cp_ipcheck .option-input02:checked::before {
-	font-size: 14px;
-	line-height: 22px;
 	position: absolute;
 	display: inline-block;
-	width: 20px;
-	height: 20px;
-	content: '✔';
-	color: #da3c41;
-	text-align: center;
-}
-.cp_ipcheck .option-input02:checked::after {
-	position: relative;
-	display: block;
 	content: '';
-	-webkit-animation: click-wave 0.65s;
-	        animation: click-wave 0.65s;
-	background: #da3c41;
+    width: 9px;
+    height: 4px;
+    border-left: 3px solid #da3c41;
+    border-bottom: 3px solid #da3c41;
+    transform: rotate(-45deg);
+	text-align: center;
+	top: 4px;
+    left: 2px;
 }
 .cp_ipcheck .option-input02.radio {
 	border-radius: 50%;
@@ -177,7 +171,7 @@ ul.keep span {
 	transition: all 0.15s ease-out 0s;
 	outline: none;
 	background: #fff;
-	border: 1px solid #ccc;
+	border: 2px solid #aaa;
 	-webkit-appearance: none;
 	        appearance: none;
 }
@@ -185,23 +179,17 @@ ul.keep span {
 	background: #fff;
 }
 .cp_ipradio .option-input:checked::before {
-	font-size: 14px;
-	line-height: 22px;
 	position: absolute;
 	display: inline-block;
-	width: 20px;
-	height: 20px;
-	content: '✔';
-	color: #da3c41;
-	text-align: center;
-}
-.cp_ipradio .option-input:checked::after {
-	position: relative;
-	display: block;
 	content: '';
-	-webkit-animation: click-wave 0.65s;
-	        animation: click-wave 0.65s;
-	background: #da3c41;
+    width: 9px;
+    height: 4px;
+    border-left: 3px solid #da3c41;
+    border-bottom: 3px solid #da3c41;
+    transform: rotate(-45deg);
+	text-align: center;
+	top: 4px;
+    left: 2px;
 }
 .cp_ipradio .option-input.radio {
 	border-radius: 50%;
@@ -256,8 +244,8 @@ ul.keep span {
     display: block;
     width: 8px;
     height: 8px;
-    border-top: solid 2px #000;
-    border-right: solid 2px #000;
+    border-top: solid 2px #333;
+    border-right: solid 2px #333;
     -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
 }
@@ -290,11 +278,10 @@ ul.keep span {
     vertical-align: super;
 }
 .sample5-2::before{
-    left: 3px;
-    width: 4px;
-    height: 4px;
-    border-top: 2px solid #7a0;
-    border-right: 2px solid #7a0;
+    width: 6px;
+    height: 6px;
+    border-top: 2px solid #333;
+    border-right: 2px solid #333;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
