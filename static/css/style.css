@@ -83,7 +83,8 @@ label.attraction {
 table{
   border-collapse:collapse;
   width:100%;
-  margin: 10px 0px;
+  margin-top: 10px;
+  margin-bottom: 30px;
   background: #eee;
 }
 table tr:nth-child(3n){
