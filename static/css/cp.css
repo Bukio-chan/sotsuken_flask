@@ -16,13 +16,14 @@
 	box-shadow: none;
 	-webkit-appearance: none;
 	appearance: none;
+	cursor: pointer;
 }
 .cp_select select::-ms-expand {
     display: none;
 }
 .cp_select.cp_sl03 {
 	position: relative;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #5f6368;
 }
 .cp_select.cp_sl03::before {
 	position: absolute;
@@ -34,12 +35,14 @@
 	content: '';
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-top: 6px solid #000000;
+	border-top: 6px solid #5f6368;
 	pointer-events: none;
 }
 .cp_select.cp_sl03 select {
 	padding: 8px 38px 8px 8px;
 }
+
+
 
 
 
@@ -58,14 +61,14 @@
 	cursor: pointer;
 	transition: all 0.15s ease-out 0s;
 	outline: none;
-	background: #fff;
-	border: 2px solid #aaa;
+	background: #d7cbcb;
+	border: none;
 	border-radius: 4px;
 	-webkit-appearance: none;
 	        appearance: none;
 }
 .cp_ipcheck .option-input02:checked {
-	background: #fff;
+	background: #da3c41;
 }
 .cp_ipcheck .option-input02:checked::before {
 	position: absolute;
@@ -73,12 +76,12 @@
 	content: '';
     width: 9px;
     height: 4px;
-    border-left: 3px solid #da3c41;
-    border-bottom: 3px solid #da3c41;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
     transform: rotate(-45deg);
 	text-align: center;
-	top: 4px;
-    left: 2px;
+	top: 6px;
+    left: 4px;
 }
 .cp_ipcheck .option-input02.radio {
 	border-radius: 50%;
@@ -100,6 +103,7 @@
 	padding: 10px;
 	text-align: left;
 	margin-right: 40px;
+	cursor: pointer;
 }
 .cp_ipcheck label:after {
 	content: "";
@@ -170,13 +174,13 @@ ul.keep span {
 	cursor: pointer;
 	transition: all 0.15s ease-out 0s;
 	outline: none;
-	background: #fff;
-	border: 2px solid #aaa;
+	background: #d7cbcb;
+	border: none;
 	-webkit-appearance: none;
 	        appearance: none;
 }
 .cp_ipradio .option-input:checked {
-	background: #fff;
+	background: #da3c41;
 }
 .cp_ipradio .option-input:checked::before {
 	position: absolute;
@@ -184,12 +188,12 @@ ul.keep span {
 	content: '';
     width: 9px;
     height: 4px;
-    border-left: 3px solid #da3c41;
-    border-bottom: 3px solid #da3c41;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
     transform: rotate(-45deg);
 	text-align: center;
-	top: 4px;
-    left: 2px;
+	top: 6px;
+    left: 4px;
 }
 .cp_ipradio .option-input.radio {
 	border-radius: 50%;
@@ -199,6 +203,7 @@ ul.keep span {
 }
 .cp_ipradio label {
 	margin-right: 30px;
+	cursor: pointer;
 }
 
 
@@ -244,8 +249,8 @@ ul.keep span {
     display: block;
     width: 8px;
     height: 8px;
-    border-top: solid 2px #333;
-    border-right: solid 2px #333;
+    border-top: solid 2px #5f6368;
+    border-right: solid 2px #5f6368;
     -webkit-transform: rotate(135deg);
     transform: rotate(135deg);
 }
@@ -280,8 +285,8 @@ ul.keep span {
 .sample5-2::before{
     width: 6px;
     height: 6px;
-    border-top: 2px solid #333;
-    border-right: 2px solid #333;
+    border-top: 2px solid #5f6368;
+    border-right: 2px solid #5f6368;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
 }
