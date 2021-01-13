@@ -1,6 +1,5 @@
 名前,x座標,y座標,所要時間,列,idタグ,url
 エントランス（入口）,80,190,0,0,None,None
-『STAND BY ME ドラえもん２』XRライド,80,120,10,1,EV_DORAEMON_XR,https://www.usj.co.jp/web/ja/jp/events/doraemon/summer2020
 ハリウッド・ドリーム・ザ・ライド,130,170,3,2,HW_DREAM,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride
 ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3,HW_BKDROP,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride-backdrop
 ザ・フライング・ダイナソー,230,80,3,4,JP_DINOSAUR,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-dinosaur
