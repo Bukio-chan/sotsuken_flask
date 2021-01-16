@@ -143,6 +143,7 @@ def result():
         rank = yoso.string  # A,B,C,D,E,F,S
     else:
         yoso = soup.find(class_="rank-col rank")
+        print(yoso.contents)
         rank = yoso.contents[1]  # A,B,C,D,E,F,S
     rank = rank.lower()  # 小文字に変換
     today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
