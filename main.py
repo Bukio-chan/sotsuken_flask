@@ -140,7 +140,7 @@ def result():
 
     if now.hour <= opening_time:
         yoso = soup.find(class_="yoso").contents[1]
-        rank = f'{real}'[-7:-6]  # A,B,C,D,E,F,S
+        rank = f'{yoso}'[-7:-6]  # A,B,C,D,E,F,S
     else:
         real = soup.find(class_="resl").contents[1]
         rank = f'{real}'[-7:-6]  # A,B,C,D,E,F,S
