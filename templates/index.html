@@ -66,24 +66,22 @@
               <div class="cp_ipcheck">
                 <ul class="keep clearfix">
 
-          {% for i in city[1:] %}
-                    <li>
-                        <input type="checkbox" class="option-input02 checkbox"  name="attraction" id="{{i.num}}" value="{{i.num}}">
-                        <span>
-
-                            <div class="cp_linetab">
-                                <input id="tab-{{i.num}}" name="tabs" type="checkbox" />
-                                <label for="tab-{{i.num}}">
-                                    {{i.name}}
-                                </label>
-                                <div class="cp_linetab-content">
-                                    <p><a href="#" class="arrow sample5-2"></a><a href="{{i.url}}">{{i.name}}公式サイト</a></p>
-                                </div>
-                            </div>
-
-                        </span>
-                    </li>
-          {% endfor %}
+{% for i in city[1:] %}
+<li>
+    <input type="checkbox" class="option-input02 checkbox"  name="attraction" id="{{i.num}}" value="{{i.num}}">
+    <span>
+    <div class="cp_linetab">
+        <input id="tab-{{i.num}}" name="tabs" type="checkbox" />
+        <label for="tab-{{i.num}}">
+            {{i.name}}
+        </label>
+        <div class="cp_linetab-content">
+            <p><a href="#" class="arrow sample5-2"></a><a href="{{i.url}}">{{i.name}}公式サイト</a></p>
+        </div>
+    </div>
+    </span>
+</li>
+{% endfor %}
                 </ul>
               </div>
           </div>
@@ -94,13 +92,9 @@
     <div class="bullets">
       <div class="cp_ipradio">
         <input type="radio" class="option-input radio" name="priority" value="距離優先" id="distance" checked >
-        <label for="distance">
-        距離優先
-        </label>
+        <label for="distance">距離優先</label>
         <input type="radio" class="option-input radio" name="priority" value="時間優先" id="time">
-        <label for="time">
-        時間優先
-        </label>
+        <label for="time">時間優先</label>
       </div>
     </div>
   </div>

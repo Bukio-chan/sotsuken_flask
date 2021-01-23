@@ -13,7 +13,7 @@ app = Flask(__name__)
 url = 'https://usjreal.asumirai.info/'
 html = requests.get(url, verify=False)
 soup = BeautifulSoup(html.content, "html.parser")
-business_hours = soup.find(class_="wave").string
+business_hours = soup.find(class_="time").string
 opening = business_hours.replace(':', ' ').split()
 opening_time = int(opening[0])
 closing_time = int(opening[3])
@@ -139,12 +139,11 @@ def result():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 
     if now.hour <= opening_time:
-        yoso = soup.find(class_="rank-yoso")
-        rank = yoso.string  # A,B,C,D,E,F,S
+        yoso = soup.find(class_="yoso").contents[1]
+        rank = f'{real}'[-7:-6]  # A,B,C,D,E,F,S
     else:
-        yoso = soup.find(class_="rank-col rank")
-        print(yoso.contents)
-        rank = yoso.contents[1]  # A,B,C,D,E,F,S
+        real = soup.find(class_="resl").contents[1]
+        rank = f'{real}'[-7:-6]  # A,B,C,D,E,F,S
     rank = rank.lower()  # 小文字に変換
     today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
 
