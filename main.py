@@ -204,7 +204,6 @@ def result():
         sub_comment = "アトラクションを減らすか、スタート時間を変更してください。"
         return render_template('error.html', comment=comment, sub_comment=sub_comment)
     else:
-        print(time_result)
         end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])
 
     # ?分を?時間?分の形に変更
