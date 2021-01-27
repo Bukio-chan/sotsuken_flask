@@ -40,8 +40,13 @@ def now_wait_time_extraction(attraction_id):
     html_time = requests.get(url_time, verify=False)
     soup_time = BeautifulSoup(html_time.content, "html.parser")
     table_time = soup_time.find("td").text
+    fd = table_time.find('分待ち')
 
-    now_wait_time = int(re.sub("\\D", "", table_time))  # 数字の抽出
+    if fd == -1:
+        now_wait_time = 0
+    else:
+        now_wait_time = int(re.sub("\\D", "", table_time))  # 数字の抽出
+
     if now_wait_time > 1000:
         now_wait_time = 0
 
