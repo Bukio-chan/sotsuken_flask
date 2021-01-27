@@ -5,6 +5,7 @@ import datetime
 import os
 import glob
 import csv
+import re
 from flask import Flask, render_template, request
 from calc import Attraction, GeneticAlgorithm
 
@@ -35,16 +36,15 @@ for j in range(len(data)):
 
 
 def now_wait_time_extraction(attraction_id):
-    table = time_soup.select(f'#{attraction_id} p')
-    if len(table) > 2:
-        now_wait_time = table[2].text
-    else:
-        now_wait_time = 'None'
+    url_time = f'https://usjreal.asumirai.info/attraction/{attraction_id}.html'
+    html_time = requests.get(url_time, verify=False)
+    soup_time = BeautifulSoup(html_time.content, "html.parser")
+    table_time = soup_time.find("td").text
 
-    if '分待ち' in now_wait_time:
-        now_wait_time = int(now_wait_time.replace(' 分待ち', ''))
-    else:
-        now_wait_time = None
+    now_wait_time = int(re.sub("\\D", "", table_time))  # 数字の抽出
+    if now_wait_time > 1000:
+        now_wait_time = 0
+
     return now_wait_time
 
 
@@ -136,6 +136,13 @@ def search():
 
 @app.route("/result", methods=['POST'])
 def result():
+    attraction_number = request.form.getlist('attraction')  # 選択されたアトラクションの取得
+    selected_start_place = int(request.form.get('START'))  # スタート位置の取得
+    selected_end_place = int(request.form.get('END'))  # 終わり位置の取得
+    start_time = int(request.form.get('start_time'))  # スタート時間の取得
+    priority = request.form.get("priority")  # 優先の取得
+    generation = int(request.form.get("generation"))  # 世代数の取得
+
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)  # 日本時間取得
 
     if now.hour <= opening_time:
@@ -146,13 +153,6 @@ def result():
         rank = f'{real}'[-7:-6]  # A,B,C,D,E,F,S
     rank = rank.lower()  # 小文字に変換
     today_csv = f'static/csv/TimeList/rank-{rank}-average.csv'
-
-    attraction_number = request.form.getlist('attraction')  # 選択されたアトラクションの取得
-    selected_start_place = int(request.form.get('START'))  # スタート位置
-    selected_end_place = int(request.form.get('END'))  # 終わり位置
-    start_time = int(request.form.get('start_time'))  # スタート時間
-    priority = request.form.get("priority")  # 優先
-    generation = int(request.form.get("generation"))  # 世代数
 
     # スタート・ゴール地点取得
     start_place = all_attraction[selected_start_place]
@@ -179,7 +179,7 @@ def result():
         if opening_time <= now.hour < closing_time:
             start_time = get_start_time(now.hour, now.minute)
             for i in range(len(attraction_list)):
-                attraction_list[i].now_wait_time = now_time_list[int(attraction_number[i])-1]
+                attraction_list[i].now_wait_time = now_time_list[int(attraction_number[i]) - 1]
         else:
             comment = '現在は営業時間外です！'
             sub_comment = '時間を選択してください。'
@@ -204,6 +204,7 @@ def result():
         sub_comment = "アトラクションを減らすか、スタート時間を変更してください。"
         return render_template('error.html', comment=comment, sub_comment=sub_comment)
     else:
+        print(time_result)
         end_time_result = start_time_result + datetime.timedelta(minutes=time_result[0])
 
     # ?分を?時間?分の形に変更

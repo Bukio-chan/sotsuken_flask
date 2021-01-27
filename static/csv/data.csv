@@ -1,19 +1,19 @@
 名前,x座標,y座標,所要時間,列,idタグ,url
 エントランス（入口）,80,190,0,0,None,None
-ハリウッド・ドリーム・ザ・ライド,130,170,3,2,HW_DREAM,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride
-ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3,HW_BKDROP,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride-backdrop
-ザ・フライング・ダイナソー,230,80,3,4,JP_DINOSAUR,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-dinosaur
-ジュラシック・パーク・ザ・ライド,230,90,7,5,JP_RIDE,https://www.usj.co.jp/web/ja/jp/attractions/jurassic-park-the-ride
-ミニオン・ハチャメチャ・ライド,170,35,18,6,MI_MINIONS,https://www.usj.co.jp/web/ja/jp/attractions/despicable-me-minion-mayhem
-ハリー・ポッター・アンド・ザ・フォービドゥン・ジャーニー,200,270,5,7,HP_JOURNEY,https://www.usj.co.jp/web/ja/jp/attractions/harry-potter-and-the-forbidden-journey
-アメージング・アドベンチャー・オブ・スパイダーマン・ザ・ライド 4K3D,120,60,5,8,NY_SPIDERMAN,https://www.usj.co.jp/web/ja/jp/attractions/the-amazing-adventures-of-spider-man-the-ride
-フライト・オブ・ザ・ヒッポグリフ,190,240,2,9,HP_HIPPO,https://www.usj.co.jp/web/ja/jp/attractions/flight-of-the-hippogriff
-ジョーズ,200,150,7,14,AM_JAWS,https://www.usj.co.jp/web/ja/jp/attractions/jaws
-ミニオン・ハチャメチャ・アイス,165,50,2,15,MI_MINIONSICE,https://www.usj.co.jp/web/ja/jp/attractions/freeze-ray-sliders
-フライング・スヌーピー,160,180,3,20,UN_FLYSNOOPY,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-snoopy
-ハローキティのカップケーキ・ドリーム,155,190,2,23,UN_CUPCAKE,https://www.usj.co.jp/web/ja/jp/attractions/hello-kittys-cupcake-dream
-エルモのゴーゴー・スケートボード,140,195,2,24,UN_SKATEBOAD,https://www.usj.co.jp/web/ja/jp/attractions/elmos-go-go-skateboard
-モッピーのバルーン・トリップ,140,205,2,25,UN_BALLOON,https://www.usj.co.jp/web/ja/jp/attractions/moppys-balloon-trip
-エルモのリトル・ドライブ,150,210,2,27,UN_LITTLEDRIVE,https://www.usj.co.jp/web/ja/jp/attractions/elmos-little-drive
-ビッグバードのビッグトップ・サーカス,160,205,2,28,UN_BIGBIRD,https://www.usj.co.jp/web/ja/jp/attractions/big-birds-big-top-circus
-エルモのバブル・バブル,145,235,3,29,UN_BUBBLE,https://www.usj.co.jp/web/ja/jp/attractions/elmos-bubble-bubble
+ハリウッド・ドリーム・ザ・ライド,130,170,3,2,hw_dream,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride
+ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3,hw_bkdrop,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride-backdrop
+ザ・フライング・ダイナソー,230,80,3,4,jp_dinosaur,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-dinosaur
+ジュラシック・パーク・ザ・ライド,230,90,7,5,jp_ride,https://www.usj.co.jp/web/ja/jp/attractions/jurassic-park-the-ride
+ミニオン・ハチャメチャ・ライド,170,35,18,6,mi_minions,https://www.usj.co.jp/web/ja/jp/attractions/despicable-me-minion-mayhem
+ハリー・ポッター・アンド・ザ・フォービドゥン・ジャーニー,200,270,5,7,hp_journey,https://www.usj.co.jp/web/ja/jp/attractions/harry-potter-and-the-forbidden-journey
+アメージング・アドベンチャー・オブ・スパイダーマン・ザ・ライド 4K3D,120,60,5,8,ny_spiderman,https://www.usj.co.jp/web/ja/jp/attractions/the-amazing-adventures-of-spider-man-the-ride
+フライト・オブ・ザ・ヒッポグリフ,190,240,2,9,hp_hippo,https://www.usj.co.jp/web/ja/jp/attractions/flight-of-the-hippogriff
+ジョーズ,200,150,7,14,am_jaws,https://www.usj.co.jp/web/ja/jp/attractions/jaws
+ミニオン・ハチャメチャ・アイス,165,50,2,15,mi_minionsice,https://www.usj.co.jp/web/ja/jp/attractions/freeze-ray-sliders
+フライング・スヌーピー,160,180,3,20,un_flysnoopy,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-snoopy
+ハローキティのカップケーキ・ドリーム,155,190,2,23,un_cupcake,https://www.usj.co.jp/web/ja/jp/attractions/hello-kittys-cupcake-dream
+エルモのゴーゴー・スケートボード,140,195,2,24,un_skateboad,https://www.usj.co.jp/web/ja/jp/attractions/elmos-go-go-skateboard
+モッピーのバルーン・トリップ,140,205,2,25,un_balloon,https://www.usj.co.jp/web/ja/jp/attractions/moppys-balloon-trip
+エルモのリトル・ドライブ,150,210,2,27,un_littledrive,https://www.usj.co.jp/web/ja/jp/attractions/elmos-little-drive
+ビッグバードのビッグトップ・サーカス,160,205,2,28,un_bigbird,https://www.usj.co.jp/web/ja/jp/attractions/big-birds-big-top-circus
+エルモのバブル・バブル,145,235,3,29,un_bubble,https://www.usj.co.jp/web/ja/jp/attractions/elmos-bubble-bubble
