@@ -129,7 +129,7 @@ def calculate_factor(now, today_csv):
         factor = sum(list(filter(lambda x: x is not None, now_ave))) / sum(forecast_ave)
     else:
         for i in range(len(all_attraction) - 1):
-            now_ave.append(now_wait_time_extraction(table_time, int(data[i + 1][5])))
+            now_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])
 
     return factor, now_ave
 
