@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <td align="center" style="padding-top:0;">{{elapsed_hour[((loop.index-1)*2)+1]}}:{{elapsed_minute[((loop.index-1)*2)+1]}}</td>
-                    {%if time_result[1][loop.index-1] > 0%}
+                    {% if time_result[1][loop.index-1] > 0 %}
                     <td style="padding-top:0;">(予想待ち時間 {{time_result[1][loop.index-1]}}分)</td>
                     {% else %}
                     <td style="padding-top:0;">(休止中)</td>

@@ -19,10 +19,6 @@ opening = business_hours.replace(':', ' ').split()
 opening_time = int(opening[0])
 closing_time = int(opening[3])
 
-time_url = 'https://usjreal.asumirai.info/realtime/usj-wait-today.html'
-time_html = requests.get(time_url, verify=False)
-time_soup = BeautifulSoup(time_html.content, "html.parser")
-
 # data.csvのデータを2次元配列dataに格納
 with open("static/csv/data.csv", 'r', encoding="utf-8")as f:
     reader = csv.reader(f)
@@ -35,14 +31,18 @@ for j in range(len(data)):
     all_attraction.append(Attraction(name=data[j][0], x=int(data[j][1]), y=int(data[j][2]), num=j, url=data[j][6]))
 
 
-def now_wait_time_extraction(attraction_id):
-    url_time = f'https://usjreal.asumirai.info/attraction/{attraction_id}.html'
-    html_time = requests.get(url_time, verify=False)
-    soup_time = BeautifulSoup(html_time.content, "html.parser")
-    table_time = soup_time.find("td").text
-    fd = table_time.find('分待ち')
+def remove_str_start_end(s, start, end):
+    return s[:start] + s[end + 1:]
 
-    if fd == -1:
+
+def now_wait_time_extraction(table_time, attraction_id):
+    text = f'{table_time[attraction_id]}'
+    start = text.find('<span')
+    end = text.find('span>') + 4
+
+    table_time = remove_str_start_end(text, start, end)
+
+    if start == -1:
         now_wait_time = 0
     else:
         now_wait_time = int(re.sub("\\D", "", table_time))  # 数字の抽出
@@ -114,17 +114,22 @@ def time_for_index():  # index.html用
 
 # 待ち時間予想の係数
 def calculate_factor(now, today_csv):
+    url_time = 'https://usjinfo.com/wait/sp/realtime.php?order=name'
+    html_time = requests.get(url_time, verify=False)
+    soup_time = BeautifulSoup(html_time.content, "html.parser")
+    table_time = soup_time.find_all("li")
+
     now_ave = []
     forecast_ave = []
     factor = 1
     if opening_time + 1 <= now.hour < closing_time - 1:
         for i in range(len(all_attraction) - 1):
-            now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
+            now_ave.append(now_wait_time_extraction(table_time, int(data[i + 1][5])))
             forecast_ave.append(load_from_csv(int(data[i + 1][4]), today_csv)[get_start_time(now.hour, now.minute)])
         factor = sum(list(filter(lambda x: x is not None, now_ave))) / sum(forecast_ave)
     else:
         for i in range(len(all_attraction) - 1):
-            now_ave.append(now_wait_time_extraction(f"{data[i + 1][5]}"))
+            now_ave.append(now_wait_time_extraction(table_time, int(data[i + 1][5])))
 
     return factor, now_ave
 
@@ -178,6 +183,10 @@ def result():
                                           wait_time_list=load_from_csv(int(data[num][4]), today_csv, factor),
                                           ride_time=int(data[num][3]), num=num,
                                           now_wait_time='not now', url=data[num][6]))
+    # 休止中のアトラクションの待ち時間を0にする
+    for i in range(len(attraction_list)):
+        if now_time_list[i] == 0:
+            attraction_list[i].wait_time_list = [0] * len(attraction_list[i].wait_time_list)
 
     start_time_result = now
     if start_time == 100:  # 現在時刻が選択されたときのスタート時間
