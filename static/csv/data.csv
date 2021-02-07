@@ -1,5 +1,5 @@
 名前,x座標,y座標,所要時間,列,idタグ,url
-エントランス（入口）,80,190,0,0,None,None
+エントランス（出入口）,80,190,0,0,None,None
 ハリウッド・ドリーム・ザ・ライド,130,170,3,2,32,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride
 ハリウッド・ドリーム・ザ・ライド ～バックドロップ～,120,175,3,3,34,https://www.usj.co.jp/web/ja/jp/attractions/hollywood-dream-the-ride-backdrop
 ザ・フライング・ダイナソー,230,80,3,4,12,https://www.usj.co.jp/web/ja/jp/attractions/the-flying-dinosaur
